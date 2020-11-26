@@ -7,6 +7,12 @@ import java.sql.Date;
 import java.util.ArrayList;
 public class User {
 	private int id;
+	
+	// na ta valume tuta?
+	private String username;
+	private String password;
+	///
+	
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -151,6 +157,52 @@ public class User {
 		this.isVerified=isVerified;
 		this.hometown=hometown;
 		this.livesInLocation=livesInLocation;
+	}
+	
+	public User(int id, String firstName, String lastName, String email,
+			String webiste, String link, Date birthday, char gender,
+			ArrayList<String> workedFor, ArrayList<String> educationPlaces, 
+			ArrayList<String> quotes,boolean isVerified, Location hometown,
+			Location livesInLocation, String username, String password) {
+		this.id=id;
+		this.firstName=firstName;
+		this.lastName=lastName;
+		this.email=email;
+		this.website=webiste;
+		this.link=link;
+		this.birthday=birthday;
+		this.gender=gender;
+		this.workedFor=workedFor;
+		this.educationPlaces=educationPlaces;
+		this.quotes=quotes;
+		this.isVerified=isVerified;
+		this.hometown=hometown;
+		this.livesInLocation=livesInLocation;
+		this.username=username;
+		this.password=password;
+	}
+	
+	public User(String firstName, String lastName, String email,
+			String webiste, String link, Date birthday, char gender,
+			ArrayList<String> workedFor, ArrayList<String> educationPlaces, 
+			ArrayList<String> quotes,boolean isVerified, Location hometown,
+			Location livesInLocation, String username, String password) {
+		this.id=-1;
+		this.firstName=firstName;
+		this.lastName=lastName;
+		this.email=email;
+		this.website=webiste;
+		this.link=link;
+		this.birthday=birthday;
+		this.gender=gender;
+		this.workedFor=workedFor;
+		this.educationPlaces=educationPlaces;
+		this.quotes=quotes;
+		this.isVerified=isVerified;
+		this.hometown=hometown;
+		this.livesInLocation=livesInLocation;
+		this.username=username;
+		this.password=password;
 	}
 	
 	

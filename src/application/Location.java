@@ -24,5 +24,4 @@ public class Location {
 		this.id=id;
 		this.name=name;
 	}
-	
 }

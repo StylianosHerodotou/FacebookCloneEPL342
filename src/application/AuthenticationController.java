@@ -1,6 +1,7 @@
 package application;
 
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -57,5 +58,19 @@ public class AuthenticationController {
 	public void signUp() throws FileNotFoundException {
 		// other stuff
 		this.showLogInView();
+	}
+
+	public HashMap<String, Integer> getLocations() {
+		
+		HashMap<String ,Integer> temp = new HashMap<String ,Integer>();
+		temp.put("Larnaka", 1);
+		temp.put("Lefkosia", 2);
+		return temp;
+		// TODO Auto-generated method stub
+	}
+
+	public void registerUser(User newUser) {
+		// TODO Auto-generated method stub
+		
 	}
 }
