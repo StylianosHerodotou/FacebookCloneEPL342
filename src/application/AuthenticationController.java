@@ -48,10 +48,14 @@ public class AuthenticationController {
 		popupwindow.showAndWait();
 
 	}
+//	public static User generateDummyUser() {
+//		return  new User("Stylianos", "Herodotou", "email@ucy.ac.cy","www.ucy.com",
+//				null, null, 'M',null,null,null,
+//					false,null,null, "sherod01","password");
+//		
+//	}
 	public static User generateDummyUser() {
-		return  new User("Stylianos", "Herodotou", "email@ucy.ac.cy","www.ucy.com",
-				null, null, 'M',null,null,null,
-					false,null,null, "sherod01","password");
+		return  new User("sherod01","");
 		
 	}
 	
@@ -59,7 +63,8 @@ public class AuthenticationController {
 //		User user=this.model.getUser(username);
 		User user= generateDummyUser();
 		if (user.getPassword().equals(password)) {
-			this.displayPopUp("correct password signed in");
+//			this.displayPopUp("correct password signed in");
+			UserController.startController(this.view.primaryStage, user);
 		}
 		else {
 			//oste na men tou pis oti exi tuto to username. gia na spamari meta. gia safty

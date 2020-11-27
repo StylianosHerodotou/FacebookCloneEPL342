@@ -2,30 +2,33 @@
  * ekames mono sindesis tou event ke interests.
  */
 package application;
+import java.lang.reflect.Field;
 import java.sql.Date;
 
 import java.util.ArrayList;
+
+import javafx.scene.control.Label;
 public class User {
-	private int id;
+	protected int id;
 	
 	// na ta valume tuta?
-	private String username;
-	private String password;
+	protected String username;
+	protected String password;
 	///
 	
-	private String firstName;
-	private String lastName;
-	private String email;
-	private String website;
-	private String link;
-	private Date birthday;
-	private char gender;
-	private ArrayList<String> workedFor;
-	private ArrayList<String> educationPlaces;
-	private ArrayList<String> quotes;
-	private boolean isVerified;
-	private Location hometown;
-	private Location livesInLocation;
+	protected String firstName;
+	protected String lastName;
+	protected String email;
+	protected String website;
+	protected String link;
+	protected Date birthday;
+	protected char gender;
+	protected ArrayList<String> workedFor;
+	protected ArrayList<String> educationPlaces;
+	protected ArrayList<String> quotes;
+	protected boolean isVerified;
+	protected Location hometown;
+	protected Location livesInLocation;
 	
 	public int getId() {
 		return id;
@@ -219,6 +222,34 @@ public class User {
 		this.livesInLocation=livesInLocation;
 		this.username=username;
 		this.password=password;
+	}
+	
+	public User(String Username, String password) {
+		this.username=Username;
+		this.password=password;
+	}
+	
+	public String toString() {
+		String ans="";
+		Field[] all_fields = User.class.getDeclaredFields();
+		for (int i = 0; i < all_fields.length; i++) {
+			String field_name = all_fields[i].getName();
+			Object fieldValue = null;
+			try {
+				fieldValue = all_fields[i].get(this);
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			ans=ans+field_name;
+			if(fieldValue!=null)
+			{
+				ans=ans+": "+ fieldValue.toString()+", ";
+			}else {
+				ans=ans+": null,";
+			}
+		}
+		return ans;
 	}
 	
 	
