@@ -92,6 +92,9 @@ public class AuthenticationModel {
 			return "user";
 
 	}
+	public boolean registerUser(User newUser) {
+		return true;
+	}
 
 //	public static boolean register(Registration registration) {
 //		// collumns

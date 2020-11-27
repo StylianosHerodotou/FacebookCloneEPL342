@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
-import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -48,7 +47,7 @@ public  class AuthenticationView{
 		this.controller=controller;
 	}
 	
-	public void startView() throws FileNotFoundException {
+	public void startView()  {
 	    Scene scene = new Scene(this.getLogInView(), 800,800);
         this.primaryStage.setScene(scene);
         primaryStage.setTitle("BookFace");
@@ -56,7 +55,7 @@ public  class AuthenticationView{
 	}
 
 	
-	public void prepareSceneLogin(GridPane grid) throws FileNotFoundException {
+	public void prepareSceneLogin(GridPane grid) {
 
 		grid.setAlignment(Pos.BASELINE_LEFT);
 		grid.setHgap(18);
@@ -69,7 +68,7 @@ public  class AuthenticationView{
 
 	}
 	
-	public GridPane getLogInView() throws FileNotFoundException {
+	public GridPane getLogInView()  {
 
 		GridPane grid = new GridPane();
 		this.prepareSceneLogin(grid);
@@ -100,24 +99,15 @@ public  class AuthenticationView{
 		signInButton.setOnAction(event-> {
 			String username =userTextField.getText();
 			String password = passwordField.getText();
-			try {
-				this.controller.signIn(username,password);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.controller.signIn(username,password);
 			});
 		HBox horizonalBox= new HBox(50);
 		horizonalBox.setAlignment(Pos.BOTTOM_RIGHT);
 
 		Button register_btn = new Button("Sign up");
 		register_btn.setOnAction(event-> {
-			try {
-				this.controller.showRegisterView();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		this.controller.showRegisterView();
+
 		} );
 		horizonalBox.getChildren().add(register_btn);
 		horizonalBox.getChildren().add(signInButton);
@@ -129,7 +119,7 @@ public  class AuthenticationView{
 	
 	
 	
-	public void prepareSceneRegister(GridPane grid) throws FileNotFoundException {
+	public void prepareSceneRegister(GridPane grid)  {
 
 		grid.setAlignment(Pos.BASELINE_LEFT);
 		grid.setHgap(18);
@@ -156,7 +146,7 @@ public  class AuthenticationView{
         // return the formed String[] 
         return arrayOfString; 
     }
-	public GridPane getRegisterView() throws FileNotFoundException {
+	public GridPane getRegisterView()  {
 
 		GridPane grid = new GridPane();
 		this.prepareSceneRegister(grid);
@@ -284,7 +274,7 @@ public  class AuthenticationView{
 			
 			this.controller.registerUser(newUser);
 		});
-		grid.add(button, xStartinglevel, 10);
+		grid.add(button, xStartinglevel, ++yLevelIndex);
 		
 		prepareSceneRegister(grid);
 		return grid;
