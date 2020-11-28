@@ -7,7 +7,26 @@ public class Link extends FBItem{
 	private String message;
 	private String description;
 	private String caption;
-	
+	private int user_id;
+	public int getUser_id() {
+		return user_id;
+	}
+
+	public Link(int id, String name, String uRL, String message, String description, String caption, int user_id) {
+		super();
+		this.id = id;
+		this.name = name;
+		URL = uRL;
+		this.message = message;
+		this.description = description;
+		this.caption = caption;
+		this.user_id = user_id;
+	}
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -55,7 +74,6 @@ public class Link extends FBItem{
 	public void setCaption(String caption) {
 		this.caption = caption;
 	}
-
 	public Link(int id, String name, String URL, String message,
 			String description, String caption) {
 		super("this is a link");

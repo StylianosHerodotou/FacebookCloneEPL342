@@ -8,6 +8,20 @@ public class Video extends FBItem{
 	private String description;
 	private double length;
 	private String source;
+	private int user_id;
+	//new constr with user id
+	public Video(int id, String message, String description, double length, String source, int user_id,
+			ArrayList<Comment> comments) {
+		super();
+		this.id = id;
+		this.message = message;
+		this.description = description;
+		this.length = length;
+		this.source = source;
+		this.user_id = user_id;
+		this.comments = comments;
+	}
+
 	private ArrayList<Comment> comments;
 	
 	public ArrayList<Comment> getComments() {

@@ -13,7 +13,9 @@ public class User extends FBItem {
 	protected int id;
 	
 
-	
+	protected int taken_loc_id;
+	protected int user_id;
+	protected String privacy;
 	protected String firstName;
 	protected String lastName;
 	protected String email;
@@ -28,7 +30,34 @@ public class User extends FBItem {
 	protected boolean isVerified;
 	protected Location hometown;
 	protected Location livesInLocation;
-	
+	//newer with pass and username
+	public User(int id, int taken_loc_id, int user_id, String privacy, String firstName, String lastName, String email,
+			String website, String link, Date birthday, char gender, ArrayList<String> workedFor,
+			ArrayList<String> educationPlaces, ArrayList<String> quotes, ArrayList<FRequest> friendRequests,
+			boolean isVerified, Location hometown, Location livesInLocation, String username, String password) {
+		super();
+		this.id = id;
+		this.taken_loc_id = taken_loc_id;
+		this.user_id = user_id;
+		this.privacy = privacy;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.website = website;
+		this.link = link;
+		this.birthday = birthday;
+		this.gender = gender;
+		this.workedFor = workedFor;
+		this.educationPlaces = educationPlaces;
+		this.quotes = quotes;
+		FriendRequests = friendRequests;
+		this.isVerified = isVerified;
+		this.hometown = hometown;
+		this.livesInLocation = livesInLocation;
+		this.username = username;
+		this.password = password;
+	}
+
 	// na ta valume tuta?
 	protected String username;
 	protected String password;

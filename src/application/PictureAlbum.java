@@ -8,6 +8,25 @@ public class PictureAlbum extends FBItem{
 	private String description;
 	private String link;
 	private ArrayList<Picture> pictures;
+	private int taken_loc_id;
+	private int user_id;
+	private String privacy;
+	
+	//newer constructor with fields missing
+	public PictureAlbum(int id, String name, String description, String link, ArrayList<Picture> pictures,
+			int taken_loc_id, int user_id, String privacy, ArrayList<Comment> comments) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.link = link;
+		this.pictures = pictures;
+		this.taken_loc_id = taken_loc_id;
+		this.user_id = user_id;
+		this.privacy = privacy;
+		this.comments = comments;
+	}
+
 	private ArrayList<Comment> comments;
 	
 	public ArrayList<Comment> getComments() {
