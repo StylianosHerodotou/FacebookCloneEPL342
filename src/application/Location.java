@@ -1,6 +1,6 @@
 package application;
 
-public class Location {
+public class Location extends FBItem{
 	private int id;
 	private String name;
 	
@@ -21,6 +21,8 @@ public class Location {
 	}
 
 	public Location(int id, String name) {
+		super("this is a location");
+
 		this.id=id;
 		this.name=name;
 	}

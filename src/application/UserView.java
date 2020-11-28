@@ -53,7 +53,6 @@ public class UserView {
 	private static int initYlevel = 2;
 	
 	
-	
 	Stage primaryStage;
 	TabPane tabPane;
 	UserController controller;
@@ -102,11 +101,12 @@ public class UserView {
       Tab profileTab = new Tab("Profile",this.getItemView(index++,0));
       Tab changeProfileTab = new Tab("changeProfileTab",this.getFormView(index++, 1));
       Tab seeItemTab = new Tab("item view",this.getItemView(index++, 2));
+      Tab resultsTab = new Tab("help", this.tempView(index++));
 
 
       
 
-
+      tabPane.getTabs().add(resultsTab);
       tabPane.getTabs().add(profileTab);
       tabPane.getTabs().add(changeProfileTab);
       tabPane.getTabs().add(seeItemTab);
@@ -148,15 +148,28 @@ public class UserView {
 			return -1;
 	}
 	
-	protected void getResultsView(GridPane grid, ArrayList<Object> objects) {
+	protected GridPane tempView(int tabIndex) {
+		GridPane grid = new GridPane();
+		ArrayList<FBItem> users = new ArrayList<FBItem>(UserController.generateDummyUser());
+		this.getResultsView(grid,users );
+		
+		return grid;
+	}
+	
+	protected void getResultsView(GridPane grid, ArrayList<FBItem> items) {
 		// set dimentions of the grid.
 		grid.setHgap(8); // horizontal
 		grid.setVgap(10);// vertical
 		initXlevel = 0;
 		initYlevel = 2;
-		for (int objectIndex = 0; objectIndex < objects.size(); objectIndex++) {
-			Object object = objects.get(objectIndex);
-//			grid.add(new Label(object.getClass().getSimpleName()+" "+object.), initXlevel, objectIndex + initYlevel);
+		for (int objectIndex = 0; objectIndex < items.size(); objectIndex++) {
+			FBItem object = items.get(objectIndex);
+			System.out.println(object.toString());
+			grid.add(new Label(object.getClass().getSimpleName()), initXlevel, objectIndex + initYlevel);
+			grid.add(new Label(object.getFBName()), initXlevel+1, objectIndex + initYlevel);
+			Button somethingButton = new Button("something");
+			somethingButton.setOnAction(event-> this.controller.doSomething("this is a something message"));
+			grid.add(somethingButton, initXlevel+2, objectIndex + initYlevel);
 		}
 
 	}
@@ -204,32 +217,6 @@ public class UserView {
 					e.printStackTrace();
 				}
 			}
-
-//			Button showButton = new Button("Show Password");
-//			showButton.setOnAction(event -> {
-//				this.controller.showUserPassword(user);
-//			});
-//			grid.add(showButton, rowCount + initXlevel + 1, objectIndex + initYlevel); // adding 2 because i start from
-//																						// (2,3)
-//
-//			if (user.isAdmin() == true) {
-//				Button removeAdminCap = new Button("Remove Admin Capabilities");
-//				removeAdminCap.setOnAction(event -> this.controller.removeAdminCapabilities(tabIndex, user.id));
-//				grid.add(removeAdminCap, rowCount + initXlevel + 2, objectIndex + initYlevel); // adding 2 because i
-//																								// start from (2,3)
-//			} else {
-//				Button giveAdminCap = new Button("Give Admin Capabilities");
-//				giveAdminCap.setOnAction(event -> this.controller.giveAdminCapabilities(tabIndex, user.id));
-//				grid.add(giveAdminCap, rowCount + initXlevel + 2, objectIndex + initYlevel); // adding 2 because i start
-//																							// from (2,3)
-//			}
-//			Button fireUserButton = new Button("Fire User");
-//			fireUserButton.setOnAction(event -> this.controller.fireUser(tabIndex, user.id));
-//			grid.add(fireUserButton, rowCount + 3 + initXlevel, objectIndex + initYlevel); // adding 2 because i start
-//																							// from (2,3)
-//		}
-//		Button logout = new Button("Logout");
-//		grid.add(logout, rowCount + 3, 0);
 		return grid;
 	
 	}
@@ -249,10 +236,10 @@ public class UserView {
 		GridPane grid = new GridPane();
 		this.prepareItemScene(grid, 2);
 		User user= this.controller.getUser();
-		Object object=user;
+		FBItem item=user;
 		
-		Field[] all_fields = object.getClass().getDeclaredFields();
-		ArrayList<Field> fields= getNonSensitiveFields(object, all_fields);
+		Field[] all_fields = item.getClass().getDeclaredFields();
+		ArrayList<Field> fields= getNonSensitiveFields(item, all_fields);
 //		ArrayList<Field> fields= getBothSensitiveAndNonSensitiveFields(object, all_fields);
 
 		initXlevel = 0;
@@ -261,7 +248,7 @@ public class UserView {
 		for (int field_index = 0; field_index < fields.size(); field_index++) {
 				try {
 					Field currentField=fields.get(field_index);
-					this.addItemLabel(currentField,object, retriveFields);
+					this.addItemLabel(currentField,item, retriveFields);
 					addFielditemInGrid(grid, currentField.getName(),field_index, retriveFields);
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
@@ -299,37 +286,6 @@ public class UserView {
 		else {
 			addTextLabelRow("null", retriveFields);
 		}
-		
-
-
-//		switch(fieldType) {
-//			case "String":
-//				addTextLabelRow((String) field.get(object),retriveFields);
-//			break;
-//			case "int" :
-//				addTextLabelRow(Integer.toString((int)field.get(object)),retriveFields);
-//			break;
-//			case "char":
-//				if(field.getName().equals("gender")) {
-//					addTextLabelRow(String.valueOf(((char)field.get(object))),retriveFields);
-//				}
-//			break;
-//			case "ArrayList<String>":
-//				addTextLabelRow(ArrayListToString((ArrayList<String>) field.get(object)),retriveFields);
-//			break;
-//			case "Date":
-//				addTextLabelRow(((Date)field.get(object)).toString(),retriveFields);
-//			break;
-//			case "boolean":
-//				addTextLabelRow(String.valueOf((boolean )field.get(object)),retriveFields);
-//			break;
-//			case "Location":
-//				addTextLabelRow((Location)field.get(object),retriveFields);
-//			break;
-//			default:
-//				System.out.print("there was a new field "+field.getName() );
-//			break;
-
 		
 	}
 

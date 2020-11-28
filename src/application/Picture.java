@@ -2,7 +2,7 @@ package application;
 
 import java.util.ArrayList;
 
-public class Picture {
+public class Picture extends FBItem{
 	private int id;
 	private double width;
 	private double height;
@@ -19,6 +19,7 @@ public class Picture {
 	}
 	
 	public Picture(int id, double width, double height, String link, String source) {
+		super("this is a picture");
 		this.id=id;
 		this.width=width;
 		this.height=height;

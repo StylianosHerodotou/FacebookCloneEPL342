@@ -2,7 +2,7 @@ package application;
 
 import java.util.ArrayList;
 
-public class Video {
+public class Video extends FBItem{
 	private int id;
 	private String message;
 	private String description;
@@ -19,6 +19,8 @@ public class Video {
 	}
 	
 	public Video(int id, String message, String description, double length, String source) {
+		super("this is a video");
+
 		this.id=id;
 		this.message=message;
 		this.description=description;

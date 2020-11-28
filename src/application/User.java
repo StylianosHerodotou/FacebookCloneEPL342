@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-public class User {
+public class User extends FBItem {
 	protected int id;
 	
 	// na ta valume tuta?
@@ -147,6 +147,8 @@ public class User {
 			String webiste, String link, Date birthday, char gender,
 			ArrayList<String> workedFor, ArrayList<String> educationPlaces, 
 			ArrayList<String> quotes,boolean isVerified, Location hometown, Location livesInLocation) {
+		super("this is a user");
+
 		this.id=id;
 		this.firstName=firstName;
 		this.lastName=lastName;
@@ -168,6 +170,8 @@ public class User {
 			ArrayList<String> workedFor, ArrayList<String> educationPlaces, 
 			ArrayList<String> quotes,boolean isVerified, Location hometown,
 			Location livesInLocation, String username, String password) {
+		super("this is a user");
+
 		this.id=id;
 		this.firstName=firstName;
 		this.lastName=lastName;
@@ -207,6 +211,8 @@ public class User {
 			ArrayList<String> workedFor, ArrayList<String> educationPlaces, 
 			ArrayList<String> quotes,boolean isVerified, Location hometown,
 			Location livesInLocation, String username, String password) {
+		super("this is a user");
+
 		this.id=-1;
 		this.firstName=firstName;
 		this.lastName=lastName;
@@ -226,12 +232,16 @@ public class User {
 	}
 	
 	public User(String Username, String password) {
+		super("this is a user");
+
 		this.username=Username;
 		this.password=password;
 		this.gender='M';
 	}
 	
 	public User(ArrayList<Object> newData) {
+		super("this is a user");
+
 		Field[] all_fields = this.getClass().getDeclaredFields();
 		for (int field_index = 0; field_index < all_fields.length; field_index++) {
 			try {
