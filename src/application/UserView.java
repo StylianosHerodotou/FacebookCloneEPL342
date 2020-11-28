@@ -233,7 +233,18 @@ public class UserView {
 		return grid;
 	
 	}
-	
+	protected GridPane getFriendRequestView(int tabIndex ) {
+		GridPane grid = new GridPane();
+		ArrayList <String> FriendRequests = this.controller.getFriendRequests(this.controller.getUser().getId());
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		// grid.setPadding(new Insets(00, 00, 00, 00));
+		Text scenetitle = new Text("Friend Requests");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 1, 1, 9, 1);
+	    
+	}
 	protected GridPane getItemView(int tabIndex, int itemType) {
 		GridPane grid = new GridPane();
 		this.prepareItemScene(grid, 2);
