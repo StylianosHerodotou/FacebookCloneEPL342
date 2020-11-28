@@ -11,7 +11,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-
+import applicationVersionTwo.TicketForView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -220,18 +220,80 @@ public class UserView {
 		return grid;
 	
 	}
+	// FRIEND REQUEST VIEW 
 	protected GridPane getFriendRequestView(int tabIndex ) {
 		GridPane grid = new GridPane();
-		ArrayList <String> FriendRequests = this.controller.getFriendRequests(this.controller.getUser().getId());
+		ObservableList<FRequest> FriendRequests = this.controller.getFriendRequests(this.controller.getUser().getId());
 		grid.setAlignment(Pos.BASELINE_LEFT);
 		grid.setHgap(18);
 		grid.setVgap(18);
 		// grid.setPadding(new Insets(00, 00, 00, 00));
 		Text scenetitle = new Text("Friend Requests");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
-		grid.add(scenetitle, 1, 1, 9, 1);
-	    
+		grid.add(scenetitle, 0,0);
+		TableColumn<FRequest, Integer> idcolumn = new TableColumn<>("ID");
+		idcolumn.setMinWidth(100);
+		idcolumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+		TableColumn<FRequest, String> namecolumn = new TableColumn<>("FirstName");
+		namecolumn.setMinWidth(200);
+		namecolumn.setCellValueFactory(new PropertyValueFactory<>("FirstName"));
+		TableColumn<FRequest, String> surnamecolumn = new TableColumn<>("LastName");
+		surnamecolumn.setMinWidth(200);
+		surnamecolumn.setCellValueFactory(new PropertyValueFactory<>("LastName"));
+		//TableColumn ID = new TableColumn("ID");
+		
+
+		TableView table = new TableView();
+		
+		 table.setItems(FriendRequests);
+table.getColumns().addAll(idcolumn,namecolumn,surnamecolumn);
+
+TableColumn<FRequest, Void> add = new TableColumn("Add");
+TableColumn<FRequest, Void> deny = new TableColumn("Deny");
+TableColumn<FRequest, Void> ignore = new TableColumn("Ignore");
+Callback<TableColumn<FRequest, Void>, TableCell<FRequest, Void>> cellFactory = new Callback<TableColumn<FRequest, Void>, TableCell<FRequest, Void>>() {
+    @Override
+    public TableCell<FRequest, Void> call(final TableColumn<FRequest, Void> param) {
+        final TableCell<FRequest, Void> cell = new TableCell<FRequest, Void>() {
+
+            private final Button add = new Button("Add");
+            private final Button deny = new Button("Deny");
+            private final Button ignore = new Button("Ignore");
+           // {
+           //     add.setOnAction((ActionEvent event) -> {
+            //        FRequest data = getTableView().getItems().get(getIndex());
+             //       System.out.println("selectedFRequest: " + data);
+              //  });
+           // }
+
+            @Override
+            public void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(add);
+                    setGraphic(deny);
+                    setGraphic(ignore);
+                }
+            }
+        };
+        return cell;
+    }
+};
+
+add.setCellFactory(cellFactory);
+deny.setCellFactory(cellFactory);
+ignore.setCellFactory(cellFactory);
+table.getColumns().add(add);
+table.getColumns().add(deny);
+table.getColumns().add(ignore);
+table.setEditable(true);
+grid.add(table, 0, 1);
+return grid;
+
 	}
+	
 	protected GridPane getItemView(int tabIndex, int itemType) {
 		GridPane grid = new GridPane();
 		this.prepareItemScene(grid, 2);

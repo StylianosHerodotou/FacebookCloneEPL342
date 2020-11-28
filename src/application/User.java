@@ -27,6 +27,7 @@ public class User extends FBItem {
 	protected ArrayList<String> workedFor;
 	protected ArrayList<String> educationPlaces;
 	protected ArrayList<String> quotes;
+	protected ArrayList<FRequest> FriendRequests;
 	protected boolean isVerified;
 	protected Location hometown;
 	protected Location livesInLocation;

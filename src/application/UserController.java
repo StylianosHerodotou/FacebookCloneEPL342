@@ -6,6 +6,8 @@ import javafx.stage.Stage;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -69,13 +71,14 @@ public class UserController {
 		}
 	}
 	//Dummy data 
-	public ArrayList<String> getFriendRequests(int UsersId){
-		ArrayList<String> friendsReq = new ArrayList<String>(); 
-	  String d="21 Max Ban";
-	  String r="bay blade";
-	  friendsReq.add(d);
-	  friendsReq.add(r);
-	  return friendsReq;
+	public ObservableList<FRequest> getFriendRequests(int UsersId){
+		ObservableList<FRequest> Req = FXCollections.observableArrayList();
+		
+	FRequest a=new FRequest(1,"Joe","Biden");
+	FRequest b=new FRequest(2,"Donald","Trump");
+	  Req.add(a);
+	 Req.add(b);
+	  return  Req;
 	  
 	}
 	protected void logOut() {
