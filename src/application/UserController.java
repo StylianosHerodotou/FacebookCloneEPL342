@@ -55,7 +55,21 @@ public class UserController {
 		this.view.generateTabPane();
 		this.model.setController(this);
 	}
+	public static void displayPopUp(String message) {
+		Stage popupwindow = new Stage();
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Pop Up Window");
+		Label label1 = new Label(message);
+		Button button1 = new Button("OK");
+		button1.setOnAction(e -> popupwindow.close());
+		VBox layout = new VBox(10);
+		layout.getChildren().addAll(label1, button1);
+		layout.setAlignment(Pos.CENTER);
+		Scene scene1 = new Scene(layout, 300, 250);
+		popupwindow.setScene(scene1);
+		popupwindow.showAndWait();
 
+	}
 	public static void startController(Stage primaryStage, User user)  {
 		UserController controller = new UserController(primaryStage, user);
 		controller.view.startView();
@@ -71,12 +85,40 @@ public class UserController {
 			AuthenticationController.displayPopUp(message);
 		}
 	}
-	//Dummy data 
+public void ignoreFriend(int id, int tabint) throws FileNotFoundException {
+	if(this.model.removeFromFriendRequest(this.getUser().getId(),id)) {
+		displayPopUp("Removed from the friend request List "+id);
+	}else {
+	displayPopUp("Failed to remove from list "+id);
+	}
+	Tab tab= this.view.tabPane.getTabs().get(tabint);
+	tab.setContent(this.view.getFriendRequestView(tabint));
+}
+	public void denyFriend(int id, int tabint) {
+		if(this.model.banFromFriendRequest(this.getUser().getId(),id)) {
+			displayPopUp("Banned from the friend request List "+id);
+		}else {
+		displayPopUp("Failed to ban from list "+id);
+		}
+		Tab tab= this.view.tabPane.getTabs().get(tabint);
+		tab.setContent(this.view.getFriendRequestView(tabint));
+	}
+	
+public void addFriend(int id,int tabint) {
+	if(this.model.addToFriends(this.getUser().getId(),id)) {
+		displayPopUp("Added to friends "+id);
+	}else {
+	displayPopUp("Failed to Add to friends"+id);
+	}
+	Tab tab= this.view.tabPane.getTabs().get(tabint);
+	tab.setContent(this.view.getFriendRequestView(tabint));
+	}
+//Dummy data 
 	public ObservableList<FRequest> getFriendRequests(int UsersId){
 		ObservableList<FRequest> Req = FXCollections.observableArrayList();
 		
-	FRequest a=new FRequest(1,"Joe","Biden");
-	FRequest b=new FRequest(2,"Donald","Trump");
+	FRequest a=new FRequest(1,"Joe","Biden",this);
+	FRequest b=new FRequest(2,"Donald","Trump",this);
 	  Req.add(a);
 	 Req.add(b);
 	  return  Req;

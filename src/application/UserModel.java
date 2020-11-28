@@ -23,5 +23,18 @@ public class UserModel {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	//From friend request tu id 1 remove the guy with id2 
+	public boolean removeFromFriendRequest(int id, int id2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	public boolean banFromFriendRequest(int id, int id2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	public boolean addToFriends(int id, int id2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

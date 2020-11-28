@@ -11,7 +11,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-import applicationVersionTwo.TicketForView;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -233,6 +233,17 @@ public class UserView {
 	protected GridPane getFriendRequestView(int tabIndex ) {
 		GridPane grid = new GridPane();
 		ObservableList<FRequest> FriendRequests = this.controller.getFriendRequests(this.controller.getUser().getId());
+		for(int i=0;i<FriendRequests.size();i++) {
+			int b=i;
+			FriendRequests.get(i).getAdd().setOnAction(event ->{this.controller.addFriend(FriendRequests.get(b).getId(),tabIndex);});
+			FriendRequests.get(i).getDelete().setOnAction(event ->{this.controller.denyFriend(FriendRequests.get(b).getId(),tabIndex);});
+			FriendRequests.get(i).getIgnore().setOnAction(event ->{try {
+				this.controller.ignoreFriend(FriendRequests.get(b).getId(),tabIndex);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}});
+		}
 		grid.setAlignment(Pos.BASELINE_LEFT);
 		grid.setHgap(18);
 		grid.setVgap(18);
@@ -250,53 +261,21 @@ public class UserView {
 		surnamecolumn.setMinWidth(200);
 		surnamecolumn.setCellValueFactory(new PropertyValueFactory<>("LastName"));
 		//TableColumn ID = new TableColumn("ID");
-		
+		TableColumn<FRequest, Button> addColumn = new TableColumn<>("Add");
+		addColumn.setMinWidth(200);
+		addColumn.setCellValueFactory(new PropertyValueFactory<FRequest,Button>("Add"));
+		TableColumn<FRequest, Button> DeleteColumn = new TableColumn<>("Delete");
+		DeleteColumn.setMinWidth(200);
+		DeleteColumn.setCellValueFactory(new PropertyValueFactory<FRequest,Button>("Delete"));
+		TableColumn<FRequest, Button> IgnoreColumn = new TableColumn<>("Ignore");
+		IgnoreColumn.setMinWidth(200);
+		IgnoreColumn.setCellValueFactory(new PropertyValueFactory<FRequest,Button>("Ignore"));
 
 		TableView table = new TableView();
 		
 		 table.setItems(FriendRequests);
-table.getColumns().addAll(idcolumn,namecolumn,surnamecolumn);
+table.getColumns().addAll(idcolumn,namecolumn,surnamecolumn,addColumn,DeleteColumn,IgnoreColumn);
 
-TableColumn<FRequest, Void> add = new TableColumn("Add");
-TableColumn<FRequest, Void> deny = new TableColumn("Deny");
-TableColumn<FRequest, Void> ignore = new TableColumn("Ignore");
-Callback<TableColumn<FRequest, Void>, TableCell<FRequest, Void>> cellFactory = new Callback<TableColumn<FRequest, Void>, TableCell<FRequest, Void>>() {
-    @Override
-    public TableCell<FRequest, Void> call(final TableColumn<FRequest, Void> param) {
-        final TableCell<FRequest, Void> cell = new TableCell<FRequest, Void>() {
-
-            private final Button add = new Button("Add");
-            private final Button deny = new Button("Deny");
-            private final Button ignore = new Button("Ignore");
-           // {
-           //     add.setOnAction((ActionEvent event) -> {
-            //        FRequest data = getTableView().getItems().get(getIndex());
-             //       System.out.println("selectedFRequest: " + data);
-              //  });
-           // }
-
-            @Override
-            public void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(add);
-                    setGraphic(deny);
-                    setGraphic(ignore);
-                }
-            }
-        };
-        return cell;
-    }
-};
-
-add.setCellFactory(cellFactory);
-deny.setCellFactory(cellFactory);
-ignore.setCellFactory(cellFactory);
-table.getColumns().add(add);
-table.getColumns().add(deny);
-table.getColumns().add(ignore);
 table.setEditable(true);
 grid.add(table, 0, 1);
 return grid;
