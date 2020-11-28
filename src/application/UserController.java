@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -84,6 +85,11 @@ public class UserController {
 	
 	public void doSomething(String message) {
 		AuthenticationController.displayPopUp(message);
+	}
+	
+	public void changeView(int tabIndex) {
+		Tab tab = this.view.tabPane.getTabs().get(tabIndex);
+		tab.setContent(this.view.getMyProfileView(tabIndex));
 	}
 
 
