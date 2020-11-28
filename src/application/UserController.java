@@ -69,7 +69,16 @@ public class UserController {
 			AuthenticationController.displayPopUp(message);
 		}
 	}
-	
+	//Dummy data 
+	public ArrayList<String> getFriendRequests(int UsersId){
+		ArrayList<String> friendsReq = new ArrayList<String>(); 
+	  String d="21 Max Ban";
+	  String r="bay blade";
+	  friendsReq.add(d);
+	  friendsReq.add(r);
+	  return friendsReq;
+	  
+	}
 	protected void logOut() {
 		AuthenticationController.startController(this.view.primaryStage);
 	}
