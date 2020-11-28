@@ -8,9 +8,16 @@ public class PictureAlbum {
 	private String description;
 	private String link;
 	private ArrayList<Picture> pictures;
+	private ArrayList<Comment> comments;
 	
+	public ArrayList<Comment> getComments() {
+		return comments;
+	}
 
-	
+	public void setComments(ArrayList<Comment> comments) {
+		this.comments = comments;
+	}
+
 	public PictureAlbum(int id, String name, String description, String link,
 			ArrayList<Picture> pictures) {
 		this.id=id;

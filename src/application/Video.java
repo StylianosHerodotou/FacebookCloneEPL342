@@ -1,11 +1,22 @@
 package application;
 
+import java.util.ArrayList;
+
 public class Video {
 	private int id;
 	private String message;
 	private String description;
 	private double length;
 	private String source;
+	private ArrayList<Comment> comments;
+	
+	public ArrayList<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(ArrayList<Comment> comments) {
+		this.comments = comments;
+	}
 	
 	public Video(int id, String message, String description, double length, String source) {
 		this.id=id;

@@ -1,11 +1,22 @@
 package application;
 
+import java.util.ArrayList;
+
 public class Picture {
 	private int id;
 	private double width;
 	private double height;
 	private String link;
 	private String source;
+	private ArrayList<Comment> comments;
+	
+	public ArrayList<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(ArrayList<Comment> comments) {
+		this.comments = comments;
+	}
 	
 	public Picture(int id, double width, double height, String link, String source) {
 		this.id=id;
