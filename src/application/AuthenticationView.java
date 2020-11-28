@@ -217,9 +217,9 @@ public  class AuthenticationView{
 		PasswordField passwordField = new PasswordField();
 		grid.add(passwordField, xStartinglevel+1, yLevelIndex++);
 		
-		Button button = new Button();
-		button.setText("Create account");
-		button.setOnAction(event->{
+		Button CreateAccountbutton = new Button();
+		CreateAccountbutton.setText("Create account");
+		CreateAccountbutton.setOnAction(event->{
 			String firstName=nameField.getText();
 			String lastName=surnameField.getText();
 			String email=emailField.getText();
@@ -260,7 +260,7 @@ public  class AuthenticationView{
 			
 			this.controller.registerUser(newUser);
 		});
-		grid.add(button, xStartinglevel, ++yLevelIndex);
+		grid.add(CreateAccountbutton, xStartinglevel, ++yLevelIndex);
 		
 		prepareSceneRegister(grid);
 		return grid;
