@@ -2,7 +2,7 @@ package application;
 
 import java.util.ArrayList;
 
-public class PictureAlbum {
+public class PictureAlbum extends FBItem{
 	private int id;
 	private String name;
 	private String description;
@@ -20,6 +20,8 @@ public class PictureAlbum {
 
 	public PictureAlbum(int id, String name, String description, String link,
 			ArrayList<Picture> pictures) {
+		super("this is an almbum");
+
 		this.id=id;
 		this.name=name;
 		this.description=description;

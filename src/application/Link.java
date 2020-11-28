@@ -1,6 +1,6 @@
 package application;
 
-public class Link {
+public class Link extends FBItem{
 	private int id;
 	private String name;
 	private String URL;
@@ -58,6 +58,7 @@ public class Link {
 
 	public Link(int id, String name, String URL, String message,
 			String description, String caption) {
+		super("this is a link");
 		this.id=id;
 		this.URL=URL;
 		this.message=message;

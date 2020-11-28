@@ -1,7 +1,7 @@
 package application;
 import java.sql.Time;
 import java.sql.Timestamp;
-public class Event {
+public class Event extends FBItem{
 	private int id;
 	public User getCreatedBy() {
 		return createdBy;
@@ -39,6 +39,8 @@ public class Event {
 	public Event(int id, String venue, String name, Timestamp startTime,
 			Timestamp endTime, String description, User createdBy,
 			Privacy privacy, Location location) {
+		super("this is an event");
+
 		this.id=id;
 		this.venue=venue;
 		this.name=name;

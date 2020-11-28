@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -70,6 +71,19 @@ public class UserController {
 	
 	protected void logOut() {
 		AuthenticationController.startController(this.view.primaryStage);
+	}
+	
+	public static ArrayList<User> generateDummyUser() {
+		ArrayList<User> users= new ArrayList<User>();
+		users.add(new User("sherod01",""));
+		users.add(new User("pchris04",""));
+		users.add(new User("cchris",""));
+		return users;
+		
+	}
+	
+	public void doSomething(String message) {
+		AuthenticationController.displayPopUp(message);
 	}
 
 

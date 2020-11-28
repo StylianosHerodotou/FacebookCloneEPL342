@@ -1,10 +1,11 @@
 package application;
 
-public class Interest {
+public class Interest extends FBItem{
 	private int id;
 	private String name;
 	
 	public Interest(int id, String name) {
+		super("this is an interest ");
 		this.id=id;
 		this.name=name;
 	}
