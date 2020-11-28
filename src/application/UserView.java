@@ -149,10 +149,20 @@ public class UserView {
 	}
 	
 	protected GridPane tempView(int tabIndex) {
+		initXlevel = 0;
+		initYlevel = 2;
 		GridPane grid = new GridPane();
 		ArrayList<FBItem> users = new ArrayList<FBItem>(UserController.generateDummyUser());
 		this.getResultsView(grid,users );
-		
+		for(int index=0; index<users.size(); index++) {
+			Button button = new Button("this is a button");
+			button.setOnAction(event->{
+				//
+			});
+			grid.add(button, initXlevel+2, index + initYlevel);
+			
+			
+		}
 		return grid;
 	}
 	
@@ -160,16 +170,15 @@ public class UserView {
 		// set dimentions of the grid.
 		grid.setHgap(8); // horizontal
 		grid.setVgap(10);// vertical
-		initXlevel = 0;
-		initYlevel = 2;
+
 		for (int objectIndex = 0; objectIndex < items.size(); objectIndex++) {
 			FBItem object = items.get(objectIndex);
 			System.out.println(object.toString());
 			grid.add(new Label(object.getClass().getSimpleName()), initXlevel, objectIndex + initYlevel);
 			grid.add(new Label(object.getFBName()), initXlevel+1, objectIndex + initYlevel);
-			Button somethingButton = new Button("something");
-			somethingButton.setOnAction(event-> this.controller.doSomething("this is a something message"));
-			grid.add(somethingButton, initXlevel+2, objectIndex + initYlevel);
+//			Button somethingButton = new Button("something");
+//			somethingButton.setOnAction(event-> this.controller.doSomething("this is a something message"));
+//			grid.add(somethingButton, initXlevel+2, objectIndex + initYlevel);
 		}
 
 	}
@@ -193,7 +202,7 @@ public class UserView {
 //				grid.addColumn(fields.size(), new Label(field_name));
 			}
 		}
-
+		
 		initXlevel = 0;
 		initYlevel = 2;
 		int rowCount = fields.size() + 1;

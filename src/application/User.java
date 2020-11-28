@@ -12,10 +12,7 @@ import javafx.scene.control.Label;
 public class User extends FBItem {
 	protected int id;
 	
-	// na ta valume tuta?
-	protected String username;
-	protected String password;
-	///
+
 	
 	protected String firstName;
 	protected String lastName;
@@ -31,6 +28,11 @@ public class User extends FBItem {
 	protected boolean isVerified;
 	protected Location hometown;
 	protected Location livesInLocation;
+	
+	// na ta valume tuta?
+	protected String username;
+	protected String password;
+	///
 	
 	public int getId() {
 		return id;
