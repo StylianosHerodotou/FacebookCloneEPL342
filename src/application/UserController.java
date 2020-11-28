@@ -57,5 +57,20 @@ public class UserController {
 		controller.view.startView();
 	}
 
+	public void UpdateUser(User updateduser) {
+		boolean wasSuccessful=this.model.updateUser(updateduser);
+		if(wasSuccessful==true) {
+			this.setUser(updateduser);
+		}
+		else {
+			String message=" Unable to update User";
+			AuthenticationController.displayPopUp(message);
+		}
+	}
+	
+	protected void logOut() {
+		AuthenticationController.startController(this.view.primaryStage);
+	}
+
 
 }

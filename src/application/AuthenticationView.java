@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import com.sun.scenario.effect.impl.prism.PrImage;
@@ -189,6 +190,7 @@ public  class AuthenticationView{
 		Label birthdayLabel = new Label("birthday");
 		grid.add(birthdayLabel, xStartinglevel, yLevelIndex);
 		DatePicker datePicker = new DatePicker();
+		datePicker.setValue(LocalDate.now());
 		grid.add(datePicker, xStartinglevel+1, yLevelIndex++);
 		
 		Label workedAtLabel = new Label("previous employment Places * symbol between employments.");

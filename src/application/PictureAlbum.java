@@ -8,6 +8,7 @@ public class PictureAlbum {
 	private String description;
 	private String link;
 	private ArrayList<Picture> pictures;
+	
 
 	
 	public PictureAlbum(int id, String name, String description, String link,

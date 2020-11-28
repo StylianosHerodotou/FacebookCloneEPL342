@@ -7,6 +7,7 @@ import java.sql.Date;
 
 import java.util.ArrayList;
 
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 public class User {
 	protected int id;
@@ -227,8 +228,22 @@ public class User {
 	public User(String Username, String password) {
 		this.username=Username;
 		this.password=password;
+		this.gender='M';
 	}
 	
+	public User(ArrayList<Object> newData) {
+		Field[] all_fields = this.getClass().getDeclaredFields();
+		for (int field_index = 0; field_index < all_fields.length; field_index++) {
+			try {
+				Field currentField=all_fields[field_index];
+				currentField.set(this,newData.get(field_index));
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+	}
+
 	public String toString() {
 		String ans="";
 		Field[] all_fields = User.class.getDeclaredFields();

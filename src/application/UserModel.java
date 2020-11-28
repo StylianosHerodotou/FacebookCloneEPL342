@@ -19,5 +19,9 @@ public class UserModel {
 	public void setController(UserController controller) {
 		this.controller=controller;
 	}
+	public boolean updateUser(User updateduser) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }
