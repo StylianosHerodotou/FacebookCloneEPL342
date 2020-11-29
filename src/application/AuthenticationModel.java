@@ -21,7 +21,7 @@ public class AuthenticationModel {
 		this.controller=controller;
 	}
 
-	static String dbConnString = "jdbc:sqlserver://localhost:1433;databaseName=LAPTOP-FOP56MFB;integratedSecurity=true;";
+	static String dbConnString = "jdbc:sqlserver://mssql.cs.ucy.ac.cy;user=kchris12;password=7m3aPvBA;";
 
 	static Connection conn = null;
 	private static boolean dbDriverLoaded = false;
@@ -38,10 +38,17 @@ public class AuthenticationModel {
 			}
 
 		try {
-			if (conn == null)
+			if (conn == null) {
 				conn = DriverManager.getConnection(dbConnString);
-			else if (conn.isClosed())
+				conn.setAutoCommit(true);
+				conn.setHoldability(ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			}
+			else if (conn.isClosed()) {
 				conn = DriverManager.getConnection(dbConnString);
+				conn.setAutoCommit(true);
+				conn.setHoldability(ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			}
+			return true;
 		} catch (SQLException e) {
 			System.out.print("Cannot connect to the DB!\nGot error: ");
 			System.out.print(e.getErrorCode());
@@ -49,7 +56,21 @@ public class AuthenticationModel {
 			System.out.println(e.getSQLState());
 			System.out.println(e.getMessage());
 		}
-		return true;
+		return false;
+	}
+	
+	public static boolean disconnectToDB() {
+		try {
+			if (!conn.isClosed()) {
+				System.out.print("Disconnecting from database...");
+				conn.close();
+				System.out.println("Done\n\nBye !");
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public static String authenticate(String username, String password) {
