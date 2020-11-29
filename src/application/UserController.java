@@ -191,6 +191,16 @@ public void addFriend(int id,int tabint) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public ObservableList<User> getSameInterestFriends(int id) {
+		
+		return null;
+	}
+
+	public ObservableList<Event> getLeastAttendableEvents() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 	}
 
