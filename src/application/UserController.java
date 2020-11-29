@@ -165,6 +165,27 @@ public void addFriend(int id,int tabint) {
 		Tab tab= this.view.tabPane.getTabs().get(tabIndex);
 		tab.setContent(this.view.getFriendRequestView(tabIndex));
 	}
+
+	public void searchOccurence(String firstName, String slocation, String startDate, String endDate, int tabIndex) {
+		Tab tab= this.view.tabPane.getTabs().get(tabIndex);
+		tab.setContent(this.view.getOccurenceResultView(firstName,slocation,startDate,endDate,tabIndex));
+		
+	}
+// occurences pu isunte me afta
+	public ObservableList<Event> getSpecificOccurences(String firstName, String slocation, String startDate, String endDate) {
+		
+		return null;
+	}
+
+	public void goToEvent(Event event, int tabIndex) {
+		// TODO Auto-generated method stub
+		
+	}
+// fermu tus pio famous friends 
+	public ObservableList<User> getMostPopularFriends(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 	}
 

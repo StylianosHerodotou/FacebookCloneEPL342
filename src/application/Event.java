@@ -1,6 +1,8 @@
 package application;
 import java.sql.Time;
 import java.sql.Timestamp;
+
+import javafx.scene.control.Button;
 public class Event extends FBItem{
 	private int id;
 	private String venue;
@@ -11,7 +13,6 @@ public class Event extends FBItem{
 	private int user_id ;
 	private int loc_id;
 	private Privacy privacy;
-	
 	public Privacy getPrivacy() {
 		return privacy;
 	}
@@ -41,7 +42,7 @@ public class Event extends FBItem{
 	public int getUser_id() {
 		return user_id;
 	}
-
+  
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}

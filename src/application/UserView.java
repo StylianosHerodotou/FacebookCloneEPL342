@@ -2,6 +2,7 @@ package application;
 
 import java.io.FileInputStream;
 import java.lang.reflect.Field;
+import java.security.Timestamp;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.io.FileNotFoundException;
@@ -316,6 +317,53 @@ table.getColumns().addAll(idcolumn,namecolumn,surnamecolumn,DeleteColumn);
 
 table.setEditable(true);
 grid.add(table, 0, 1);
+return grid;
+
+	}	
+	protected GridPane getSearchOccurenceView(int tabIndex ) {
+		GridPane grid = new GridPane();
+	    
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		HashMap<String, Integer> locationHashmap = AuthenticationController.getLocations();
+		String [] locations= AuthenticationController.convert(locationHashmap.keySet());
+		// grid.setPadding(new Insets(00, 00, 00, 00));
+		Text scenetitle = new Text("Search for Occurence");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 0,0);
+		Label name = new Label("Name :");
+		grid.add(name, 0,3 );
+		TextField nameField = new TextField();
+		grid.add(nameField, 1, 3);
+		
+		Label location = new Label("Location :");
+		grid.add(location, 0, 4);
+		ComboBox LocationBox = new ComboBox(FXCollections.observableArrayList(locations)); 
+		LocationBox.getSelectionModel().selectFirst();
+		grid.add(LocationBox, 1, 4);
+		Label startime = new Label("Start time :");
+		grid.add(startime, 0,5 );
+		TextField startField = new TextField();
+		grid.add(startField, 1, 5);
+		Label endtime = new Label("End time :");
+		grid.add(endtime, 0,6 );
+		TextField endField = new TextField();
+		grid.add(endField, 1, 6);	
+		Button Searchbutton = new Button();
+		Searchbutton.setText("Search");
+		Searchbutton.setOnAction(event->{
+			String firstName=nameField.getText();
+			String slocation=(String) LocationBox.getValue();
+			String startDate=startField.getText();
+			String endDate=endField.getText();
+	
+		
+
+			this.controller.searchOccurence(firstName,slocation,startDate,endDate,tabIndex);
+		});
+		grid.add(Searchbutton, 0, 8);
+
 return grid;
 
 	}	
@@ -677,6 +725,58 @@ return grid;
 			this.controller.logOut();
 		});
 		grid.add(logOutButton, 0,0);
+	}
+	protected GridPane mostPopularFriendsVuew(
+			int tabIndex) {
+		GridPane grid = new GridPane();
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(30);
+		grid.setVgap(30);
+		ObservableList<User> PopularFriends= this.controller.getMostPopularFriends(this.controller.getUser().getId());
+		Text scenetitle = new Text("Most Popular Friends");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 0,0);
+		Label name = new Label("First Name :");
+		grid.add(name, 0,1 );
+		Label lastname = new Label("Last Name :");
+		grid.add(lastname, 1,1 );
+		Label Email = new Label("Email :");
+		grid.add(Email, 2,1 );
+		
+         int row=2;
+		for(int i=0;i<PopularFriends.size();i++) {
+			Text fname = new Text(PopularFriends.get(i).getFirstName());
+			Text lname = new Text(PopularFriends.get(i).getLastName());
+			Text em = new Text(PopularFriends.get(i).getEmail());
+			grid.add(fname, 0, row);
+			grid.add(lname, 1, row);
+			grid.add(em, 2, row);
+			row++;
+		}
+		 
+        // how does this work 
+return grid;
+	}
+	protected GridPane getOccurenceResultView(String Name, String slocation, String startDate, String endDate,
+			int tabIndex) {
+		GridPane grid = new GridPane();
+		ObservableList<Event> Occurence= this.controller.getSpecificOccurences(Name,slocation,startDate,endDate);
+		Button[] AddComents = new Button[Occurence.size()];
+		for(int i=0;i<Occurence.size();i++) {
+			int b=i;
+			AddComents[i].setText("Add comment");
+			AddComents[i].setOnAction(event -> {
+				this.controller.goToEvent(Occurence.get(b), tabIndex);
+				});
+		}
+		 
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(30);
+		grid.setVgap(30);
+		HashMap<String, Integer> locationHashmap = AuthenticationController.getLocations();
+		String [] locations= AuthenticationController.convert(locationHashmap.keySet());
+        // how does this work 
+return grid;
 	}
 
 	
