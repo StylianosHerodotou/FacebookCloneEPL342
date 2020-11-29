@@ -757,6 +757,37 @@ return grid;
         // how does this work 
 return grid;
 	}
+	protected GridPane UsersWithCommonFriends(
+			int tabIndex) {
+		GridPane grid = new GridPane();
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(30);
+		grid.setVgap(30);
+		ObservableList<User> FriendswithSameFriends= this.controller.getFriendswithsamefriends(this.controller.getUser().getId());
+		Text scenetitle = new Text("Most Popular Friends");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 0,0);
+		Label name = new Label("First Name :");
+		grid.add(name, 0,1 );
+		Label lastname = new Label("Last Name :");
+		grid.add(lastname, 1,1 );
+		Label Email = new Label("Email :");
+		grid.add(Email, 2,1 );
+		
+         int row=2;
+		for(int i=0;i<FriendswithSameFriends.size();i++) {
+			Text fname = new Text(FriendswithSameFriends.get(i).getFirstName());
+			Text lname = new Text(FriendswithSameFriends.get(i).getLastName());
+			Text em = new Text(FriendswithSameFriends.get(i).getEmail());
+			grid.add(fname, 0, row);
+			grid.add(lname, 1, row);
+			grid.add(em, 2, row);
+			row++;
+		}
+		 
+        // how does this work 
+return grid;
+	}
 	protected GridPane getOccurenceResultView(String Name, String slocation, String startDate, String endDate,
 			int tabIndex) {
 		GridPane grid = new GridPane();

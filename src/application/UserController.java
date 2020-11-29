@@ -186,6 +186,11 @@ public void addFriend(int id,int tabint) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+//same friends or even more
+	public ObservableList<User> getFriendswithsamefriends(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 	}
 
