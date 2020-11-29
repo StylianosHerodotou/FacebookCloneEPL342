@@ -117,8 +117,8 @@ public void addFriend(int id,int tabint) {
 	public ObservableList<FRequest> getFriendRequests(int UsersId){
 		ObservableList<FRequest> Req = FXCollections.observableArrayList();
 		
-	FRequest a=new FRequest(1,"Joe","Biden",this);
-	FRequest b=new FRequest(2,"Donald","Trump",this);
+	FRequest a=new FRequest(1,"Joe","Biden");
+	FRequest b=new FRequest(2,"Donald","Trump");
 	  Req.add(a);
 	 Req.add(b);
 	  return  Req;
@@ -146,5 +146,27 @@ public void addFriend(int id,int tabint) {
 		tab.setContent(this.view.getMyProfileView(tabIndex));
 	}
 
+	public ObservableList<FRequest> getFriends(int id) {
+		ObservableList<FRequest> Req = FXCollections.observableArrayList();
+		
+		FRequest a=new FRequest(1,"Joe","Biden");
+		FRequest b=new FRequest(2,"Donald","Trump");
+		  Req.add(a);
+		 Req.add(b);
+		  return  Req;
+	}
 
-}
+	public void DeleteFriend(int id, int tabIndex) {
+		if(this.model.removeFromFriends(this.getUser().getId(),id)) {
+			displayPopUp("Removed friend with id : "+id);
+		}else {
+		displayPopUp("Failed to remove friend with id :"+id);
+		}
+		Tab tab= this.view.tabPane.getTabs().get(tabIndex);
+		tab.setContent(this.view.getFriendRequestView(tabIndex));
+	}
+		
+	}
+
+
+

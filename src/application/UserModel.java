@@ -36,5 +36,10 @@ public class UserModel {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	// id en o user ke to id2 en tutos pu tha gini removed from friend list tu id
+	public boolean removeFromFriends(int id, int id2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

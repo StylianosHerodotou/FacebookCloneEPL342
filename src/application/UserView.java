@@ -281,7 +281,44 @@ grid.add(table, 0, 1);
 return grid;
 
 	}
-	
+	protected GridPane getFriendView(int tabIndex ) {
+		GridPane grid = new GridPane();
+		ObservableList<FRequest> Friends= this.controller.getFriends(this.controller.getUser().getId());
+		for(int i=0;i<Friends.size();i++) {
+			int b=i;
+			Friends.get(i).getDelete().setOnAction(event ->{this.controller.DeleteFriend(Friends.get(b).getId(),tabIndex);});
+		}
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		// grid.setPadding(new Insets(00, 00, 00, 00));
+		Text scenetitle = new Text("Friends");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 0,0);
+		TableColumn<FRequest, Integer> idcolumn = new TableColumn<>("ID");
+		idcolumn.setMinWidth(100);
+		idcolumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+		TableColumn<FRequest, String> namecolumn = new TableColumn<>("FirstName");
+		namecolumn.setMinWidth(200);
+		namecolumn.setCellValueFactory(new PropertyValueFactory<>("FirstName"));
+		TableColumn<FRequest, String> surnamecolumn = new TableColumn<>("LastName");
+		surnamecolumn.setMinWidth(200);
+		surnamecolumn.setCellValueFactory(new PropertyValueFactory<>("LastName"));
+		//TableColumn ID = new TableColumn("ID");
+		TableColumn<FRequest, Button> DeleteColumn = new TableColumn<>("Delete");
+		DeleteColumn.setMinWidth(200);
+		DeleteColumn.setCellValueFactory(new PropertyValueFactory<FRequest,Button>("Delete"));
+
+		TableView table = new TableView();
+		
+		 table.setItems(Friends);
+table.getColumns().addAll(idcolumn,namecolumn,surnamecolumn,DeleteColumn);
+
+table.setEditable(true);
+grid.add(table, 0, 1);
+return grid;
+
+	}	
 	protected GridPane getItemView(int tabIndex, int itemType) {
 		GridPane grid = new GridPane();
 		this.prepareItemScene(grid, 2);

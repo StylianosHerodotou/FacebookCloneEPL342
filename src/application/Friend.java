@@ -2,20 +2,16 @@ package application;
 
 import javafx.scene.control.Button;
 
-public class FRequest{
+public class Friend{
      private int id;
      private String FirstName;
      private String LastName;
-     private Button Add ;
      private Button Delete ;
-     private Button Ignore ;
-public FRequest(int ID, String Name , String SurName  ) {
+public Friend(int ID, String Name , String SurName  ) {
 	this.id=ID;
 	this.FirstName=Name;
 	this.LastName=SurName;
-	this.setAdd(new Button("Add"));
 	this.setDelete(new Button("Delete"));
-	this.setIgnore(new Button("Ignore"));
 }
 
 
@@ -49,15 +45,6 @@ public void setId(int id) {
 }
 
 
-public Button getAdd() {
-	return Add;
-}
-
-
-public void setAdd(Button add) {
-	Add = add;
-}
-
 
 public Button getDelete() {
 	return Delete;
@@ -69,14 +56,6 @@ public void setDelete(Button delete) {
 }
 
 
-public Button getIgnore() {
-	return Ignore;
-}
-
-
-public void setIgnore(Button ignore) {
-	Ignore = ignore;
-}
 
 
 
