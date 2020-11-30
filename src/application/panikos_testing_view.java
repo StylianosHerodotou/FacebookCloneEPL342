@@ -1,5 +1,6 @@
 package application;
 
+import java.lang.reflect.Field;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class panikos_testing_view extends Application {
 		HashMap<String, Integer> locationHashmap = AuthenticationController.getLocations();
 		locationHashmap.put("?", -1);
 		String[] locations = AuthenticationController.convert(locationHashmap.keySet());
-		
+
 		int yLevelIndex = 3;
 		int xStartinglevel = 2;
 
@@ -115,19 +116,17 @@ public class panikos_testing_view extends Application {
 		TextField quotesField = new TextField();
 		grid.add(quotesField, xStartinglevel + 1, yLevelIndex++);
 
-		
 		Label verifiedLabel = new Label("verified:");
 		grid.add(verifiedLabel, xStartinglevel, yLevelIndex);
 		String[] verified = { "true", "false" };
 		ComboBox verifiedBox = new ComboBox(FXCollections.observableArrayList(verified));
 		verifiedBox.getSelectionModel().selectFirst();
-		grid.add(verifiedBox, xStartinglevel + 1, yLevelIndex++);	
-	
+		grid.add(verifiedBox, xStartinglevel + 1, yLevelIndex++);
+
 		Label label1 = new Label("Username:");
 		grid.add(label1, xStartinglevel, yLevelIndex); // i am starting from xStartinglevel,xStartinglevel+1
 		TextField UserNameField = new TextField();
 		grid.add(UserNameField, xStartinglevel + 1, yLevelIndex++);
-
 
 		Button SearchUserButton = new Button();
 		SearchUserButton.setText("Search User");
@@ -139,12 +138,12 @@ public class panikos_testing_view extends Application {
 			String link = linkField.getText();
 			Date birthday = null;
 			if (datePicker.getValue().equals(LocalDate.now())) {
-				 birthday = null;
+				birthday = null;
 			} else {
-				 birthday = Date.valueOf(datePicker.getValue());
+				birthday = Date.valueOf(datePicker.getValue());
 
 			}
-			
+
 			String strGender = (String) genderBox.getValue();
 			char gender = 'F';
 			if (strGender.equals("Male")) {
@@ -164,41 +163,65 @@ public class panikos_testing_view extends Application {
 			if (strGender.equals("true")) {
 				isVerified = true;
 			}
-			
+
 			String strHometown = (String) hometownBox.getValue();
-			
-			Location hometown =null;
+
+			Location hometown = null;
 			if (strHometown == "?") {
-				hometown =null;
+				hometown = null;
 			} else {
 				hometown = new Location(locationHashmap.get(strHometown), strHometown);
 			}
-			
+
 			String strLivesInLocation = (String) hometownBox.getValue();
-			
-			Location livesIn =null;
+
+			Location livesIn = null;
 			if (strLivesInLocation == "?") {
-				livesIn =null;
+				livesIn = null;
 			} else {
 				livesIn = new Location(locationHashmap.get(strLivesInLocation), strLivesInLocation);
 			}
-			
-			
 
 			// na ta valume tuta?
 			String username = UserNameField.getText();
-			
 
 			User newUser = new User(firstName, lastName, email, website, link, birthday, gender, workedForPlaces,
 					educationPlaces, quotes, isVerified, hometown, livesIn, username, "");
 			///
-			System.out.println(newUser);
-			
+////			System.out.println(newUser);
+//			Field[] all_fields = newUser.getClass().getDeclaredFields();
+//			ArrayList<Field> fields = getBothSensitiveAndNonSensitiveFields(newUser, all_fields);
+//
+//			for (int field_index = 0; field_index < fields.size(); field_index++) {
+//				try {
+//					Field currentField = fields.get(field_index);
+//					if (currentField.getType()==String.class) {
+//						String val = (String) currentField.get(newUser);
+//						
+//						
+//					}
+//				} catch (IllegalArgumentException | IllegalAccessException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+
 		});
-		
+
 		grid.add(SearchUserButton, xStartinglevel, ++yLevelIndex);
 
 		return grid;
+
+	}
+
+	private static ArrayList<Field> getBothSensitiveAndNonSensitiveFields(Object object, Field[] all_fields) {
+		ArrayList<Field> fields = new ArrayList<Field>();
+		for (int i = 0; i < all_fields.length; i++) {
+			String field_name = all_fields[i].getName();
+			fields.add(all_fields[i]);
+//				grid.addColumn(fields.size(), new Label(field_name));
+		}
+		return fields;
 
 	}
 }

@@ -13,55 +13,25 @@ public class User extends FBItem {
 	protected int id;
 	
 
-	protected int taken_loc_id;
+	
 	protected int user_id;
-	protected String privacy;
 	protected String firstName;
 	protected String lastName;
 	protected String email;
 	protected String website;
 	protected String link;
 	protected Date birthday;
-	protected char gender;
+	protected boolean gender;
 	protected ArrayList<String> workedFor;
 	protected ArrayList<String> educationPlaces;
 	protected ArrayList<String> quotes;
-	protected ArrayList<FRequest> FriendRequests;
 	protected boolean isVerified;
 	protected Location hometown;
 	protected Location livesInLocation;
 	//newer with pass and username
-	public User(int id, int taken_loc_id, int user_id, String privacy, String firstName, String lastName, String email,
-			String website, String link, Date birthday, char gender, ArrayList<String> workedFor,
-			ArrayList<String> educationPlaces, ArrayList<String> quotes, ArrayList<FRequest> friendRequests,
-			boolean isVerified, Location hometown, Location livesInLocation, String username, String password) {
-		super();
-		this.id = id;
-		this.taken_loc_id = taken_loc_id;
-		this.user_id = user_id;
-		this.privacy = privacy;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.website = website;
-		this.link = link;
-		this.birthday = birthday;
-		this.gender = gender;
-		this.workedFor = workedFor;
-		this.educationPlaces = educationPlaces;
-		this.quotes = quotes;
-		FriendRequests = friendRequests;
-		this.isVerified = isVerified;
-		this.hometown = hometown;
-		this.livesInLocation = livesInLocation;
-		this.username = username;
-		this.password = password;
-	}
-
-	// na ta valume tuta?
 	protected String username;
 	protected String password;
-	///
+
 	
 	public int getId() {
 		return id;
@@ -119,13 +89,6 @@ public class User extends FBItem {
 		this.birthday = birthday;
 	}
 
-	public char getGender() {
-		return gender;
-	}
-
-	public void setGender(char gender) {
-		this.gender = gender;
-	}
 
 	public ArrayList<String> getWorkedFor() {
 		return workedFor;
@@ -286,27 +249,13 @@ public class User extends FBItem {
 		}
 	}
 
+	@Override
 	public String toString() {
-		String ans="";
-		Field[] all_fields = User.class.getDeclaredFields();
-		for (int i = 0; i < all_fields.length; i++) {
-			String field_name = all_fields[i].getName();
-			Object fieldValue = null;
-			try {
-				fieldValue = all_fields[i].get(this);
-			} catch (IllegalArgumentException | IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			ans=ans+field_name;
-			if(fieldValue!=null)
-			{
-				ans=ans+": "+ fieldValue.toString()+", ";
-			}else {
-				ans=ans+": null,";
-			}
-		}
-		return ans;
+		return "User [id=" + id + ", user_id=" + user_id + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", email=" + email + ", website=" + website + ", link=" + link
+				+ ", birthday=" + birthday + ", gender=" + gender + ", workedFor=" + workedFor + ", educationPlaces="
+				+ educationPlaces + ", quotes=" + quotes + ", isVerified=" + isVerified + ", hometown=" + hometown
+				+ ", livesInLocation=" + livesInLocation + ", username=" + username + ", password=" + password + "]";
 	}
 	
 	
