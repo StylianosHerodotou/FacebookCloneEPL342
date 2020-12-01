@@ -21,7 +21,7 @@ public class Picture extends FBItem{
 	
 	public Picture(int id, double width, double height, String link, String source, String privacy,
 			ArrayList<Comment> comments) {
-		super();
+		super("this is a picture");
 		this.id = id;
 		this.width = width;
 		this.height = height;

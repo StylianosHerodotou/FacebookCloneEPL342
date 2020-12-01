@@ -10,11 +10,10 @@ import java.util.ArrayList;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 public class User extends FBItem {
+	
+	
 	protected int id;
-	
-
-	
-	protected int user_id;
+//	protected int user_id;
 	protected String firstName;
 	protected String lastName;
 	protected String email;
@@ -139,7 +138,7 @@ public class User extends FBItem {
 	}
 
 	public User(int id, String firstName, String lastName, String email,
-			String webiste, String link, Date birthday, char gender,
+			String webiste, String link, Date birthday, boolean gender,
 			ArrayList<String> workedFor, ArrayList<String> educationPlaces, 
 			ArrayList<String> quotes,boolean isVerified, Location hometown, Location livesInLocation) {
 		super("this is a user");
@@ -161,7 +160,7 @@ public class User extends FBItem {
 	}
 	
 	public User(int id, String firstName, String lastName, String email,
-			String webiste, String link, Date birthday, char gender,
+			String webiste, String link, Date birthday, boolean gender,
 			ArrayList<String> workedFor, ArrayList<String> educationPlaces, 
 			ArrayList<String> quotes,boolean isVerified, Location hometown,
 			Location livesInLocation, String username, String password) {
@@ -202,7 +201,7 @@ public class User extends FBItem {
 	}
 
 	public User(String firstName, String lastName, String email,
-			String webiste, String link, Date birthday, char gender,
+			String webiste, String link, Date birthday, boolean gender,
 			ArrayList<String> workedFor, ArrayList<String> educationPlaces, 
 			ArrayList<String> quotes,boolean isVerified, Location hometown,
 			Location livesInLocation, String username, String password) {
@@ -231,7 +230,7 @@ public class User extends FBItem {
 
 		this.username=Username;
 		this.password=password;
-		this.gender='M';
+		this.gender=false;
 	}
 	
 	public User(ArrayList<Object> newData) {
@@ -251,7 +250,7 @@ public class User extends FBItem {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", user_id=" + user_id + ", firstName=" + firstName
+		return "User [id=" + id +"firstName=" + firstName
 				+ ", lastName=" + lastName + ", email=" + email + ", website=" + website + ", link=" + link
 				+ ", birthday=" + birthday + ", gender=" + gender + ", workedFor=" + workedFor + ", educationPlaces="
 				+ educationPlaces + ", quotes=" + quotes + ", isVerified=" + isVerified + ", hometown=" + hometown

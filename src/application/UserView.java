@@ -73,7 +73,7 @@ public class UserView {
 		fields.put("website", "String");
 		fields.put("link", "String");
 		fields.put("birthday", "Date");
-		fields.put("gender", "char");
+		fields.put("gender", "boolean");
 		fields.put("workedFor", "ArrayList<String>");
 		fields.put("educationPlaces", "ArrayList<String>");
 		fields.put("quotes", "ArrayList<String>");
@@ -398,6 +398,10 @@ return grid;
 		String fieldName=field.getName();
 		String fieldType=(String) allPossibleFields.get(fieldName);
 		
+		if(fieldType==null) {
+			System.out.println(fieldName);
+		}
+		
 		Object fieldValue = null;
 		try {
 			fieldValue = field.get(object);
@@ -470,10 +474,10 @@ return grid;
 		nodes.add(isVerifiedBox);
 	}
 	
-	protected static void addGenderField( char fieldValue,ArrayList<Node> nodes ) {
+	protected static void addGenderField( boolean b,ArrayList<Node> nodes ) {
 		String[] genders= {"Male","Female"};
 		ComboBox genderBox = new ComboBox(FXCollections.observableArrayList(genders)); 
-		if(fieldValue=='M') {
+		if(b==false) {
 			genderBox.getSelectionModel().selectFirst();
 		}
 		else {
@@ -510,6 +514,9 @@ return grid;
 		String fieldType=(String) allPossibleFields.get(fieldName);
 		
 		Object fieldValue=null;
+		if(fieldType==null) {
+			System.out.print("field name "+fieldName);
+		}
 
 		switch(fieldType) {
 			case "String":
@@ -518,11 +525,11 @@ return grid;
 			case "int" :
 				addTextFieldRow(Integer.toString((int)field.get(object)),retriveFields);
 			break;
-			case "char":
-				if(field.getName().equals("gender")) {
-				addGenderField((char)field.get(object),retriveFields);
-				}
-			break;
+//			case "char":
+//				if(field.getName().equals("gender")) {
+//				addGenderField((char)field.get(object),retriveFields);
+//				}
+//			break;
 			case "ArrayList<String>":
 				addTextFieldRow(ArrayListToString((ArrayList<String>) field.get(object)),retriveFields);
 			break;
@@ -530,7 +537,15 @@ return grid;
 				addDateField((Date)field.get(object),retriveFields);
 			break;
 			case "boolean":
-				addIsVerifiedField((boolean )field.get(object),retriveFields);
+				if(field.getName().equals("gender"))
+				{
+					addGenderField((boolean)field.get(object),retriveFields);
+
+				}else if((field.getName().equals("isVerified"))) {
+					addIsVerifiedField((boolean )field.get(object),retriveFields);
+
+				}
+				
 			break;
 			case "Location":
 				addLocationField((Location )field.get(object),retriveFields);
@@ -552,26 +567,37 @@ return grid;
 				return ((TextField) node).getText();
 		case "int" :
 				return Integer.parseInt(((TextField) node).getText());
-		case "char":
-				if(field.getName().equals("gender")) {
-					String strGender=(String) ((ComboBox)node).getValue();
-					char gender='F';
-					if(strGender.equals("Male")) {
-						gender='M';
-					}
-					return gender;
-				}
-			break;
+//		case "char":
+//				if(field.getName().equals("gender")) {
+//					String strGender=(String) ((ComboBox)node).getValue();
+//					char gender='F';
+//					if(strGender.equals("Male")) {
+//						gender='M';
+//					}
+//					return gender;
+//				}
+//			break;
 			case "ArrayList<String>":
 				return new ArrayList<String>(Arrays.asList(((TextField) node).getText().split("\\*",0)));
 		case "Date":
 				return Date.valueOf( ((DatePicker)node).getValue());
 		case "boolean":
+			if(field.getName().equals("gender")) {
+			String strGender=(String) ((ComboBox)node).getValue();
+			boolean gender=true;
+			if(strGender.equals("Male")) {
+				gender=false;
+			}
+			return gender;
+		}
+			else if(field.getName().equals("isVerified")) {
 				String isVerified= (String) ((ComboBox)node).getValue();
 				if(isVerified.equals("True"))
 					return true;
 				else 
-					return false;
+					return false;	
+			}
+
 		case "Location":
 				HashMap<String, Integer> locationHashmap = AuthenticationController.getLocations();
 				String strLocation= (String) ((ComboBox)node).getValue();

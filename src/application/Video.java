@@ -12,7 +12,7 @@ public class Video extends FBItem{
 	//new constr with user id
 	public Video(int id, String message, String description, double length, String source, int user_id,
 			ArrayList<Comment> comments) {
-		super();
+		super("this is a video");
 		this.id = id;
 		this.message = message;
 		this.description = description;

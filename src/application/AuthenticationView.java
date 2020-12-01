@@ -229,9 +229,9 @@ public  class AuthenticationView{
 			String link=linkField.getText();
 			Date birthday=Date.valueOf(datePicker.getValue());
 			String strGender=(String) genderBox.getValue();
-			char gender='F';
+			boolean gender=true;
 			if(strGender.equals("Male")) {
-				gender='M';
+				gender=false;
 			}
 			String tempString=workedAtField.getText();
 			if(tempString==null) {

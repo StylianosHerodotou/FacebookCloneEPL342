@@ -13,7 +13,7 @@ public class Link extends FBItem{
 	}
 
 	public Link(int id, String name, String uRL, String message, String description, String caption, int user_id) {
-		super();
+		super("this is a link");
 		this.id = id;
 		this.name = name;
 		URL = uRL;

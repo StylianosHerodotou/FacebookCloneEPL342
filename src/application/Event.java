@@ -27,7 +27,7 @@ public class Event extends FBItem{
 
 	public Event(int id, String venue, String name, Timestamp startTime, Timestamp endTime, String description,
 			int user_id, int loc_id, Privacy privacy) {
-		super();
+		super("this is an event");
 		this.id = id;
 		this.venue = venue;
 		this.name = name;

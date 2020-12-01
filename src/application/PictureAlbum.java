@@ -15,7 +15,7 @@ public class PictureAlbum extends FBItem{
 	//newer constructor with fields missing
 	public PictureAlbum(int id, String name, String description, String link, ArrayList<Picture> pictures,
 			int taken_loc_id, int user_id, String privacy, ArrayList<Comment> comments) {
-		super();
+		super("this is an album");
 		this.id = id;
 		this.name = name;
 		this.description = description;
