@@ -3,14 +3,15 @@ package application;
 import java.util.ArrayList;
 
 public class PictureAlbum extends FBItem{
-	private int id;
-	private String name;
-	private String description;
-	private String link;
-	private ArrayList<Picture> pictures;
-	private int taken_loc_id;
-	private int user_id;
-	private String privacy;
+	protected int id;
+	protected String name;
+	protected String description;
+	protected String link;
+	protected ArrayList<Picture> pictures;
+	protected int taken_loc_id; // tuto thelo na ine location.
+	protected Location LocationTaken; 
+	protected int user_id;
+	protected String privacy;
 	
 	//newer constructor with fields missing
 	public PictureAlbum(int id, String name, String description, String link, ArrayList<Picture> pictures,
@@ -26,8 +27,22 @@ public class PictureAlbum extends FBItem{
 		this.privacy = privacy;
 		this.comments = comments;
 	}
+	
+	public PictureAlbum(int id, String name, String description, String link, ArrayList<Picture> pictures,
+			Location location, int user_id, String privacy, ArrayList<Comment> comments) {
+		super("this is an album");
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.link = link;
+		this.pictures = pictures;
+		this.LocationTaken = location;
+		this.user_id = user_id;
+		this.privacy = privacy;
+		this.comments = comments;
+	}
 
-	private ArrayList<Comment> comments;
+	protected ArrayList<Comment> comments;
 	
 	public ArrayList<Comment> getComments() {
 		return comments;

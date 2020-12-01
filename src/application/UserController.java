@@ -127,16 +127,7 @@ public void addFriend(int id,int tabint) {
 	protected void logOut() {
 		AuthenticationController.startController(this.view.primaryStage);
 	}
-	
-	public static ArrayList<User> generateDummyUser() {
-		ArrayList<User> users= new ArrayList<User>();
-		users.add(new User("sherod01",""));
-		users.add(new User("pchris04",""));
-		users.add(new User("cchris",""));
-		return users;
 		
-	}
-	
 	public void doSomething(String message) {
 		AuthenticationController.displayPopUp(message);
 	}
@@ -148,7 +139,7 @@ public void addFriend(int id,int tabint) {
 
 	public ObservableList<FRequest> getFriends(int id) {
 		ObservableList<FRequest> Req = FXCollections.observableArrayList();
-		
+		//AHHAHAHAHHAHHAHAHHAHAHHAHHAHAHHAHAHHAHHAAHHAHAHHAHAHAH
 		FRequest a=new FRequest(1,"Joe","Biden");
 		FRequest b=new FRequest(2,"Donald","Trump");
 		  Req.add(a);
@@ -200,6 +191,30 @@ public void addFriend(int id,int tabint) {
 	public ObservableList<Event> getLeastAttendableEvents() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public static ArrayList<User> generateDummyUser() {
+		ArrayList<User> users= new ArrayList<User>();
+		users.add(new User("sherod01",""));
+		users.add(new User("pchris04",""));
+		users.add(new User("cchris",""));
+		return users;
+		
+	}
+	
+	public static Location generateDummyLocation() {
+		return new Location(0,"lemesos");
+	}
+	
+	public static Picture generateDummyPicture() {
+		return new Picture(0,0,0,"link","source","public", null);
+	}
+	
+	public static PictureAlbum generatePictureAlbum() {
+		ArrayList<Picture> pictures = new ArrayList<Picture>();
+		pictures.add(generateDummyPicture());
+		return new PictureAlbum(0,"almbum name","description","link",pictures,
+				generateDummyLocation(),0,"public", null);
 	}
 		
 	}

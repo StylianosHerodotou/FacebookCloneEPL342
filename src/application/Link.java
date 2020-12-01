@@ -1,13 +1,13 @@
 package application;
 
 public class Link extends FBItem{
-	private int id;
-	private String name;
-	private String URL;
-	private String message;
-	private String description;
-	private String caption;
-	private int user_id;
+	protected int id;
+	protected String name;
+	protected String URL;
+	protected String message;
+	protected String description;
+	protected String caption;
+	protected int user_id;
 	public int getUser_id() {
 		return user_id;
 	}

@@ -1,8 +1,8 @@
 package application;
 
 public class Location extends FBItem{
-	private int id;
-	private String name;
+	protected int id;
+	protected String name;
 	
 	public int getId() {
 		return id;
@@ -25,5 +25,9 @@ public class Location extends FBItem{
 
 		this.id=id;
 		this.name=name;
+	}
+	
+	public String toString() {
+		return this.name;
 	}
 }

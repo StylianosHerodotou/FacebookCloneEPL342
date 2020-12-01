@@ -1,5 +1,7 @@
 package application;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -58,13 +60,19 @@ public class AuthenticationController {
 //		
 //	}
 	public static User generateDummyUser() {
-		return new User("sherod01", "");
-
+		ArrayList<String> lista=new ArrayList<String>();
+		lista.add("ena");
+		lista.add("dio");
+		Location location = new Location(0,"Archaggelos");
+		
+		return  new User(0,"Stylianos", "Herodotou", "email@ucy.ac.cy","www.ucy.com",
+				"link", Date.valueOf(java.time.LocalDate.now()), false, lista,lista,lista,
+					false,location,location, "sherod01","");
 	}
 
 	public void signIn(String username, String password) {
-		User user = this.model.authenticate(username, password);
-//		User user= generateDummyUser();
+//		User user = this.model.authenticate(username, password);
+		User user= generateDummyUser();
 		if (user.getPassword().equals(password)) {
 			this.displayPopUp("correct password");
 			UserController.startController(this.view.primaryStage, user);
@@ -80,9 +88,9 @@ public class AuthenticationController {
 		controller.view.startView();
 	}
 
-	public void signUp() {
-		this.showLogInView();
-	}
+//	public void signUp() {
+//		this.showLogInView();
+//	}
 
 	public static HashMap<String, Integer> getLocations() {
 

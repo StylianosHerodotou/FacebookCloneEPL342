@@ -4,15 +4,15 @@ import java.sql.Timestamp;
 
 import javafx.scene.control.Button;
 public class Event extends FBItem{
-	private int id;
-	private String venue;
-	private String name;
-	private Timestamp startTime;
-	private Timestamp endTime;
-	private String description;
-	private int user_id ;
-	private int loc_id;
-	private Privacy privacy;
+	protected int id;
+	protected String venue;
+	protected String name;
+	protected Timestamp startTime;
+	protected Timestamp endTime;
+	protected String description;
+	protected int user_id ;
+	protected int loc_id;
+	protected Privacy privacy;
 	public Privacy getPrivacy() {
 		return privacy;
 	}

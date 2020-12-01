@@ -3,13 +3,13 @@ package application;
 import java.util.ArrayList;
 
 public class Picture extends FBItem{
-	private int id;
-	private double width;
-	private double height;
-	private String link;
-	private String source;
-	private String privacy;
-	private ArrayList<Comment> comments;
+	protected int id;
+	protected double width;
+	protected double height;
+	protected String link;
+	protected String source;
+	protected String privacy;
+	protected ArrayList<Comment> comments;
 	
 	public ArrayList<Comment> getComments() {
 		return comments;

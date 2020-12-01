@@ -40,6 +40,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -82,9 +83,7 @@ public class UserView {
 		fields.put("hometown", "Location");
 		fields.put("livesInLocation", "Location");
 		return fields;
-
 	}
-
 	public UserView(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
@@ -100,9 +99,12 @@ public class UserView {
 		this.tabPane= new TabPane();
 		int index=0;
 
-      Tab profileTab = new Tab("Profile",this.getItemView(index++,0));
-      Tab changeProfileTab = new Tab("changeProfileTab",this.getFormView(index++, 1));
-      Tab seeItemTab = new Tab("item view",this.getItemView(index++, 2));
+      Tab profileTab = new Tab("Profile",this.getItemView(index++,this.controller.getUser()));
+      Tab changeProfileTab = new Tab("changeProfileTab",this.getFormView(index++, this.controller.getUser()));
+      Tab seeItemTab = new Tab("Picture View",this.getItemView(index++, this.controller.generateDummyPicture()));
+      Tab seeAlmbuTab = new Tab("Album View",this.getItemView(index++, this.controller.generatePictureAlbum()));
+
+      
       Tab resultsTab = new Tab("help", this.tempView(index++));
 
 
@@ -112,6 +114,8 @@ public class UserView {
       tabPane.getTabs().add(profileTab);
       tabPane.getTabs().add(changeProfileTab);
       tabPane.getTabs().add(seeItemTab);
+      tabPane.getTabs().add(seeAlmbuTab);
+
 	}
 	protected static boolean is_field_sensitive(String filed_name) {
 		String[] sensitive_info = { "password", "SSN","id" };
@@ -126,28 +130,30 @@ public class UserView {
 	}
 	
 	protected static int translateStringTypeToInt(String fieldType) {
-		if(fieldType.equals("String")) {
-			return 0;
+		int ans=0;
+		switch(fieldType) {
+		case "String":return ans++;
+		case "int":return ans++;
+		case "char":return ans++;
+		case "ArrayList<String>":return ans++;
+		case "Date":return ans++;
+		case "boolean":return ans++;
+		case "Location":return ans++;
+		default: return -1;
 		}
-		else if(fieldType.equals("int")) {
-			return 1;
-		}
-		else if((fieldType.equals("char"))) {
-			return 2;
-		}
-		else if(fieldType.equals("ArrayList<String>")) {
-			return 3;
-		}
-		else if(fieldType.equals("Date")) {
-			return 4;
-		}
-		else if(fieldType.equals("boolean")) {
-			return 5;
-		}
-		else if(fieldType.equals("Location")) {
-			return 6;
-		}else
-			return -1;
+	}
+	
+		protected static int translateTypeToInt(String ClassName) {
+			int ans=1;
+			switch(ClassName) {
+			case "User":return ans++;
+			case "Picture":return ans++;
+			case "PictureAlmbum":return ans++;
+			case "Video":return ans++;
+			case "Link":return ans++;
+			case "Event":return ans++;
+			default: return ans++;
+			}
 	}
 	
 	protected GridPane tempView(int tabIndex) {
@@ -175,7 +181,7 @@ public class UserView {
 
 		for (int objectIndex = 0; objectIndex < items.size(); objectIndex++) {
 			FBItem object = items.get(objectIndex);
-			System.out.println(object.toString());
+//			System.out.println(object.toString());
 			grid.add(new Label(object.getClass().getSimpleName()), initXlevel, objectIndex + initYlevel);
 			grid.add(new Label(object.getFBName()), initXlevel+1, objectIndex + initYlevel);
 //			Button somethingButton = new Button("something");
@@ -368,34 +374,9 @@ return grid;
 return grid;
 
 	}	
-	protected GridPane getItemView(int tabIndex, int itemType) {
-		GridPane grid = new GridPane();
-		this.prepareItemScene(grid, 2);
-		User user= this.controller.getUser();
-		FBItem item=user;
-		
-		Field[] all_fields = item.getClass().getDeclaredFields();
-		ArrayList<Field> fields= getNonSensitiveFields(item, all_fields);
-//		ArrayList<Field> fields= getBothSensitiveAndNonSensitiveFields(object, all_fields);
-
-		initXlevel = 0;
-		initYlevel = 2;
-		ArrayList<Node> retriveFields = new ArrayList<Node>();
-		for (int field_index = 0; field_index < fields.size(); field_index++) {
-				try {
-					Field currentField=fields.get(field_index);
-					this.addItemLabel(currentField,item, retriveFields);
-					addFielditemInGrid(grid, currentField.getName(),field_index, retriveFields);
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
-		}
-		return grid;
 	
-	}
 	private void addItemLabel(Field field, Object object, ArrayList<Node> retriveFields) {
-		System.out.print(object.toString());
+//		System.out.print(object.toString());
 		String fieldName=field.getName();
 		String fieldType=(String) allPossibleFields.get(fieldName);
 		
@@ -412,8 +393,13 @@ return grid;
 		}
 		if(fieldValue!=null) {
 			try {
-				if(fieldValue.equals("boolean") || fieldValue.equals("char")) {
-					addTextLabelRow(String.valueOf(fieldValue), retriveFields);
+				if(fieldName.equals("gender")){
+					if((boolean)fieldValue==true)
+						addTextLabelRow("Female", retriveFields);
+					else
+						addTextLabelRow("Male", retriveFields);
+
+
 				}
 				else {
 				addTextLabelRow(fieldValue.toString(), retriveFields);
@@ -508,15 +494,19 @@ return grid;
 		}
 		nodes.add(datePicker);
 }
+	protected  void addPictureField( Picture fieldValue, ArrayList<Node> nodes, int tabIndex) {
+		HBox box = new HBox(this.getItemView(tabIndex, fieldValue));
+		nodes.add(box);
+}
 
 	
-	protected static void addItemField(Field field, Object object, ArrayList<Node> retriveFields) throws IllegalArgumentException, IllegalAccessException {
+	protected void addItemField(Field field, Object object, ArrayList<Node> retriveFields) throws IllegalArgumentException, IllegalAccessException {
 		String fieldName=field.getName();
 		String fieldType=(String) allPossibleFields.get(fieldName);
 		
 		Object fieldValue=null;
 		if(fieldType==null) {
-			System.out.print("field name "+fieldName);
+//			System.out.print("field name "+fieldName);
 		}
 
 		switch(fieldType) {
@@ -546,11 +536,12 @@ return grid;
 					addIsVerifiedField((boolean )field.get(object),retriveFields);
 
 				}
-				
 			break;
 			case "Location":
 				addLocationField((Location )field.get(object),retriveFields);
 			break;
+			case "Picture":
+				addPictureField((Picture) field.get(object),retriveFields,0);
 			default:
 				System.out.print("there was a new field "+field.getName() );
 			break;
@@ -646,12 +637,15 @@ return grid;
 		
 	}
 	
-	protected GridPane getFormView(int tabIndex, int formType) {
+	protected GridPane getFormView(int tabIndex, Object object) {
 		GridPane grid = new GridPane();
-		prepareItemScene(grid, formType);
-		this.prepareItemScene(grid, formType);
-		User user= this.controller.getUser();
-		Object object=user;
+		int typeOfClass= UserView.translateTypeToInt(object.getClass().getSimpleName());
+		if(typeOfClass==1) {
+			prepareProfileScene(grid,(User)object );
+		}
+		else {
+			prepareItemScene(grid,typeOfClass);
+		}
 		
 		Field[] all_fields = object.getClass().getDeclaredFields();
 //		ArrayList<Field> fields= getNonSensitiveFields(object, all_fields);
@@ -675,11 +669,11 @@ return grid;
 		grid.add(submitButton, initXlevel + 1,submitButtonYPosition +initYlevel);
 		submitButton.setOnAction(event->{
 			ArrayList<Object> newData = getDataFromFields(object, fields, retriveFields);
-			switch( formType) {
+			switch( typeOfClass) {
 			  case 1:
 			    User updateduser = new User(newData);
 			    this.controller.UpdateUser(updateduser);
-				System.out.print(updateduser.toString());
+//				System.out.print(updateduser.toString());
 			    break;
 			  case 2:
 			    // code block
@@ -900,8 +894,32 @@ return grid;
 		logOutButton.setOnAction(event->{
 			this.controller.logOut();
 		});
-		grid.add(logOutButton, 0,0);
+		grid.add(logOutButton, 10,0);
 	}
 	
+	protected GridPane getItemView(int tabIndex, FBItem item) {
+		GridPane grid = new GridPane();
+		this.prepareItemScene(grid, 2);
+		
+		Field[] all_fields = item.getClass().getDeclaredFields();
+		ArrayList<Field> fields= getNonSensitiveFields(item, all_fields);
+//		ArrayList<Field> fields= getBothSensitiveAndNonSensitiveFields(object, all_fields);
+
+		initXlevel = 0;
+		initYlevel = 2;
+		ArrayList<Node> retriveFields = new ArrayList<Node>();
+		for (int field_index = 0; field_index < fields.size(); field_index++) {
+				try {
+					Field currentField=fields.get(field_index);
+					this.addItemLabel(currentField,item, retriveFields);
+					addFielditemInGrid(grid, currentField.getName(),field_index, retriveFields);
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+		}
+		return grid;
+	
+	}
 
 }

@@ -129,6 +129,12 @@ public  class AuthenticationView{
 		Text scenetitle = new Text("Registration ");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
 		grid.add(scenetitle, 1, 1, 10, 1);
+		
+		Button GoBackButton = new Button("Log In Screen");
+		GoBackButton.setOnAction(event->{
+			this.controller.showLogInView();
+		});
+		grid.add(GoBackButton, 10,0);
 
 	}
 	
@@ -267,5 +273,4 @@ public  class AuthenticationView{
 		prepareSceneRegister(grid);
 		return grid;
 	}
-
 }

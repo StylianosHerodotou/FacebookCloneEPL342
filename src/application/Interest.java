@@ -1,8 +1,8 @@
 package application;
 
 public class Interest extends FBItem{
-	private int id;
-	private String name;
+	protected int id;
+	protected String name;
 	
 	public Interest(int id, String name) {
 		super("this is an interest ");
