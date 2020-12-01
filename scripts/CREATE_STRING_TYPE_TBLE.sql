@@ -1,0 +1,3 @@
+CREATE TYPE StringTable 
+   AS TABLE
+      ( STRING VARCHAR(50));

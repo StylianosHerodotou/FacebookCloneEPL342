@@ -1,0 +1,242 @@
+CREATE TABLE Interest
+(
+  Interest_ID INT NOT NULL,
+  Description VARCHAR(100) NOT NULL,
+  PRIMARY KEY (Interest_ID),
+  UNIQUE (Description)
+);
+
+CREATE TABLE LOC
+(
+  LOC_ID INT NOT NULL,
+  Name VARCHAR(100) NOT NULL,
+  PRIMARY KEY (LOC_ID),
+
+);
+
+CREATE TABLE USERS
+(
+  UserID INT NOT NULL,
+  Username VARCHAR(50) NOT NULL,
+  Pass VARCHAR(50) NOT NULL,
+  First_Name VARCHAR(50) NOT NULL,
+  Last_Name VARCHAR(50) NOT NULL,
+  Email VARCHAR(255) NOT NULL,
+  Website VARCHAR(1000) NOT NULL,
+    Link VARCHAR(1000) NOT NULL,
+	 Birthday DATE NOT NULL,
+  Gender bit NOT NULL,
+  
+   Is_verified bit NOT NULL,
+ Hometown_LOC_ID INT NOT NULL,
+  Current_LOC_ID INT NOT NULL,
+ 
+  PRIMARY KEY (UserID),
+  FOREIGN KEY (Hometown_LOC_ID) REFERENCES LOC(LOC_ID),
+  FOREIGN KEY (Current_LOC_ID) REFERENCES LOC(LOC_ID),
+  UNIQUE (Email)
+);
+
+CREATE TABLE Link
+(
+  Link_ID INT NOT NULL,
+   Name VARCHAR(50) NOT NULL,
+  URL VARCHAR(1000) NOT NULL,
+ 
+  Message VARCHAR(200),
+  Description VARCHAR(500),
+  Caption VARCHAR(200),
+  UserID INT NOT NULL,
+  PRIMARY KEY (Link_ID),
+  FOREIGN KEY (UserID) REFERENCES USERS(UserID)
+);
+
+CREATE TABLE Privacy
+(
+  Privacy_Name VARCHAR(20) NOT NULL,
+  PRIMARY KEY (Privacy_Name)
+);
+
+CREATE TABLE Video
+(
+  Video_ID INT NOT NULL,
+  Message VARCHAR(100) NOT NULL,
+  Description VARCHAR(500),
+  Length INT NOT NULL,
+  SRC VARCHAR(1000),
+  UserID INT NOT NULL,
+  Privacy_Name VARCHAR(20) NOT NULL,
+  PRIMARY KEY (Video_ID),
+  FOREIGN KEY (UserID) REFERENCES USERS(UserID),
+  FOREIGN KEY (Privacy_Name) REFERENCES Privacy(Privacy_Name)
+);
+
+CREATE TABLE User_Quotes
+(
+  Quote VARCHAR(400) NOT NULL,
+  UserID INT NOT NULL,
+  PRIMARY KEY (Quote, UserID),
+  FOREIGN KEY (UserID) REFERENCES USERS(UserID)
+);
+
+CREATE TABLE User_Work
+(
+  Workplace VARCHAR(100) NOT NULL,
+  UserID INT NOT NULL,
+  PRIMARY KEY (Workplace, UserID),
+  FOREIGN KEY (UserID) REFERENCES USERS(UserID)
+);
+
+CREATE TABLE User_Education
+(
+  Education_Place VARCHAR(100) NOT NULL,
+  UserID INT NOT NULL,
+  PRIMARY KEY (Education_Place, UserID),
+  FOREIGN KEY (UserID) REFERENCES USERS(UserID)
+);
+
+CREATE TABLE Video_Comments
+(
+  Comment VARCHAR NOT NULL,
+  Comment_ID INT NOT NULL,
+  Video_ID INT NOT NULL,
+  UserID INT NOT NULL,
+  PRIMARY KEY (Comment_ID, Video_ID),
+  FOREIGN KEY (Video_ID) REFERENCES Video(Video_ID),
+  FOREIGN KEY (UserID) REFERENCES USERS(UserID)
+);
+
+CREATE TABLE User_Interest
+(
+  Interest_ID INT NOT NULL,
+  UserID INT NOT NULL,
+  PRIMARY KEY (Interest_ID, UserID),
+  FOREIGN KEY (Interest_ID) REFERENCES Interest(Interest_ID),
+  FOREIGN KEY (UserID) REFERENCES USERS(UserID)
+);
+
+CREATE TABLE Friend_Request
+(
+  Date_Time DATETIME NOT NULL,
+  User_Who_Sent_request_ID INT NOT NULL,
+  User_Who_Received_request_ID INT NOT NULL,
+  ignored bit NOT NULL DEFAULT 1,
+  PRIMARY KEY (User_Who_Sent_request_ID, User_Who_Received_request_ID),
+  FOREIGN KEY (User_Who_Sent_request_ID) REFERENCES USERS(UserID),
+  FOREIGN KEY (User_Who_Received_request_ID) REFERENCES USERS(UserID)
+);
+
+CREATE TABLE FriendShip
+(
+  UserS_ID INT NOT NULL,
+  UserR_ID INT NOT NULL,
+  FOREIGN KEY (UserS_ID) REFERENCES USERS(UserID),
+  FOREIGN KEY (UserR_ID) REFERENCES USERS(UserID)
+);
+
+CREATE TABLE Log_File
+(
+  ObjectID INT NOT NULL,
+  Object_Type NVARCHAR(25) NOT NULL,
+  Date_Time DATETIME NOT NULL,
+  UserID INT NOT NULL,
+  PRIMARY KEY (ObjectID, Object_Type, Date_Time, UserID),
+  FOREIGN KEY (UserID) REFERENCES USERS(UserID)
+);
+
+CREATE TABLE GATHERING
+(
+  GATHERING_ID INT NOT NULL,
+  Venue VARCHAR(100) NOT NULL,
+  Name VARCHAR(100) NOT NULL,
+  Start_time DATETIME NOT NULL,
+  End_time DATETIME NOT NULL,
+  Description_ VARCHAR(500),
+  Creator_ID INT NOT NULL,
+  LOC_ID INT NOT NULL,
+  Privacy_Name VARCHAR(20) NOT NULL,
+  PRIMARY KEY (GATHERING_ID),
+  FOREIGN KEY (Creator_ID) REFERENCES USERS(UserID),
+  FOREIGN KEY (LOC_ID) REFERENCES LOC(LOC_ID),
+  FOREIGN KEY (Privacy_Name) REFERENCES Privacy(Privacy_Name)
+);
+
+CREATE TABLE Picture_Album
+(
+  Picture_Album_ID INT NOT NULL,
+  Name VARCHAR(100) NOT NULL,
+  Description VARCHAR(500),
+  Link VARCHAR(1000),
+  Taken_LOC_ID INT NOT NULL,
+  UserID INT NOT NULL,
+  Privacy_Name VARCHAR(20) NOT NULL,
+  PRIMARY KEY (Picture_Album_ID),
+  FOREIGN KEY (Taken_LOC_ID) REFERENCES LOC(LOC_ID),
+  FOREIGN KEY (UserID) REFERENCES USERS(UserID),
+  FOREIGN KEY (Privacy_Name) REFERENCES Privacy(Privacy_Name)
+);
+
+CREATE TABLE Picture
+(
+  Picture_ID INT NOT NULL,
+   Width INT NOT NULL,
+  Height INT NOT NULL,
+ 
+  Link VARCHAR(1000),
+    SRC VARCHAR(1000),
+  Privacy_Name VARCHAR(20) NOT NULL,
+
+  PRIMARY KEY (Picture_ID),
+  FOREIGN KEY (Privacy_Name) REFERENCES Privacy(Privacy_Name),
+
+);
+
+CREATE TABLE Picture_Album_Comments
+(
+  Comment VARCHAR NOT NULL,
+  Comment_ID INT NOT NULL,
+  Picture_Album_ID INT NOT NULL,
+  UserID INT NOT NULL,
+  PRIMARY KEY (Comment_ID, Picture_Album_ID),
+  FOREIGN KEY (Picture_Album_ID) REFERENCES Picture_Album(Picture_Album_ID),
+  FOREIGN KEY (UserID) REFERENCES USERS(UserID)
+);
+
+CREATE TABLE GATHERING_Attendances
+(
+  GATHERING_ID INT NOT NULL,
+  UserID INT NOT NULL,
+  PRIMARY KEY (GATHERING_ID, UserID),
+  FOREIGN KEY (GATHERING_ID) REFERENCES GATHERING(GATHERING_ID),
+  FOREIGN KEY (UserID) REFERENCES USERS(UserID)
+);
+
+CREATE TABLE Picture_in_Album
+(
+  Picture_Album_ID INT NOT NULL,
+  Picture_ID INT NOT NULL,
+  PRIMARY KEY (Picture_Album_ID, Picture_ID),
+  FOREIGN KEY (Picture_Album_ID) REFERENCES Picture_Album(Picture_Album_ID),
+  FOREIGN KEY (Picture_ID) REFERENCES Picture(Picture_ID)
+);
+
+CREATE TABLE User_Likes_Picture
+(
+  UserID INT NOT NULL,
+  Picture_ID INT NOT NULL,
+  PRIMARY KEY (UserID, Picture_ID),
+  FOREIGN KEY (UserID) REFERENCES USERS(UserID),
+  FOREIGN KEY (Picture_ID) REFERENCES Picture(Picture_ID)
+);
+
+CREATE TABLE Picture_comments
+(
+  pic_com_ID INT NOT NULL,
+  comment VARCHAR NOT NULL,
+  UserID INT NOT NULL,
+  Picture_ID INT NOT NULL,
+  PRIMARY KEY (pic_com_ID),
+  FOREIGN KEY (UserID) REFERENCES USERS(UserID),
+  FOREIGN KEY (Picture_ID) REFERENCES Picture(Picture_ID)
+);
+

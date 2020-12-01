@@ -23,17 +23,18 @@ public class AuthenticationController {
 		this.model.setController(this);
 	}
 
-	public void showRegisterView()   {
-		Scene newScene = new Scene(this.view.getRegisterView(),800,800);
+	public void showRegisterView() {
+		Scene newScene = new Scene(this.view.getRegisterView(), 800, 800);
 		this.view.primaryStage.setScene(newScene);
 		this.view.primaryStage.show();
 	}
 
-	public void showLogInView()  {
-		Scene newScene = new Scene(this.view.getLogInView(),800,800);
+	public void showLogInView() {
+		Scene newScene = new Scene(this.view.getLogInView(), 800, 800);
 		this.view.primaryStage.setScene(newScene);
 		this.view.primaryStage.show();
 	}
+
 	public static void displayPopUp(String message) {
 		Stage popupwindow = new Stage();
 		popupwindow.initModality(Modality.APPLICATION_MODAL);
@@ -49,6 +50,7 @@ public class AuthenticationController {
 		popupwindow.showAndWait();
 
 	}
+
 //	public static User generateDummyUser() {
 //		return  new User("Stylianos", "Herodotou", "email@ucy.ac.cy","www.ucy.com",
 //				null, null, 'M',null,null,null,
@@ -56,65 +58,71 @@ public class AuthenticationController {
 //		
 //	}
 	public static User generateDummyUser() {
-		return  new User("sherod01","");
-		
+		return new User("sherod01", "");
+
 	}
-	
-	public void signIn(String username, String password)  {
-//		User user=this.model.getUser(username);
-		User user= generateDummyUser();
+
+	public void signIn(String username, String password) {
+		User user = this.model.authenticate(username, password);
+//		User user= generateDummyUser();
 		if (user.getPassword().equals(password)) {
-//			this.displayPopUp("correct password signed in");
+			this.displayPopUp("correct password");
 			UserController.startController(this.view.primaryStage, user);
-		}
-		else {
-			//oste na men tou pis oti exi tuto to username. gia na spamari meta. gia safty
+		} else {
+			// oste na men tou pis oti exi tuto to username. gia na spamari meta. gia safty
 			this.displayPopUp("There is no user with this username or with this password\n");
 			// TODO Auto-generated method stub
 		}
 	}
 
-	public static void startController(Stage primaryStage)   {
+	public static void startController(Stage primaryStage) {
 		AuthenticationController controller = new AuthenticationController(primaryStage);
 		controller.view.startView();
 	}
 
-	public void signUp()   {
+	public void signUp() {
 		this.showLogInView();
 	}
 
-	public static  HashMap<String, Integer> getLocations() {
-		
-		HashMap<String ,Integer> temp = new HashMap<String ,Integer>();
+	public static HashMap<String, Integer> getLocations() {
+
+		HashMap<String, Integer> temp = new HashMap<String, Integer>();
 		temp.put("Larnaka", 1);
 		temp.put("Lefkosia", 2);
 		return temp;
 		// TODO Auto-generated method stub
 	}
-	public static String[] convert(Set<String> setOfString) 
-    { 
-  
-        // Create String[] of size of setOfString 
-        String[] arrayOfString = new String[setOfString.size()]; 
-  
-        // Copy elements from set to string array 
-        // using advanced for loop 
-        int index = 0; 
-        for (String str : setOfString) 
-            arrayOfString[index++] = str; 
-  
-        // return the formed String[] 
-        return arrayOfString; 
-    }
+
+	public static String[] convert(Set<String> setOfString) {
+
+		// Create String[] of size of setOfString
+		String[] arrayOfString = new String[setOfString.size()];
+
+		// Copy elements from set to string array
+		// using advanced for loop
+		int index = 0;
+		for (String str : setOfString)
+			arrayOfString[index++] = str;
+
+		// return the formed String[]
+		return arrayOfString;
+	}
+
 	public void registerUser(User newUser) {
-		boolean wasSuccessfull=this.model.registerUser(newUser);
-				if (wasSuccessfull==false) {
-					String message = "Could not register User";
-					displayPopUp(message);
-				}
-				else {
-					this.showLogInView();
-					
-				}
+		if (this.model.doesAnyUserWithUsernameExistInDB(newUser.username)) {
+			AuthenticationController.displayPopUp("User with username:" + newUser.username + " already exists");
+			return;
+		} else {
+			boolean wasSuccessfull = this.model.registerUser(newUser);
+			if (wasSuccessfull == false) {
+				String message = "Could not register User";
+				displayPopUp(message);
+			} else {
+				String message = "Registration successful";
+				displayPopUp(message);
+				this.showLogInView();
+
+			}
+		}
 	}
 }

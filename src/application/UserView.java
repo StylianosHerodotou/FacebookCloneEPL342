@@ -26,6 +26,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableCell;
@@ -647,6 +648,7 @@ return grid;
 	
 	protected GridPane getFormView(int tabIndex, int formType) {
 		GridPane grid = new GridPane();
+		prepareItemScene(grid, formType);
 		this.prepareItemScene(grid, formType);
 		User user= this.controller.getUser();
 		Object object=user;
@@ -700,58 +702,10 @@ return grid;
 			
 			
 		});
+		
 		return grid;
 	}
 
-	private void prepareItemScene(GridPane grid, int formType) {
-		grid.setAlignment(Pos.BASELINE_LEFT);
-		grid.setHgap(18);
-		grid.setVgap(18);
-		// grid.setPadding(new Insets(00, 00, 00, 00));
-		Text scenetitle = null;
-		User myUser=this.controller.getUser();
-		switch(formType) {
-		case 2:
-			scenetitle = new Text(myUser.getUsername()+ "'s Almum");
-		break;
-		case 3:
-			scenetitle = new Text(myUser.getUsername()+ "'s Picture");
-		break;
-		case 4:
-			scenetitle = new Text(myUser.getUsername()+ "'s Video");
-		break;
-		case 5:
-			scenetitle = new Text(myUser.getUsername()+ "'s Link");
-		break;
-		case 6:
-			scenetitle = new Text(myUser.getUsername()+ "'s Event");
-		break;
-		}
-		
-		scenetitle = new Text(this.controller.getUser().getUsername()+"'s Profile");
-		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
-		grid.add(scenetitle, 1, 1, 10, 1);
-		Button logOutButton = new Button("Log Out");
-		logOutButton.setOnAction(event->{
-			this.controller.logOut();
-		});
-		grid.add(logOutButton, 10,0);
-	}
-	
-	private void prepareProfileScene(GridPane grid, User user) {
-		grid.setAlignment(Pos.BASELINE_LEFT);
-		grid.setHgap(18);
-		grid.setVgap(18);
-		// grid.setPadding(new Insets(00, 00, 00, 00));
-		Text scenetitle = new Text(user.getUsername()+ "'s Profile");
-		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
-		grid.add(scenetitle, 1, 1, 10, 1);
-		Button logOutButton = new Button("Log Out");
-		logOutButton.setOnAction(event->{
-			this.controller.logOut();
-		});
-		grid.add(logOutButton, 0,0);
-	}
 	protected GridPane mostPopularFriendsVuew(
 			int tabIndex) {
 		GridPane grid = new GridPane();
@@ -895,6 +849,59 @@ return grid;
 return grid;
 	}
 
+	private void prepareItemScene(GridPane grid, int formType) {
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		// grid.setPadding(new Insets(00, 00, 00, 00));
+		Text scenetitle = null;
+		User myUser=this.controller.getUser();
+		switch(formType) {
+		case 2:
+			scenetitle = new Text(myUser.getUsername()+ "'s Almum");
+		break;
+		case 3:
+			scenetitle = new Text(myUser.getUsername()+ "'s Picture");
+		break;
+		case 4:
+			scenetitle = new Text(myUser.getUsername()+ "'s Video");
+		break;
+		case 5:
+			scenetitle = new Text(myUser.getUsername()+ "'s Link");
+		break;
+		case 6:
+			scenetitle = new Text(myUser.getUsername()+ "'s Event");
+		break;
+		}
+		
+		scenetitle = new Text(this.controller.getUser().getUsername()+"'s Profile");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 1, 1, 10, 1);
+		Button logOutButton = new Button("Log Out");
+		logOutButton.setOnAction(event->{
+			this.controller.logOut();
+		});
+		ScrollPane sp = new ScrollPane(grid);
+		sp.setFitToWidth(true);
+		grid.setHgrow(sp, Priority.ALWAYS);
+		sp.setContent(grid);
+		grid.add(logOutButton, 10,0);
+	}
+	
+	private void prepareProfileScene(GridPane grid, User user) {
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		// grid.setPadding(new Insets(00, 00, 00, 00));
+		Text scenetitle = new Text(user.getUsername()+ "'s Profile");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 1, 1, 10, 1);
+		Button logOutButton = new Button("Log Out");
+		logOutButton.setOnAction(event->{
+			this.controller.logOut();
+		});
+		grid.add(logOutButton, 0,0);
+	}
 	
 
 }

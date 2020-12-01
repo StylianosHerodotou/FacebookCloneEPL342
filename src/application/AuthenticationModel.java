@@ -1,6 +1,8 @@
 package application;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -114,33 +116,81 @@ public class AuthenticationModel {
 
 	}
 	public boolean registerUser(User newUser) {
-		return true;
+		CallableStatement cstmt=null;
+		try {
+			 int id=newUser.id;
+			 String firstName= newUser.firstName;
+			 String lastName=newUser.lastName;
+			 String email=newUser.email;
+			 String website=newUser.website;
+			 String link=newUser.link;
+			 Date birthday=newUser.birthday;
+			 boolean gender=newUser.gender;
+			 String[] workedFor=(String[]) newUser.workedFor.toArray();
+			 String[] educationPlaces=(String[]) newUser.educationPlaces.toArray();
+			 String[] quotes=(String[]) newUser.quotes.toArray();
+			 boolean isVerified=newUser.isVerified;
+			 int hometownFK=newUser.hometown.getId();
+			 int livesInLocation= newUser.livesInLocation.getId();
+			//newer with pass and username
+			 String username=newUser.username;
+			 String password=newUser.password;
+			
+			
+				cstmt = conn.prepareCall("{call dbo.DoesUserWithThisUsernameExists(?,?)}");
+				int columnIndex=1;		
+				cstmt.setString(columnIndex++, username);
+				//...
+				cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
+				cstmt.execute();
+				if(cstmt.getInt(columnIndex)==1) {
+					return true;
+				}
+				else {
+					return false;
+				}
+		}
+		 catch (SQLException e) {
+				return false;
+			}
+		finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	public boolean doesAnyUserWithUsernameExistInDB(String username) {
+		CallableStatement cstmt=null;
+		try {
+		cstmt = conn.prepareCall("{call dbo.DoesUserWithThisUsernameExists(?,?)}");
+				cstmt.setString(1, username);
+				cstmt.registerOutParameter(2, java.sql.Types.BIT);
+				cstmt.execute();
+				if(cstmt.getInt(2)==1) {
+					AuthenticationController.displayPopUp("He exists");
+					return true;
+				}
+				else {
+					AuthenticationController.displayPopUp("He does not exists");
+					return false;
+				}
+		}
+		 catch (SQLException e) {
+				return false;
+			}
+		finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
-//	public static boolean register(Registration registration) {
-//		// collumns
-//		int count = 0;
-//
-//		String query = "INSERT INTO REGISTRATION (R_USERNAME,R_PASSWORD,R_PHONE,R_EMAIL,R_F_NAME,R_L_NAME)\r\n"
-//				+ "VALUES (?,?,?,?,?,?)";
-//
-//		try (PreparedStatement stmt = AuthenticationModel.conn.prepareStatement(query);) {
-//			stmt.setString(1, registration.getUsername());
-//			stmt.setString(2, registration.getPassword());
-//			stmt.setString(3, registration.getPhone());
-//			stmt.setString(4, registration.getEmail());
-//			stmt.setString(5, registration.getF_Name());
-//			stmt.setString(6, registration.getL_Name());
-//
-//			count = stmt.executeUpdate(query);
-//			stmt.close();
-//
-//		} catch (SQLException e) {
-//			return false;
-//		}
-//		if (count >= 1)
-//			return true;
-//		else
-//			return false;
-//	}
 }
