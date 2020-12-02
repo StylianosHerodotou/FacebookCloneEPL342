@@ -120,8 +120,8 @@ public void addFriend(int id,int tabint) {
 	public ObservableList<FRequest> getFriendRequests(int UsersId){
 		ObservableList<FRequest> Req = FXCollections.observableArrayList();
 		
-	FRequest a=new FRequest(1,"Joe","Biden");
-	FRequest b=new FRequest(2,"Donald","Trump");
+	FRequest a=new FRequest(1,"Joe","Biden",0);
+	FRequest b=new FRequest(2,"Donald","Trump",0);
 	  Req.add(a);
 	 Req.add(b);
 	  return  Req;
@@ -143,8 +143,8 @@ public void addFriend(int id,int tabint) {
 	public ObservableList<FRequest> getFriends(int id) {
 		ObservableList<FRequest> Req = FXCollections.observableArrayList();
 		//AHHAHAHAHHAHHAHAHHAHAHHAHHAHAHHAHAHHAHHAAHHAHAHHAHAHAH
-		FRequest a=new FRequest(1,"Joe","Biden");
-		FRequest b=new FRequest(2,"Donald","Trump");
+		FRequest a=new FRequest(1,"Joe","Biden",0);
+		FRequest b=new FRequest(2,"Donald","Trump",0);
 		  Req.add(a);
 		 Req.add(b);
 		  return  Req;

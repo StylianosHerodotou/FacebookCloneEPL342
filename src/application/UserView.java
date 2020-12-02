@@ -241,16 +241,27 @@ public class UserView {
 	protected GridPane getFriendRequestView(int tabIndex ) {
 		GridPane grid = new GridPane();
 		ObservableList<FRequest> FriendRequests = this.controller.getFriendRequests(this.controller.getUser().getId());
+		ObservableList<Button> addb = FXCollections.observableArrayList();
+		ObservableList<Button> delb = FXCollections.observableArrayList();
+		ObservableList<Button> ignb = FXCollections.observableArrayList();
+		
 		for(int i=0;i<FriendRequests.size();i++) {
 			int b=i;
-			FriendRequests.get(i).getAdd().setOnAction(event ->{this.controller.addFriend(FriendRequests.get(b).getId(),tabIndex);});
-			FriendRequests.get(i).getDelete().setOnAction(event ->{this.controller.denyFriend(FriendRequests.get(b).getId(),tabIndex);});
-			FriendRequests.get(i).getIgnore().setOnAction(event ->{try {
-				this.controller.ignoreFriend(FriendRequests.get(b).getId(),tabIndex);
+			Button add= new Button("Add");
+			add.setOnAction(event ->{this.controller.addFriend(FriendRequests.get(b).getId(), tabIndex);});
+			Button del= new Button("Delete");
+			del.setOnAction(event ->{this.controller.denyFriend(FriendRequests.get(b).getId(), tabIndex);});
+			Button ign= new Button("Ignore");
+			ign.setOnAction(event ->{try {
+				this.controller.ignoreFriend(FriendRequests.get(b).getId(), tabIndex);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}});
+			addb.add(add);
+			delb.add(del);
+			ignb.add(ign);
+			
 		}
 		grid.setAlignment(Pos.BASELINE_LEFT);
 		grid.setHgap(18);
@@ -269,32 +280,45 @@ public class UserView {
 		surnamecolumn.setMinWidth(200);
 		surnamecolumn.setCellValueFactory(new PropertyValueFactory<>("LastName"));
 		//TableColumn ID = new TableColumn("ID");
-		TableColumn<FRequest, Button> addColumn = new TableColumn<>("Add");
+		TableColumn<Button, Button> addColumn = new TableColumn<>("Add");
 		addColumn.setMinWidth(200);
-		addColumn.setCellValueFactory(new PropertyValueFactory<FRequest,Button>("Add"));
-		TableColumn<FRequest, Button> DeleteColumn = new TableColumn<>("Delete");
+		addColumn.setCellValueFactory(new PropertyValueFactory<Button,Button>("Add"));
+		TableColumn<Button, Button> DeleteColumn = new TableColumn<>("Delete");
 		DeleteColumn.setMinWidth(200);
-		DeleteColumn.setCellValueFactory(new PropertyValueFactory<FRequest,Button>("Delete"));
-		TableColumn<FRequest, Button> IgnoreColumn = new TableColumn<>("Ignore");
+		DeleteColumn.setCellValueFactory(new PropertyValueFactory<Button,Button>("Delete"));
+		TableColumn<Button, Button> IgnoreColumn = new TableColumn<>("Ignore");
 		IgnoreColumn.setMinWidth(200);
-		IgnoreColumn.setCellValueFactory(new PropertyValueFactory<FRequest,Button>("Ignore"));
+		IgnoreColumn.setCellValueFactory(new PropertyValueFactory<Button,Button>("Ignore"));
 
 		TableView table = new TableView();
-		
+		TableView table2 = new TableView();
+		TableView table3 = new TableView();
+		TableView table4 = new TableView();
+		table2.setItems(addb);
+		table3.setItems(delb);
+		table4.setItems(ignb);
 		 table.setItems(FriendRequests);
-table.getColumns().addAll(idcolumn,namecolumn,surnamecolumn,addColumn,DeleteColumn,IgnoreColumn);
-
+table.getColumns().addAll(idcolumn,namecolumn,surnamecolumn);
+table2.getColumns().addAll(addColumn);
+table3.getColumns().addAll(DeleteColumn);
+table4.getColumns().addAll(IgnoreColumn);
 table.setEditable(true);
 grid.add(table, 0, 1);
+grid.add(table, 1, 1);
+grid.add(table, 2, 1);
+grid.add(table, 3, 1);
 return grid;
 
 	}
 	protected GridPane getFriendView(int tabIndex ) {
 		GridPane grid = new GridPane();
 		ObservableList<FRequest> Friends= this.controller.getFriends(this.controller.getUser().getId());
+		ObservableList<Button> delb = FXCollections.observableArrayList();
 		for(int i=0;i<Friends.size();i++) {
 			int b=i;
-			Friends.get(i).getDelete().setOnAction(event ->{this.controller.DeleteFriend(Friends.get(b).getId(),tabIndex);});
+			Button del= new Button("Delete");
+			del.setOnAction(event ->{this.controller.DeleteFriend(Friends.get(b).getId(), tabIndex);});
+			delb.add(del);
 		}
 		grid.setAlignment(Pos.BASELINE_LEFT);
 		grid.setHgap(18);
@@ -313,17 +337,21 @@ return grid;
 		surnamecolumn.setMinWidth(200);
 		surnamecolumn.setCellValueFactory(new PropertyValueFactory<>("LastName"));
 		//TableColumn ID = new TableColumn("ID");
-		TableColumn<FRequest, Button> DeleteColumn = new TableColumn<>("Delete");
+		TableColumn<Button, Button> DeleteColumn = new TableColumn<>("Delete");
 		DeleteColumn.setMinWidth(200);
-		DeleteColumn.setCellValueFactory(new PropertyValueFactory<FRequest,Button>("Delete"));
+		DeleteColumn.setCellValueFactory(new PropertyValueFactory<Button,Button>("Delete"));
 
 		TableView table = new TableView();
+		TableView table2 = new TableView();
+		table2.setItems(delb);
+		table2.getColumns().addAll(DeleteColumn);
 		
 		 table.setItems(Friends);
 table.getColumns().addAll(idcolumn,namecolumn,surnamecolumn,DeleteColumn);
 
 table.setEditable(true);
 grid.add(table, 0, 1);
+grid.add(table, 1, 1);
 return grid;
 
 	}	

@@ -6,16 +6,13 @@ public class FRequest{
      private int id;
      private String FirstName;
      private String LastName;
-     private Button Add ;
-     private Button Delete ;
-     private Button Ignore ;
-public FRequest(int ID, String Name , String SurName  ) {
+     private int ignore;
+public FRequest(int ID, String Name , String SurName, int ig  ) {
 	this.id=ID;
 	this.FirstName=Name;
 	this.LastName=SurName;
-	this.setAdd(new Button("Add"));
-	this.setDelete(new Button("Delete"));
-	this.setIgnore(new Button("Ignore"));
+	this.ignore=ig;
+
 }
 
 
@@ -49,34 +46,6 @@ public void setId(int id) {
 }
 
 
-public Button getAdd() {
-	return Add;
-}
-
-
-public void setAdd(Button add) {
-	Add = add;
-}
-
-
-public Button getDelete() {
-	return Delete;
-}
-
-
-public void setDelete(Button delete) {
-	Delete = delete;
-}
-
-
-public Button getIgnore() {
-	return Ignore;
-}
-
-
-public void setIgnore(Button ignore) {
-	Ignore = ignore;
-}
 
 
 
