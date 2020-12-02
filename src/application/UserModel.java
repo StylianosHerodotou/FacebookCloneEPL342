@@ -41,5 +41,19 @@ public class UserModel {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	public ResultSet getLocations() {
+		String SPsql = "EXEC retrieveLocations ";   // for stored proc taking 2 parameters
+		ResultSet resultSet=null;
+		try {
+		PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+		ps.setEscapeProcessing(true);
+		resultSet = ps.executeQuery();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		System.out.println(e);
+		e.printStackTrace();
+	}
+		return resultSet;
+	}
 
 }

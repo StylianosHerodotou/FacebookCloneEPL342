@@ -1,6 +1,8 @@
 package application;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -85,6 +87,7 @@ public class AuthenticationController {
 
 	public static void startController(Stage primaryStage) {
 		AuthenticationController controller = new AuthenticationController(primaryStage);
+		controller.model.connectToDB();
 		controller.view.startView();
 	}
 
@@ -92,12 +95,22 @@ public class AuthenticationController {
 //		this.showLogInView();
 //	}
 
-	public static HashMap<String, Integer> getLocations() {
-
-		HashMap<String, Integer> temp = new HashMap<String, Integer>();
-		temp.put("Larnaka", 1);
-		temp.put("Lefkosia", 2);
-		return temp;
+	public HashMap<String, Integer> getLocations() {
+		ResultSet result= this.model.getLocations();
+		HashMap<String, Integer> locations = new HashMap<String, Integer>();
+		
+		try {
+			while (result.next()) {
+				String name = result.getString("Name");
+				int id = result.getInt("LOC_ID");
+				locations.put(name, id);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return locations;
 		// TODO Auto-generated method stub
 	}
 

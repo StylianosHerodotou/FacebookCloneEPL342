@@ -143,7 +143,7 @@ public  class AuthenticationView{
 
 		GridPane grid = new GridPane();
 		this.prepareSceneRegister(grid);
-		HashMap<String, Integer> locationHashmap = AuthenticationController.getLocations();
+		HashMap<String, Integer> locationHashmap = this.controller.getLocations();
 		String [] locations= AuthenticationController.convert(locationHashmap.keySet());
 		
 		int yLevelIndex=3;

@@ -4,7 +4,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -215,6 +218,25 @@ public void addFriend(int id,int tabint) {
 		pictures.add(generateDummyPicture());
 		return new PictureAlbum(0,"almbum name","description","link",pictures,
 				generateDummyLocation(),0,"public", null);
+	}
+
+	public HashMap<String, Integer> getLocations() {
+		ResultSet result= this.model.getLocations();
+		HashMap<String, Integer> locations = new HashMap<String, Integer>();
+		
+		try {
+			while (result.next()) {
+				String name = result.getString("Name");
+				int id = result.getInt("LOC_ID");
+				locations.put(name, id);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return locations;
+		// TODO Auto-generated method stub
 	}
 		
 	}

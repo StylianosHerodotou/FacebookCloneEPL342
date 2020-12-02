@@ -23,8 +23,7 @@ public class AuthenticationModel {
 		this.controller=controller;
 	}
 
-	static String dbConnString = "jdbc:sqlserver://mssql.cs.ucy.ac.cy;user=kchris12;password=7m3aPvBA;";
-
+	static String dbConnString = "jdbc:sqlserver://mssql.cs.ucy.ac.cy;user=pchris08;password=9NWxfehB;";
 	static Connection conn = null;
 	private static boolean dbDriverLoaded = false;
 
@@ -115,10 +114,22 @@ public class AuthenticationModel {
 			return "user";
 
 	}
+	public static String translateArrayListToString(ArrayList<String> lista) {
+		String ans= new String();
+		for(int index=0; index<lista.size(); index++) {
+			String word=lista.get(index);
+			if(index==lista.size()-1)
+				ans=ans+word;
+			else
+				ans=ans+word+"&&&";
+		}
+		return ans;
+	}
+	
 	public boolean registerUser(User newUser) {
 		CallableStatement cstmt=null;
 		try {
-			 int id=newUser.id;
+//			 int id=newUser.id;
 			 String firstName= newUser.firstName;
 			 String lastName=newUser.lastName;
 			 String email=newUser.email;
@@ -126,21 +137,36 @@ public class AuthenticationModel {
 			 String link=newUser.link;
 			 Date birthday=newUser.birthday;
 			 boolean gender=newUser.gender;
-			 String[] workedFor=(String[]) newUser.workedFor.toArray();
-			 String[] educationPlaces=(String[]) newUser.educationPlaces.toArray();
-			 String[] quotes=(String[]) newUser.quotes.toArray();
+			 String  workedFor=translateArrayListToString(newUser.workedFor);
+			 String  educationPlaces=translateArrayListToString(newUser.educationPlaces);
+			 String  quotes=translateArrayListToString(newUser.quotes);
 			 boolean isVerified=newUser.isVerified;
 			 int hometownFK=newUser.hometown.getId();
-			 int livesInLocation= newUser.livesInLocation.getId();
+			 int livesInLocationFK= newUser.livesInLocation.getId();
 			//newer with pass and username
 			 String username=newUser.username;
 			 String password=newUser.password;
 			
 			
-				cstmt = conn.prepareCall("{call dbo.DoesUserWithThisUsernameExists(?,?)}");
+				cstmt = conn.prepareCall("{call dbo.DoesUserWithThisUsernameExists(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?)}");
 				int columnIndex=1;		
+				cstmt.setString(columnIndex++, firstName);
+				cstmt.setString(columnIndex++, lastName);
 				cstmt.setString(columnIndex++, username);
-				//...
+				cstmt.setString(columnIndex++, password);
+				cstmt.setString(columnIndex++, email);
+				cstmt.setString(columnIndex++, website);
+				cstmt.setString(columnIndex++, link);
+				cstmt.setDate(columnIndex++, birthday);
+				cstmt.setBoolean(columnIndex++, gender);
+				cstmt.setString(columnIndex++, workedFor);
+				cstmt.setString(columnIndex++, educationPlaces);
+				cstmt.setString(columnIndex++, quotes);
+				cstmt.setBoolean(columnIndex++, isVerified);
+				cstmt.setInt(columnIndex++, hometownFK);
+				cstmt.setInt(columnIndex++, livesInLocationFK);
+
+				
 				cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
 				cstmt.execute();
 				if(cstmt.getInt(columnIndex)==1) {
@@ -167,10 +193,11 @@ public class AuthenticationModel {
 	public boolean doesAnyUserWithUsernameExistInDB(String username) {
 		CallableStatement cstmt=null;
 		try {
-		cstmt = conn.prepareCall("{call dbo.DoesUserWithThisUsernameExists(?,?)}");
+		cstmt = conn.prepareCall("{call DoesUserWithThisUsernameExists(?,?)}");
 				cstmt.setString(1, username);
-				cstmt.registerOutParameter(2, java.sql.Types.BIT);
+				cstmt.registerOutParameter(2, java.sql.Types.NUMERIC);
 				cstmt.execute();
+
 				if(cstmt.getInt(2)==1) {
 					AuthenticationController.displayPopUp("He exists");
 					return true;
@@ -181,7 +208,7 @@ public class AuthenticationModel {
 				}
 		}
 		 catch (SQLException e) {
-				return false;
+			 e.printStackTrace();
 			}
 		finally {
 			try {
@@ -191,6 +218,20 @@ public class AuthenticationModel {
 				e.printStackTrace();
 			}
 		}
+		return false;
 	}
-
+	public ResultSet getLocations() {
+		String SPsql = "EXEC retrieveLocations ";   // for stored proc taking 2 parameters
+		ResultSet resultSet=null;
+		try {
+		PreparedStatement ps = conn.prepareStatement(SPsql);
+		ps.setEscapeProcessing(true);
+		resultSet = ps.executeQuery();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		System.out.println(e);
+		e.printStackTrace();
+	}
+		return resultSet;
+	}
 }

@@ -333,7 +333,7 @@ return grid;
 		grid.setAlignment(Pos.BASELINE_LEFT);
 		grid.setHgap(18);
 		grid.setVgap(18);
-		HashMap<String, Integer> locationHashmap = AuthenticationController.getLocations();
+		HashMap<String, Integer> locationHashmap = this.controller.getLocations();
 		String [] locations= AuthenticationController.convert(locationHashmap.keySet());
 		// grid.setPadding(new Insets(00, 00, 00, 00));
 		Text scenetitle = new Text("Search for Occurence");
@@ -473,8 +473,8 @@ return grid;
 		nodes.add(genderBox);
 		
 	}
-	protected static void addLocationField(Location location, ArrayList<Node> nodes ) {
-		HashMap<String, Integer> locationHashmap = AuthenticationController.getLocations();
+	protected void addLocationField(Location location, ArrayList<Node> nodes ) {
+		HashMap<String, Integer> locationHashmap = this.controller.getLocations();
 		String [] locations= AuthenticationController.convert(locationHashmap.keySet());
 		int locationIndex=0;
 		if(location!=null) {
@@ -550,7 +550,7 @@ return grid;
 
 	}
 	
-	private static Object retriveDataFromField(Object object, Field field,Node node) {
+	private Object retriveDataFromField(Object object, Field field,Node node) {
 		String fieldName=field.getName();
 		String fieldType=(String) allPossibleFields.get(fieldName);
 		
@@ -591,7 +591,7 @@ return grid;
 			}
 
 		case "Location":
-				HashMap<String, Integer> locationHashmap = AuthenticationController.getLocations();
+				HashMap<String, Integer> locationHashmap = this.controller.getLocations();
 				String strLocation= (String) ((ComboBox)node).getValue();
 				Location hometown=new Location(locationHashmap.get(strLocation), strLocation);
 			break;
@@ -602,10 +602,10 @@ return grid;
 		return null;
 	}
 	
-	private static ArrayList<Object> getDataFromFields(Object object,ArrayList<Field> fields, ArrayList<Node> retriveFields){
+	private ArrayList<Object> getDataFromFields(Object object,ArrayList<Field> fields, ArrayList<Node> retriveFields){
 		 ArrayList<Object> data= new ArrayList<Object>();
 		 for (int fieldIndex=0; fieldIndex<retriveFields.size(); fieldIndex++) {
-			 data.add(retriveDataFromField(object, fields.get(fieldIndex), retriveFields.get(fieldIndex)));
+			 data.add(this.retriveDataFromField(object, fields.get(fieldIndex), retriveFields.get(fieldIndex)));
 		 }
 		 return data;
 		
@@ -837,7 +837,7 @@ return grid;
 		grid.setAlignment(Pos.BASELINE_LEFT);
 		grid.setHgap(30);
 		grid.setVgap(30);
-		HashMap<String, Integer> locationHashmap = AuthenticationController.getLocations();
+		HashMap<String, Integer> locationHashmap = this.controller.getLocations();
 		String [] locations= AuthenticationController.convert(locationHashmap.keySet());
         // how does this work 
 return grid;
