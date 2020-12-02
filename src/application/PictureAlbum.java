@@ -11,11 +11,11 @@ public class PictureAlbum extends FBItem{
 	protected int taken_loc_id; // tuto thelo na ine location.
 	protected Location LocationTaken; 
 	protected int user_id;
-	protected String privacy;
+	protected Privacy privacy;
 	
 	//newer constructor with fields missing
 	public PictureAlbum(int id, String name, String description, String link, ArrayList<Picture> pictures,
-			int taken_loc_id, int user_id, String privacy, ArrayList<Comment> comments) {
+			int taken_loc_id, int user_id, Privacy privacy, ArrayList<Comment> comments) {
 		super("this is an album");
 		this.id = id;
 		this.name = name;
@@ -29,7 +29,7 @@ public class PictureAlbum extends FBItem{
 	}
 	
 	public PictureAlbum(int id, String name, String description, String link, ArrayList<Picture> pictures,
-			Location location, int user_id, String privacy, ArrayList<Comment> comments) {
+			Location location, int user_id, Privacy privacy, ArrayList<Comment> comments) {
 		super("this is an album");
 		this.id = id;
 		this.name = name;

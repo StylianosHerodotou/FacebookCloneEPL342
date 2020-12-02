@@ -73,9 +73,9 @@ public class AuthenticationController {
 	}
 
 	public void signIn(String username, String password) {
-//		User user = this.model.authenticate(username, password);
-		User user= generateDummyUser();
-		if (user.getPassword().equals(password)) {
+		User user = this.model.authenticate(username, password);
+//		User user= generateDummyUser();
+		if (user!=null && user.getPassword().equals(password)) {
 			this.displayPopUp("correct password");
 			UserController.startController(this.view.primaryStage, user);
 		} else {
@@ -95,7 +95,7 @@ public class AuthenticationController {
 //		this.showLogInView();
 //	}
 
-	public HashMap<String, Integer> getLocations() {
+	public HashMap<String, Integer> getStringToIntLocations() {
 		ResultSet result= this.model.getLocations();
 		HashMap<String, Integer> locations = new HashMap<String, Integer>();
 		
@@ -104,6 +104,25 @@ public class AuthenticationController {
 				String name = result.getString("Name");
 				int id = result.getInt("LOC_ID");
 				locations.put(name, id);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return locations;
+		// TODO Auto-generated method stub
+	}
+	
+	public HashMap<Integer, String> getIntToStringLocations() {
+		ResultSet result= this.model.getLocations();
+		HashMap<Integer, String> locations = new HashMap<Integer, String>();
+		
+		try {
+			while (result.next()) {
+				String name = result.getString("Name");
+				int id = result.getInt("LOC_ID");
+				locations.put(id, name);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

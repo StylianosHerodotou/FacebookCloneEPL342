@@ -3,7 +3,7 @@ package application;
 public class Comment extends FBItem{
 	
 	int id;
-	Object item;
+	FBItem item;
 	User commenter;
 	String comment;
 	
