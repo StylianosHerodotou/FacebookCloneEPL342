@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class AuthenticationModel {
@@ -73,45 +74,145 @@ public class AuthenticationModel {
 		}
 		return false;
 	}
-
-	public static String authenticate(String username, String password) {
-		List<Object[]> results = new ArrayList<Object[]>();
-		ResultSet rs = null;
-
-		try (Statement stmt = AuthenticationModel.conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);) {
-
-			String query = "SELECT *\r\n" + "FROM EMPLOYEE\r\n" + "WHERE EMP_USERNAME =" + username
-					+ "AND EMP_PASSWORD =" + password;
-			rs = stmt.executeQuery(query);
-
-			if (rs.next() == false) {
-				return null;
-			} else {
-				int cols = rs.getMetaData().getColumnCount();
-				Object[] arr = new Object[cols];
-				for (int i = 0; i < cols; i++) {
-					Object obj = rs.getObject(i + 1);
-					System.out.println(obj.toString());
-					arr[i] = obj;
-				}
-				results.add(arr);
-			}
-		} catch (SQLException e) {
-			return null;
-		} finally {
-			try {
-				rs.close();
-			} catch (SQLException e) {
-
-			}
-		}
-
-		Object[] temp = results.get(0);
-		if ((boolean) temp[5])
-			return "admin";
+	
+	public static boolean isResultSetEmpty(ResultSet resultSet) throws SQLException {
+		if (!resultSet.isBeforeFirst() )    
+		    return true;
 		else
-			return "user";
+			return false;
+	}
+
+	public ArrayList<String> getQuotesOfUser(int UserID){
+		
+		String SPsql = "EXEC getQuotesOfUser ?";   // for stored proc taking 2 parameters
+		PreparedStatement ps;
+		ResultSet resultSet=null;
+		ArrayList<String> quotes = new ArrayList<String>();
+		try {
+			ps = conn.prepareStatement(SPsql);
+		
+		ps.setEscapeProcessing(true);
+		int index=1;
+		ps.setInt(index++, UserID);
+		resultSet= ps.executeQuery();
+		while(resultSet.next()) {
+			String quote=resultSet.getString("Quote");
+			quotes.add(quote);
+		}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return quotes;
+		
+	}
+	
+	public ArrayList<String> getWorkOfUser(int UserID){
+		
+		String SPsql = "EXEC getWorkOfUser ?";   // for stored proc taking 2 parameters
+		PreparedStatement ps;
+		ResultSet resultSet=null;
+		ArrayList<String> workPlaces = new ArrayList<String>();
+		try {
+			ps = conn.prepareStatement(SPsql);
+		
+		ps.setEscapeProcessing(true);
+		int index=1;
+		ps.setInt(index++, UserID);
+		resultSet= ps.executeQuery();
+		while(resultSet.next()) {
+			String workplace=resultSet.getString("Workplace");
+			workPlaces.add(workplace);
+		}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return workPlaces;
+		
+	}
+	
+	public ArrayList<String> getEducationOfUser(int UserID){
+		
+		String SPsql = "EXEC getEducationOfUser ?";   // for stored proc taking 2 parameters
+		PreparedStatement ps;
+		ResultSet resultSet=null;
+		ArrayList<String> educationPlaces = new ArrayList<String>();
+		try {
+			ps = conn.prepareStatement(SPsql);
+		
+		ps.setEscapeProcessing(true);
+		int index=1;
+		ps.setInt(index++, UserID);
+		resultSet= ps.executeQuery();
+		while(resultSet.next()) {
+			String educationplace=resultSet.getString("Education_Place");
+			educationPlaces.add(educationplace);
+		}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return educationPlaces;
+		
+	}
+	public User CreateUser(ResultSet resultSet) throws SQLException {
+		if(isResultSetEmpty(resultSet))
+			return null;
+		else {
+			HashMap<Integer, String> locations= this.controller.getIntToStringLocations();
+			
+			resultSet.next();//metafero to ston xristi.
+			int id=resultSet.getInt("UserID");
+			String firstName= resultSet.getString("First_Name");
+			String lastName=resultSet.getString("Last_Name");
+			String email=resultSet.getString("Email");
+			String website=resultSet.getString("Website");
+			String link=resultSet.getString("Link");
+			Date birthday=resultSet.getDate("Birthday");
+			boolean gender=resultSet.getBoolean("Gender");
+			boolean isVerified=resultSet.getBoolean("Is_verified");
+			int hometownFK=resultSet.getInt("Hometown_LOC_ID");
+			Location hometown=new Location(hometownFK, locations.get(hometownFK));
+			int livesInLocationFK= resultSet.getInt("Current_LOC_ID");
+			Location livesHereNow = new Location(livesInLocationFK, locations.get(livesInLocationFK));
+			String username=resultSet.getString("Username");
+			String password=resultSet.getString("pass");
+			
+			ArrayList<String>  workedFor=this.getWorkOfUser(id);
+			
+			ArrayList<String>  educationPlaces=this.getEducationOfUser(id);
+			ArrayList<String>  quotes=this.getQuotesOfUser(id);
+			//newer with pass and username
+			
+			User user = new User(id, firstName, lastName, email,
+					website, link, birthday, gender, 
+					workedFor, educationPlaces, quotes, isVerified, hometown, 
+					livesHereNow, username, password);
+			return user;
+		}
+	}
+	
+
+	public User authenticate(String username, String password) {
+		String SPsql = "EXEC AuthenticateUser ?,?";   // for stored proc taking 2 parameters
+		PreparedStatement ps;
+		ResultSet resultSet=null;
+		try {
+			ps = conn.prepareStatement(SPsql);
+		
+		ps.setEscapeProcessing(true);
+		int index=1;
+		ps.setString(index++, username);
+		ps.setString(index, password);
+		resultSet= ps.executeQuery();
+		return this.CreateUser(resultSet);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
 
 	}
 	public static String translateArrayListToString(ArrayList<String> lista) {
@@ -121,7 +222,7 @@ public class AuthenticationModel {
 			if(index==lista.size()-1)
 				ans=ans+word;
 			else
-				ans=ans+word+"&&&";
+				ans=ans+word+"&";
 		}
 		return ans;
 	}
@@ -129,7 +230,7 @@ public class AuthenticationModel {
 	public boolean registerUser(User newUser) {
 		CallableStatement cstmt=null;
 		try {
-//			 int id=newUser.id;
+			 int id=101;//TODO DELETE THIS molis sasti to autoincrement.
 			 String firstName= newUser.firstName;
 			 String lastName=newUser.lastName;
 			 String email=newUser.email;
@@ -148,7 +249,7 @@ public class AuthenticationModel {
 			 String password=newUser.password;
 			
 			
-				cstmt = conn.prepareCall("{call dbo.DoesUserWithThisUsernameExists(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?)}");
+				cstmt = conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
 				int columnIndex=1;		
 				cstmt.setString(columnIndex++, firstName);
 				cstmt.setString(columnIndex++, lastName);
@@ -165,6 +266,7 @@ public class AuthenticationModel {
 				cstmt.setBoolean(columnIndex++, isVerified);
 				cstmt.setInt(columnIndex++, hometownFK);
 				cstmt.setInt(columnIndex++, livesInLocationFK);
+				cstmt.setInt(columnIndex++, id);
 
 				
 				cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
@@ -177,6 +279,7 @@ public class AuthenticationModel {
 				}
 		}
 		 catch (SQLException e) {
+			 System.out.print(e);
 				return false;
 			}
 		finally {
@@ -199,11 +302,9 @@ public class AuthenticationModel {
 				cstmt.execute();
 
 				if(cstmt.getInt(2)==1) {
-					AuthenticationController.displayPopUp("He exists");
 					return true;
 				}
 				else {
-					AuthenticationController.displayPopUp("He does not exists");
 					return false;
 				}
 		}

@@ -8,5 +8,9 @@ public class Privacy extends FBItem{
 
 		this.name=name;
 	}
+	
+	public String toString() {
+		return this.name;
+	}
 
 }

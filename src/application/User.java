@@ -233,14 +233,19 @@ public class User extends FBItem {
 		this.gender=false;
 	}
 	
-	public User(ArrayList<Object> newData) {
+	public User(ArrayList<Object> newData, User oldUser) {
 		super("this is a user");
 
 		Field[] all_fields = this.getClass().getDeclaredFields();
+		int newDataIndex=0;
 		for (int field_index = 0; field_index < all_fields.length; field_index++) {
 			try {
 				Field currentField=all_fields[field_index];
-				currentField.set(this,newData.get(field_index));
+				if(UserView.is_field_sensitive(currentField.getName())) {
+					currentField.set(this,currentField.get(oldUser));
+				}
+				else
+					currentField.set(this,newData.get(newDataIndex++));
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

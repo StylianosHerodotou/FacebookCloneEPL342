@@ -1,5 +1,6 @@
 package application;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class Picture extends FBItem{
@@ -8,7 +9,7 @@ public class Picture extends FBItem{
 	protected double height;
 	protected String link;
 	protected String source;
-	protected String privacy;
+	protected Privacy privacy;
 	protected ArrayList<Comment> comments;
 	
 	public ArrayList<Comment> getComments() {
@@ -19,7 +20,7 @@ public class Picture extends FBItem{
 		this.comments = comments;
 	}
 	
-	public Picture(int id, double width, double height, String link, String source, String privacy,
+	public Picture(int id, double width, double height, String link, String source, Privacy privacy,
 			ArrayList<Comment> comments) {
 		super("this is a picture");
 		this.id = id;
@@ -38,6 +39,26 @@ public class Picture extends FBItem{
 		this.height=height;
 		this.link=link;
 		this.source=source;
+	}
+
+	public Picture(ArrayList<Object> newData, Picture object) {
+		super("this is a picture");
+
+		Field[] all_fields = this.getClass().getDeclaredFields();
+		int newDataIndex=0;
+		for (int field_index = 0; field_index < all_fields.length; field_index++) {
+			try {
+				Field currentField=all_fields[field_index];
+				if(UserView.is_field_sensitive(currentField.getName())) {
+					currentField.set(this,currentField.get(object));
+				}
+				else
+					currentField.set(this,newData.get(newDataIndex++));
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
 	}
 
 	public int getId() {
