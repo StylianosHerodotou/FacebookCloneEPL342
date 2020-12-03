@@ -297,7 +297,7 @@ return new ScrollPane(grid);
 	}
 	protected ScrollPane getFriendView(int tabIndex ) {
 		GridPane grid = new GridPane();
-		ObservableList<FriendRequest> Friends= this.controller.getFriends(this.controller.getUser().getId());
+		ArrayList<User> Friends= this.controller.getFriends(this.controller.getUser().getId());
 		ObservableList<Button> delb = FXCollections.observableArrayList();
 		for(int i=0;i<Friends.size();i++) {
 			int b=i;

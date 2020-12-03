@@ -106,8 +106,18 @@ public class UserModel {
 	}
 	// id en o user ke to id2 en tutos pu tha gini removed from friend list tu id
 	public boolean removeFromFriends(int id, int id2) {
-		// TODO Auto-generated method stub
-		return false;
+		String SPsql = "EXEC DELETE_FRIENDS ";   // for stored proc taking 2 parameters
+		ResultSet resultSet=null;
+		try {
+		PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+		ps.setEscapeProcessing(true);
+		resultSet = ps.executeQuery();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		System.out.println(e);
+		e.printStackTrace();
+	}
+		return true;
 	}
 	public ResultSet getLocations() {
 		String SPsql = "EXEC retrieveLocations ";   // for stored proc taking 2 parameters
@@ -236,8 +246,8 @@ public class UserModel {
 	}
 		return users;
 	}
-	public ArrayList<User> getUserFriendsRequests(int id) {
-		String SPsql = "SHOW_FRIENDS ? ";   // for stored proc taking 2 parameters
+	public ArrayList<User> getUserFriends(int id) {
+		String SPsql = "EXEC SHOW_FRIENDS ? ";   // for stored proc taking 2 parameters
 		ResultSet resultSet=null;
 		ArrayList<User> users = new ArrayList<User>();
 		try {
@@ -326,5 +336,65 @@ public ArrayList<String> getEducationOfUser(int UserID){
 	}
 	return educationPlaces;
 
+}
+//Gets friends with same friends as you 
+public ArrayList<User> getFriendsWithAtleastSameFriends(int id) {
+	String SPsql = "EXEC FRIENDS_WITH_ATLEAST_SAME_FRIENDS ? ";   // for stored proc taking 2 parameters
+	ResultSet resultSet=null;
+	ArrayList<User> users = new ArrayList<User>();
+	try {
+	PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+	ps.setInt(1,id );
+	ps.setEscapeProcessing(true);
+	resultSet = ps.executeQuery();
+	users=turnresultSetToUser(resultSet);
+	System.out.println(users);
+
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	System.out.println(e);
+	e.printStackTrace();
+}
+	return users;
+}
+//Gets Friends that are most popular
+public ArrayList<User> getMostPopularFriends(int id) {
+	String SPsql = "EXEC MOST_POPULAR_FRIENDS ? ";   // for stored proc taking 2 parameters
+	ResultSet resultSet=null;
+	ArrayList<User> users = new ArrayList<User>();
+	try {
+	PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+	ps.setInt(1,id );
+	ps.setEscapeProcessing(true);
+	resultSet = ps.executeQuery();
+	users=turnresultSetToUser(resultSet);
+	System.out.println(users);
+
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	System.out.println(e);
+	e.printStackTrace();
+}
+	return users;
+}
+// Gets Friends with same Interests
+public ArrayList<User> FriendsSameInterests(int id) {
+	String SPsql = "EXEC FRIENDS_WITH_SAME_INTERESTS ? ";   // for stored proc taking 2 parameters
+	ResultSet resultSet=null;
+	ArrayList<User> users = new ArrayList<User>();
+	try {
+	PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+	ps.setInt(1,id );
+	ps.setEscapeProcessing(true);
+	resultSet = ps.executeQuery();
+	users=turnresultSetToUser(resultSet);
+	System.out.println(users);
+
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	System.out.println(e);
+	e.printStackTrace();
+}
+	return users;
 }
 }

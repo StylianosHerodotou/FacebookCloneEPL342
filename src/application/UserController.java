@@ -208,8 +208,16 @@ public void addFriend(int id,int tabint) {
 		tab.setContent(this.view.getOccurenceResultView(firstName,slocation,startDate,endDate,tabIndex));
 
 	}
+	public ArrayList<User> getFriendRequests(int id)  {
+		ArrayList<User> UsersThatSendFriendRequest= this.model.getUserFriendRequests(id);
+		return UsersThatSendFriendRequest;
+	}
+	public ArrayList<User> getFriends(int id)  {
+		ArrayList<User> UsersThatAreFriends= this.model.getUserFriends(id);
+		return UsersThatAreFriends;
+	}
 // occurences pu isunte me afta
-	public ObservableList<Event> getSpecificOccurences(String firstName, String slocation, String startDate, String endDate) {
+	public ArrayList<Event> getSpecificOccurences(String firstName, String slocation, String startDate, String endDate) {
 
 		return null;
 	}
@@ -218,20 +226,20 @@ public void addFriend(int id,int tabint) {
 		// TODO Auto-generated method stub
 
 	}
-// fermu tus pio famous friends
-	public ObservableList<User> getMostPopularFriends(int id) {
-		// TODO Auto-generated method stub
-		return null;
+// bring me my most famous friends
+	public ArrayList<User> getMostPopularFriends(int id) {
+		ArrayList<User> PopularFriends= this.model.getMostPopularFriends(id);
+		return PopularFriends;
 	}
-//same friends or even more
-	public ObservableList<User> getFriendswithsamefriends(int id) {
-		// TODO Auto-generated method stub
-		return null;
+//friends with same friends or even more people
+	public ArrayList<User> getFriendswithsamefriends(int id) {
+		ArrayList<User> FriendsWithAtleastSameFriendsRequest= this.model.getFriendsWithAtleastSameFriends(id);
+		return FriendsWithAtleastSameFriendsRequest;
 	}
-
-	public ObservableList<User> getSameInterestFriends(int id) {
-
-		return null;
+// get Friends with same interests
+	public ArrayList<User> getSameInterestFriends(int id) {
+		ArrayList<User> FriendsWithSameInterests= this.model.FriendsSameInterests(id);
+		return FriendsWithSameInterests;
 	}
 
 	public ObservableList<Event> getLeastAttendableEvents() {
@@ -420,10 +428,7 @@ public void addFriend(int id,int tabint) {
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
-	public ArrayList<User> getFriendRequests(int id)  {
-		ArrayList<User> UsersThatSendFriendRequest= this.model.getUserFriendRequests(id);
-		return UsersThatSendFriendRequest;
-	}
+	
 
 
 	}
