@@ -6,7 +6,7 @@ public class Video extends FBItem{
 	protected int id;
 	protected String message;
 	protected String description;
-	protected double length;
+	protected int length;
 	protected String source;
 	protected int user_id;
 	protected Privacy privacy;
@@ -14,7 +14,7 @@ public class Video extends FBItem{
 
 
 	//new constr with user id
-	public Video(int id, String message, String description, double length, String source, int user_id,
+	public Video(int id, String message, String description, int length, String source, int user_id,
 			Privacy privacy,ArrayList<Comment> comments) {
 		super("this is a video");
 		this.id = id;
@@ -33,7 +33,7 @@ public class Video extends FBItem{
 	public void setComments(ArrayList<Comment> comments) {
 		this.comments = comments;
 	}
-	public Video(int id, String message, String description, double length, String source) {
+	public Video(int id, String message, String description, int length, String source) {
 		super("this is a video");
 
 		this.id=id;
@@ -71,7 +71,7 @@ public class Video extends FBItem{
 		return length;
 	}
 
-	public void setLength(double length) {
+	public void setLength(int length) {
 		this.length = length;
 	}
 
