@@ -8,7 +8,6 @@ public class PictureAlbum extends FBItem{
 	protected String description;
 	protected String link;
 	protected ArrayList<Picture> pictures;
-	protected int taken_loc_id; // tuto thelo na ine location.
 	protected Location LocationTaken; 
 	protected int user_id;
 	protected Privacy privacy;
