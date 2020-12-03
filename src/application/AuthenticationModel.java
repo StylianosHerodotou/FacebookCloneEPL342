@@ -24,7 +24,7 @@ public class AuthenticationModel {
 		this.controller=controller;
 	}
 
-	static String dbConnString = "jdbc:sqlserver://mssql.cs.ucy.ac.cy;user=pchris08;password=9NWxfehB;";
+	static String dbConnString = "jdbc:sqlserver://mssql.cs.ucy.ac.cy;user=ccosti01;password=3WB9MEUh;";
 	static Connection conn = null;
 	private static boolean dbDriverLoaded = false;
 

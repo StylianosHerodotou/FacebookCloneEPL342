@@ -225,7 +225,7 @@ public void addFriend(int id,int tabint) {
 		return new PictureAlbum(0,"almbum name","description","link",pictures,
 				generateDummyLocation(),0,new Privacy("public"), null);
 	}
-	
+
 	public static Link generateDummyLink() {
 		return new Link(0,"link name","URL","message","description","caption", 0);
 	}
@@ -237,7 +237,7 @@ public void addFriend(int id,int tabint) {
 				"description",0,0,new Privacy("Open"));
 
 	}
-	
+
 
 	public HashMap<String, Integer> getLocations() {
 		ResultSet result= this.model.getLocations();
@@ -345,7 +345,7 @@ public void addFriend(int id,int tabint) {
 		}
 
 	}
-	
+
 	public void showUserImagesView(int tabIndex) {
 		ArrayList<Picture> pictures= this.model.getUserImages(this.user.getId());
 		FBItem[] pictureItems= turnPicturesToFBArray(pictures);
@@ -376,7 +376,6 @@ public void addFriend(int id,int tabint) {
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
-
 	public void showUserEventsView(int tabIndex) {
 		ArrayList<Event> events= this.model.getUserEvents(this.user.getId());
 		FBItem[] eventItems= turnEventsToFBArray(events);
@@ -384,6 +383,14 @@ public void addFriend(int id,int tabint) {
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
-	
+	public ObservableList<FriendRequest> getFriendRequests(int id)  {
+		ArrayList<User> UsersThatSendFriendRequest= this.model.getUserFriendRequests(id);
+		//AHHAHAHAHHAHHAHAHHAHAHHAHHAHAHHAHAHHAHHAAHHAHAHHAHAHAH
+
+
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	}
