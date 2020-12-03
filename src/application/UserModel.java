@@ -99,20 +99,20 @@ public class UserModel {
 
 	// From friend request tu id 1 remove the guy with id2
 	public boolean removeFromFriendRequest(int id, int id2) {
-		CallableStatement cstmt=null;
+		CallableStatement cstmt = null;
 		try {
-		int outs=3;
-		cstmt = AuthenticationModel.conn.prepareCall("{call DELETE_A_REQUEST(? ,?,?)}");
-		cstmt.setInt(1, id);
-		cstmt.setInt(2, id2);
-		cstmt.registerOutParameter(outs, java.sql.Types.BIT);
-		cstmt.execute();
-		if (cstmt.getInt(outs) == 1) {
-			return true;
-		} else {
-			return false;
-		}
-		}catch(SQLException e) {
+			int outs = 3;
+			cstmt = AuthenticationModel.conn.prepareCall("{call DELETE_A_REQUEST(? ,?,?)}");
+			cstmt.setInt(1, id);
+			cstmt.setInt(2, id2);
+			cstmt.registerOutParameter(outs, java.sql.Types.BIT);
+			cstmt.execute();
+			if (cstmt.getInt(outs) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		} finally {
@@ -123,24 +123,24 @@ public class UserModel {
 				e.printStackTrace();
 			}
 		}
-	
+
 	}
 
 	public boolean banFromFriendRequest(int id, int id2) {
-		CallableStatement cstmt=null;
+		CallableStatement cstmt = null;
 		try {
-		int outs=3;
-		cstmt = AuthenticationModel.conn.prepareCall("{call IGNORE_A_REQUEST(? ,?,?)}");
-		cstmt.setInt(1, id);
-		cstmt.setInt(2, id2);
-		cstmt.registerOutParameter(outs, java.sql.Types.BIT);
-		cstmt.execute();
-		if (cstmt.getInt(outs) == 1) {
-			return true;
-		} else {
-			return false;
-		}
-		}catch(SQLException e) {
+			int outs = 3;
+			cstmt = AuthenticationModel.conn.prepareCall("{call IGNORE_A_REQUEST(? ,?,?)}");
+			cstmt.setInt(1, id);
+			cstmt.setInt(2, id2);
+			cstmt.registerOutParameter(outs, java.sql.Types.BIT);
+			cstmt.execute();
+			if (cstmt.getInt(outs) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		} finally {
@@ -152,21 +152,22 @@ public class UserModel {
 			}
 		}
 	}
+
 	public boolean unbanFromFriendRequest(int id, int id2) {
-		CallableStatement cstmt=null;
+		CallableStatement cstmt = null;
 		try {
-		int outs=3;
-		cstmt = AuthenticationModel.conn.prepareCall("{call REMOVE_IGNORE(? ,?,?)}");
-		cstmt.setInt(1, id);
-		cstmt.setInt(2, id2);
-		cstmt.registerOutParameter(outs, java.sql.Types.BIT);
-		cstmt.execute();
-		if (cstmt.getInt(outs) == 1) {
-			return true;
-		} else {
-			return false;
-		}
-		}catch(SQLException e) {
+			int outs = 3;
+			cstmt = AuthenticationModel.conn.prepareCall("{call REMOVE_IGNORE(? ,?,?)}");
+			cstmt.setInt(1, id);
+			cstmt.setInt(2, id2);
+			cstmt.registerOutParameter(outs, java.sql.Types.BIT);
+			cstmt.execute();
+			if (cstmt.getInt(outs) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		} finally {
@@ -180,20 +181,20 @@ public class UserModel {
 	}
 
 	public boolean addToFriends(int id, int id2) {
-		CallableStatement cstmt=null;
+		CallableStatement cstmt = null;
 		try {
-		int outs=3;
-		cstmt = AuthenticationModel.conn.prepareCall("{call ACCEPT_A_REQUEST(? ,?,?)}");
-		cstmt.setInt(1, id);
-		cstmt.setInt(2, id2);
-		cstmt.registerOutParameter(outs, java.sql.Types.BIT);
-		cstmt.execute();
-		if (cstmt.getInt(outs) == 1) {
-			return true;
-		} else {
-			return false;
-		}
-		}catch(SQLException e) {
+			int outs = 3;
+			cstmt = AuthenticationModel.conn.prepareCall("{call ACCEPT_A_REQUEST(? ,?,?)}");
+			cstmt.setInt(1, id);
+			cstmt.setInt(2, id2);
+			cstmt.registerOutParameter(outs, java.sql.Types.BIT);
+			cstmt.execute();
+			if (cstmt.getInt(outs) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		} finally {
@@ -208,20 +209,20 @@ public class UserModel {
 
 	// id en o user ke to id2 en tutos pu tha gini removed from friend list tu id
 	public boolean removeFromFriends(int id, int id2) {
-		CallableStatement cstmt=null;
+		CallableStatement cstmt = null;
 		try {
-		int outs=3;
-		cstmt = AuthenticationModel.conn.prepareCall("{call DELETE_FRIENDS(? ,?,?)}");
-		cstmt.setInt(1, id);
-		cstmt.setInt(2, id2);
-		cstmt.registerOutParameter(outs, java.sql.Types.BIT);
-		cstmt.execute();
-		if (cstmt.getInt(outs) == 1) {
-			return true;
-		} else {
-			return false;
-		}
-		}catch(SQLException e) {
+			int outs = 3;
+			cstmt = AuthenticationModel.conn.prepareCall("{call DELETE_FRIENDS(? ,?,?)}");
+			cstmt.setInt(1, id);
+			cstmt.setInt(2, id2);
+			cstmt.registerOutParameter(outs, java.sql.Types.BIT);
+			cstmt.execute();
+			if (cstmt.getInt(outs) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		} finally {
@@ -265,8 +266,8 @@ public class UserModel {
 				Privacy privacy = new Privacy(resultSet.getString("Privacy_Name"));
 				Location location = new Location(LocId, locations.get(LocId));
 				ArrayList<Picture> pictures = this.getPicturesByAlbum(id);
-				for(int i=0;i<pictures.size();i++) {
-					ArrayList<Comment> comen=getItemComments(pictures.get(i));
+				for (int i = 0; i < pictures.size(); i++) {
+					ArrayList<Comment> comen = getItemComments(pictures.get(i));
 					pictures.get(i).setComments(comen);
 				}
 				PictureAlbum albm = new PictureAlbum(id, name, description, linkname, pictures, location, UserId,
@@ -494,7 +495,6 @@ public class UserModel {
 		return pictures;
 	}
 
-
 	public ArrayList<Video> getUserVideos(int id) {
 		String SPsql = "EXEC getVideosOfUser ? "; // for stored proc taking 2 parameters
 		ResultSet resultSet = null;
@@ -594,6 +594,7 @@ public class UserModel {
 		}
 		return users;
 	}
+
 	public ArrayList<User> getUserIgnoredFriendRequests(int id) {
 		String SPsql = "EXEC GET_FRIEND_REQUESTS_IGNORED ? "; // for stored proc taking 2 parameters
 		ResultSet resultSet = null;
@@ -613,7 +614,7 @@ public class UserModel {
 		}
 		return users;
 	}
-	
+
 	public ArrayList<User> getUserFriends(int id) {
 		String SPsql = "EXEC SHOW_FRIENDS ? "; // for stored proc taking 2 parameters
 		ResultSet resultSet = null;
@@ -856,12 +857,12 @@ public class UserModel {
 		}
 		return user;
 	}
+
 	protected boolean addEvent(Event obj) {
 		ResultSet resultSet = null;
-		String SPsql = "EXEC insertEvent (?,?,?,?,?,?,?,?) "; // for stored proc taking 2 parameters
 		CallableStatement cstmt = null;
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call insertVideo (?,?,?,?,?,?)}");
 
 			int index = 1;
 			cstmt.setString(index++, obj.getVenue());
@@ -898,10 +899,9 @@ public class UserModel {
 
 	protected boolean addVideo(Video obj) {
 		ResultSet resultSet = null;
-		String SPsql = "EXEC insertVideo (?,?,?,?,?,?) "; // for stored proc taking 2 parameters
 		CallableStatement cstmt = null;
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call insertVideo (?,?,?,?,?,?)}");
 
 			int index = 1;
 			cstmt.setString(index++, obj.getMessage());
@@ -936,10 +936,9 @@ public class UserModel {
 
 	protected boolean addPicture(Picture obj) {
 		ResultSet resultSet = null;
-		String SPsql = "EXEC insertPicture (?,?,?,?,?,?) "; // for stored proc taking 2 parameters
 		CallableStatement cstmt = null;
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call insertPicture (?,?,?,?,?,?)}");
 
 			int index = 1;
 			cstmt.setFloat(index++, (float) obj.width);
@@ -976,19 +975,18 @@ public class UserModel {
 	protected boolean addLink(Link obj) {
 		ResultSet resultSet = null;
 
-		String SPsql = "EXEC insertLink (?,?,?,?,?,?) "; // for stored proc taking 2 parameters
 		CallableStatement cstmt = null;
 
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call insertLink (?,?,?,?,?,?) }");
 
 			int index = 1;
-			cstmt.setString(index++,obj.getName());
-			cstmt.setString(index++,obj.getURL());
-			cstmt.setString(index++,obj.getMessage());
-			cstmt.setString(index++,obj.getDescription());
-			cstmt.setString(index++,obj.getCaption());
-			cstmt.setInt(index++,obj.getUser_id());
+			cstmt.setString(index++, obj.getName());
+			cstmt.setString(index++, obj.getURL());
+			cstmt.setString(index++, obj.getMessage());
+			cstmt.setString(index++, obj.getDescription());
+			cstmt.setString(index++, obj.getCaption());
+			cstmt.setInt(index++, obj.getUser_id());
 
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
@@ -1016,20 +1014,18 @@ public class UserModel {
 
 	protected boolean addAlbum(PictureAlbum obj) {
 		ResultSet resultSet = null;
-
-		String SPsql = "EXEC insertAlbum (?,?,?,?,?,?) "; // for stored proc taking 2 parameters
 		CallableStatement cstmt = null;
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call insertAlbum (?,?,?,?,?,?)}");
 
 			int index = 1;
-			cstmt.setString(index++,obj.getName());
-			cstmt.setString(index++,obj.getDescription());
-		cstmt.setString(index++,obj.link);
-		cstmt.setInt(index++,obj.LocationTaken.id);
-		cstmt.setInt(index++,obj.user_id);
-		cstmt.setString(index++,obj.privacy.name);
-		
+			cstmt.setString(index++, obj.getName());
+			cstmt.setString(index++, obj.getDescription());
+			cstmt.setString(index++, obj.link);
+			cstmt.setInt(index++, obj.LocationTaken.id);
+			cstmt.setInt(index++, obj.user_id);
+			cstmt.setString(index++, obj.privacy.name);
+
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
 			cstmt.execute();
@@ -1107,7 +1103,7 @@ public class UserModel {
 		int user_id = obj.getId();
 
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call updateVideo(?,?,?,?,?,?,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call updatePicture(?,?,?,?,?,?,?)}");
 			int columnIndex = 1;
 			cstmt.setInt(columnIndex++, id);
 			cstmt.setDouble(columnIndex++, height);
@@ -1137,5 +1133,77 @@ public class UserModel {
 		}
 
 	}
-	
+
+	protected boolean updateLink(Link obj) {
+		CallableStatement cstmt = null;
+		int id = obj.id;
+
+		try {
+			cstmt = AuthenticationModel.conn.prepareCall("{call updateLink(?,?,?,?,?,?,?)}");
+			int columnIndex = 1;
+			cstmt.setInt(columnIndex++, id);
+			cstmt.setString(columnIndex++, obj.getName());
+			cstmt.setString(columnIndex++, obj.getURL());
+			cstmt.setString(columnIndex++, obj.getMessage());
+			cstmt.setString(columnIndex++, obj.getDescription());
+			cstmt.setString(columnIndex++, obj.caption);
+			cstmt.setInt(columnIndex++, obj.user_id);
+			cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
+			cstmt.execute();
+			System.out.print("okay sinexise\n");
+			if (cstmt.getInt(columnIndex) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	protected boolean updateAlbum(PictureAlbum obj) {
+		CallableStatement cstmt = null;
+		int id = obj.id;
+
+		try {
+			cstmt = AuthenticationModel.conn.prepareCall("{call updateAlbum(?,?,?,?,?,?,?)}");
+			int columnIndex = 1;
+			cstmt.setInt(columnIndex++, id);
+			cstmt.setString(columnIndex++, obj.getName());
+			cstmt.setString(columnIndex++, obj.getDescription());
+			cstmt.setString(columnIndex++, obj.getLink());
+			cstmt.setInt(columnIndex++, obj.LocationTaken.id);
+			cstmt.setInt(columnIndex++, obj.user_id);
+			cstmt.setString(columnIndex++, obj.privacy.name);
+			cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
+			cstmt.execute();
+			System.out.print("okay sinexise\n");
+			if (cstmt.getInt(columnIndex) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
 }
