@@ -423,4 +423,22 @@ public ArrayList<User> FriendsSameInterests(int id) {
 }
 	return users;
 }
+public ArrayList<Event> getLeastAttendableEvent() {
+	String SPsql = "SHOW_LEAST_POPULAR_GATHERINGS ";   // for stored proc taking 2 parameters
+	ResultSet resultSet=null;
+	ArrayList<Event> Events = new ArrayList<Event>();
+	try {
+	PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+	ps.setEscapeProcessing(true);
+	resultSet = ps.executeQuery();
+	Events=turnresultSetToUser(resultSet);
+	System.out.println(Events);
+
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	System.out.println(e);
+	e.printStackTrace();
+}
+	return Events;
+}
 }

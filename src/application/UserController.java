@@ -242,9 +242,9 @@ public void addFriend(int id,int tabint) {
 		return FriendsWithSameInterests;
 	}
 
-	public ObservableList<Event> getLeastAttendableEvents() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Event> getLeastAttendableEvents() {
+		ArrayList<Event> LeastEvents= this.model.getLeastAttendableEvent();
+		return LeastEvents;
 	}
 
 	public static ArrayList<User> generateDummyUsers() {
