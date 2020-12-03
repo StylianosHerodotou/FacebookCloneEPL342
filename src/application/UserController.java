@@ -410,10 +410,7 @@ public void addFriend(int id,int tabint) {
 
 	public void showUserVideosView(int tabIndex) {
 		ArrayList<Video> Videos= this.model.getUserVideos(this.user.getId());
-//		ArrayList<Video> Videos= new ArrayList<Video>();
-//		Videos.add(generateDummyVideo());
-//		Videos.add(generateDummyVideo());
-//		Videos.add(generateDummyVideo());
+
 
 		FBItem[] videoItems= turnVideosToFBArray(Videos);
 		ScrollPane grid = this.view.getItemCrollView(videoItems,tabIndex,true);

@@ -382,45 +382,5 @@ public class HelperFunctions {
 
 	}
 
-	
-	
-	
-	
-	
-	
-	
-//	
-//	protected static int translateTypeToInt(String ClassName) {
-//		int ans=1;
-//		switch(ClassName) {
-//		case "User":return ans++;
-//		case "Picture":return ans++;
-//		case "PictureAlmbum":return ans++;
-//		case "Video":return ans++;
-//		case "Link":return ans++;
-//		case "Event":return ans++;
-//		default: return ans++;
-//		}
-//}
-//	protected static int translateStringTypeToInt(String fieldType) {
-//	int ans = 0;
-//	switch (fieldType) {
-//	case "String":
-//		return ans++;
-//	case "int":
-//		return ans++;
-//	case "char":
-//		return ans++;
-//	case "ArrayList<String>":
-//		return ans++;
-//	case "Date":
-//		return ans++;
-//	case "boolean":
-//		return ans++;
-//	case "Location":
-//		return ans++;
-//	default:
-//		return -1;
-//	}
-//}
+////////////////////////////////////////////////////////////////////
 }

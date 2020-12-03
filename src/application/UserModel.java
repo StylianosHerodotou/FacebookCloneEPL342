@@ -156,6 +156,32 @@ public class UserModel {
 		}
 		return pictures;
 	}
+	
+	
+	private ArrayList<Video> turnresultSetToVideos(ResultSet resultSet){
+		 ArrayList<Video> videos= new  ArrayList<Video>();
+		try {
+			while(resultSet.next()) {
+				int id=resultSet.getInt("Video_ID");
+				String message=resultSet.getString("Message");
+				String description=resultSet.getString("Description");
+				int length =resultSet.getInt("Length");
+				String src=resultSet.getString("SRC");
+				int userID =resultSet.getInt("UserID");
+				String privacyName =resultSet.getString("Privacy_Name");
+
+
+
+				
+				Video video = new Video();
+				videos.add(video);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return videos;
+	}
 	private ArrayList<User> turnresultSetToUser(ResultSet resultSet){
 		 ArrayList<User> users= new  ArrayList<User>();
 		 HashMap<Integer, String> locations= this.controller.getIntToStringLocations();
