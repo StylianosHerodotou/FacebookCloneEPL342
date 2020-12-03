@@ -152,6 +152,32 @@ public class UserModel {
 			}
 		}
 	}
+	public boolean unbanFromFriendRequest(int id, int id2) {
+		CallableStatement cstmt=null;
+		try {
+		int outs=3;
+		cstmt = AuthenticationModel.conn.prepareCall("{call REMOVE_IGNORE(? ,?,?)}");
+		cstmt.setInt(1, id);
+		cstmt.setInt(2, id2);
+		cstmt.registerOutParameter(outs, java.sql.Types.BIT);
+		cstmt.execute();
+		if (cstmt.getInt(outs) == 1) {
+			return true;
+		} else {
+			return false;
+		}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public boolean addToFriends(int id, int id2) {
 		CallableStatement cstmt=null;
@@ -509,7 +535,26 @@ public class UserModel {
 		}
 		return users;
 	}
+	public ArrayList<User> getUserIgnoredFriendRequests(int id) {
+		String SPsql = "EXEC GET_FRIEND_REQUESTS_IGNORED ? "; // for stored proc taking 2 parameters
+		ResultSet resultSet = null;
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+			ps.setInt(1, id);
+			ps.setEscapeProcessing(true);
+			resultSet = ps.executeQuery();
+			users = turnresultSetToUser(resultSet);
+			System.out.println(users);
 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		return users;
+	}
+	
 	public ArrayList<User> getUserFriends(int id) {
 		String SPsql = "EXEC SHOW_FRIENDS ? "; // for stored proc taking 2 parameters
 		ResultSet resultSet = null;
@@ -756,7 +801,7 @@ public class UserModel {
 	protected boolean addEvent(Event event) {
 		ResultSet resultSet = null;
 		String SPsql = "EXEC addEvent (?,?,?,?,?,?,?,?) "; // for stored proc taking 2 parameters
-		CallableStatement cstmt;
+		CallableStatement cstmt=null;
 		try {
 			cstmt = AuthenticationModel.conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
 
