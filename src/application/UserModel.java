@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UserModel {
 	UserController controller;
-
+	
 	public UserModel(UserController controller) {
 		this.controller= controller;
 	}
@@ -41,32 +41,32 @@ public class UserModel {
 			//newer with pass and username
 			 String username=updatedUser.username;
 			 String password=updatedUser.password;
-
+			
 				try {
 					System.out.print("okay sinexise\n");
 				cstmt = AuthenticationModel.conn.prepareCall("{call updateUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
-				int columnIndex=1;
+				int columnIndex=1;		
 				cstmt.setString(columnIndex++, firstName);
 				cstmt.setString(columnIndex++, lastName);
 				cstmt.setString(columnIndex++, username);
 				cstmt.setString(columnIndex++, password);
-
+				
 				cstmt.setString(columnIndex++, email);
 				cstmt.setString(columnIndex++, website);
 				cstmt.setString(columnIndex++, link);
 				cstmt.setDate(columnIndex++, birthday);
-
+				
 				cstmt.setBoolean(columnIndex++, gender);
 				cstmt.setString(columnIndex++, workedFor);
 				cstmt.setString(columnIndex++, educationPlaces);
 				cstmt.setString(columnIndex++, quotes);
-
+				
 				cstmt.setBoolean(columnIndex++, isVerified);
 				cstmt.setInt(columnIndex++, hometownFK);
 				cstmt.setInt(columnIndex++, livesInLocationFK);
 				cstmt.setInt(columnIndex++, id);
 
-
+				
 				cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
 				cstmt.execute();
 				System.out.print("okay sinexise\n");
@@ -88,9 +88,9 @@ public class UserModel {
 				e.printStackTrace();
 			}
 		}
-
+		
 	}
-	//From friend request tu id 1 remove the guy with id2
+	//From friend request tu id 1 remove the guy with id2 
 	public boolean removeFromFriendRequest(int id, int id2) {
 		// TODO Auto-generated method stub
 		return false;
@@ -122,7 +122,7 @@ public class UserModel {
 	}
 		return resultSet;
 	}
-
+	
 	private ArrayList<Picture> turnresultSetToPictures(ResultSet resultSet){
 		 ArrayList<Picture> pictures= new  ArrayList<Picture>();
 		try {
@@ -136,36 +136,7 @@ public class UserModel {
 				ArrayList<Comment> comments=null;
 				Picture pic = new Picture(id,width,height,Link,src,
 						privacy,comments);
-
-				pictures.add(pic);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return pictures;
-	}
-	private ArrayList<User> turnresultSetToUser(ResultSet resultSet){
-		 ArrayList<User> users= new  ArrayList<User>();
-		try {
-			while(resultSet.next()) {
-				int id=resultSet.getInt("User_ID");
-				String Username=resultSet.getString("Username");
-				int password= resultSet.getInt("Pass");
-				String First_Name=resultSet.getString("First_Name");
-				String Last_Name = resultSet.getString("Last_Name");
-				String Email=resultSet.getString("Email");
-				String Website = resultSet.getString("WebSite");
-				String Link=resultSet.getString("Link");
-				Date Birthday = resultSet.getDate("Birthday");
-				int gender=resultSet.getInt("Gender");
-				int is_verified = resultSet.getInt("Is_verified");
-				int    hometown_loc_id =resultSet.getInt("Hometown_LOC_ID");
-				int    current_loc_id = resultSet.getInt("Current_LOC_ID");
-				Location home=new Location(hometown_loc_id ,AuthenticationController.
-				User user = new User(id,Username,password,First_Name,Last_Name,Email,Website,Link,Birthday,gender,is_verified,hometown_loc_id,current_loc_id);
-
-
+						
 				pictures.add(pic);
 			}
 		} catch (SQLException e) {
@@ -212,24 +183,6 @@ public class UserModel {
 	public ArrayList<Event> getUserEvents(int id) {
 		// TODO Auto-generated method stub
 		return null;
-	public ArrayList<User> getUserFriendRequests(int id) {
-		String SPsql = "EXEC GET_FRIEND_REQUESTS ? ";   // for stored proc taking 2 parameters
-		ResultSet resultSet=null;
-		ArrayList<User> users = new ArrayList<User>();
-		try {
-		PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
-		ps.setInt(1,id );
-		ps.setEscapeProcessing(true);
-		resultSet = ps.executeQuery();
-		users=turnresultSetToPictures(resultSet);
-		System.out.println(pictures);
-
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		System.out.println(e);
-		e.printStackTrace();
-	}
-		return pictures;
 	}
 
 

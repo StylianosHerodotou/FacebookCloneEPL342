@@ -349,7 +349,7 @@ public void addFriend(int id,int tabint) {
 	public void showUserImagesView(int tabIndex) {
 		ArrayList<Picture> pictures= this.model.getUserImages(this.user.getId());
 		FBItem[] pictureItems= turnPicturesToFBArray(pictures);
-		ScrollPane grid = this.view.getItemCrollView(pictureItems,tabIndex);
+		ScrollPane grid = this.view.getItemCrollView(pictureItems,tabIndex,true);
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
@@ -357,7 +357,7 @@ public void addFriend(int id,int tabint) {
 	public void showUserVideosView(int tabIndex) {
 		ArrayList<Video> Videos= this.model.getUserVideos(this.user.getId());
 		FBItem[] videoItems= turnVideosToFBArray(Videos);
-		ScrollPane grid = this.view.getItemCrollView(videoItems,tabIndex);
+		ScrollPane grid = this.view.getItemCrollView(videoItems,tabIndex,true);
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
@@ -365,21 +365,21 @@ public void addFriend(int id,int tabint) {
 	public void showUserAlbumsView(int tabIndex) {
 		ArrayList<PictureAlbum> Albums= this.model.getUserAlbums(this.user.getId());
 		FBItem[] albumItems= turnAlbumToFBArray(Albums);
-		ScrollPane grid = this.view.getItemCrollView(albumItems,tabIndex);
+		ScrollPane grid = this.view.getItemCrollView(albumItems,tabIndex,true);
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);	}
 
 	public void showUserLinksView(int tabIndex) {
 		ArrayList<Link> links= this.model.getUserLinks(this.user.getId());
 		FBItem[] linkItems= turnLinksToFBArray(links);
-		ScrollPane grid = this.view.getItemCrollView(linkItems,tabIndex);
+		ScrollPane grid = this.view.getItemCrollView(linkItems,tabIndex,true);
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
 	public void showUserEventsView(int tabIndex) {
 		ArrayList<Event> events= this.model.getUserEvents(this.user.getId());
 		FBItem[] eventItems= turnEventsToFBArray(events);
-		ScrollPane grid = this.view.getItemCrollView(eventItems,tabIndex);
+		ScrollPane grid = this.view.getItemCrollView(eventItems,tabIndex,true);
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
