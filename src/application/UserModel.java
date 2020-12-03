@@ -500,23 +500,83 @@ public class UserModel {
 	}
 
 	public ArrayList<Video> getUserVideos(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		String SPsql = "EXEC getVideosOfUser ? "; // for stored proc taking 2 parameters
+		ResultSet resultSet = null;
+		ArrayList<Video> vids = new ArrayList<Video>();
+		try {
+			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+			ps.setInt(1, id);
+			ps.setEscapeProcessing(true);
+			resultSet = ps.executeQuery();
+			vids = turnresultSetToVideos(resultSet);
+			System.out.println(vids);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		return vids;
 	}
 
 	public ArrayList<PictureAlbum> getUserAlbums(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		String SPsql = "EXEC getUsersAlbum ? "; // for stored proc taking 2 parameters
+		ResultSet resultSet = null;
+		ArrayList<PictureAlbum> Albums = new ArrayList<PictureAlbum>();
+		try {
+			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+			ps.setInt(1, id);
+			ps.setEscapeProcessing(true);
+			resultSet = ps.executeQuery();
+			Albums = turnresultSetToPictureAlbums(resultSet);
+			System.out.println(Albums);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		return Albums;
 	}
 
 	public ArrayList<Link> getUserLinks(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		String SPsql = "EXEC getLinksOfUser ? "; // for stored proc taking 2 parameters
+		ResultSet resultSet = null;
+		ArrayList<Link> links = new ArrayList<Link>();
+		try {
+			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+			ps.setInt(1, id);
+			ps.setEscapeProcessing(true);
+			resultSet = ps.executeQuery();
+			links = turnresultSetToLinks(resultSet);
+			System.out.println(links);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		return links;
 	}
 
 	public ArrayList<Event> getUserEvents(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		String SPsql = "EXEC getEventsOfUser ? "; // for stored proc taking 2 parameters
+		ResultSet resultSet = null;
+		ArrayList<Event> events = new ArrayList<Event>();
+		try {
+			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+			ps.setInt(1, id);
+			ps.setEscapeProcessing(true);
+			resultSet = ps.executeQuery();
+			events = turnresultSetToEvent(resultSet);
+			System.out.println(events);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		return events;
 	}
 
 	public ArrayList<User> getUserFriendRequests(int id) {
