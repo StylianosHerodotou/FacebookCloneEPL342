@@ -307,5 +307,14 @@ public void addFriend(int id,int tabint) {
 
 	}
 
+	public ObservableList<FriendRequest> getFriendRequests(int id)  {
+		ArrayList<User> UsersThatSendFriendRequest= this.model.getUserFriendRequests(id);
+		//AHHAHAHAHHAHHAHAHHAHAHHAHHAHAHHAHAHHAHHAAHHAHAHHAHAHAH
+		
+
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	}

@@ -145,6 +145,35 @@ public class UserModel {
 		}
 		return pictures;
 	}
+	private ArrayList<User> turnresultSetToUser(ResultSet resultSet){
+		 ArrayList<User> users= new  ArrayList<User>();
+		try {
+			while(resultSet.next()) {
+				int id=resultSet.getInt("User_ID");
+				String Username=resultSet.getString("Username");
+				int password= resultSet.getInt("Pass");
+				String First_Name=resultSet.getString("First_Name");
+				String Last_Name = resultSet.getString("Last_Name");
+				String Email=resultSet.getString("Email");
+				String Website = resultSet.getString("WebSite");
+				String Link=resultSet.getString("Link");
+				Date Birthday = resultSet.getDate("Birthday");
+				int gender=resultSet.getInt("Gender");
+				int is_verified = resultSet.getInt("Is_verified");
+				int    hometown_loc_id =resultSet.getInt("Hometown_LOC_ID");
+				int    current_loc_id = resultSet.getInt("Current_LOC_ID");
+				Location home=new Location(hometown_loc_id ,AuthenticationController.
+				User user = new User(id,Username,password,First_Name,Last_Name,Email,Website,Link,Birthday,gender,is_verified,hometown_loc_id,current_loc_id);
+						
+						
+				pictures.add(pic);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pictures;
+	}
 	public ArrayList<Picture> getUserImages(int id) {
 		String SPsql = "EXEC retrieveUserImages ? ";   // for stored proc taking 2 parameters
 		ResultSet resultSet=null;
@@ -167,6 +196,25 @@ public class UserModel {
 	public boolean updatePicture(Picture updatedPic) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	public ArrayList<User> getUserFriendRequests(int id) {
+		String SPsql = "EXEC GET_FRIEND_REQUESTS ? ";   // for stored proc taking 2 parameters
+		ResultSet resultSet=null;
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+		PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+		ps.setInt(1,id );
+		ps.setEscapeProcessing(true);
+		resultSet = ps.executeQuery();
+		users=turnresultSetToPictures(resultSet);
+		System.out.println(pictures);
+
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		System.out.println(e);
+		e.printStackTrace();
+	}
+		return pictures;
 	}
 
 
