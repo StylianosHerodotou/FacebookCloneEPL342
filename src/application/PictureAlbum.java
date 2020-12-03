@@ -12,6 +12,7 @@ public class PictureAlbum extends FBItem{
 	protected Location LocationTaken; 
 	protected int user_id;
 	protected Privacy privacy;
+	protected ArrayList<Comment> comments;
 	
 	//newer constructor with fields missing
 	public PictureAlbum(int id, String name, String description, String link, ArrayList<Picture> pictures,
@@ -42,7 +43,7 @@ public class PictureAlbum extends FBItem{
 		this.comments = comments;
 	}
 
-	protected ArrayList<Comment> comments;
+
 	
 	public ArrayList<Comment> getComments() {
 		return comments;

@@ -134,7 +134,60 @@ public class UserModel {
 	}
 		return resultSet;
 	}
+	private ArrayList<PictureAlbum> turnresultSetToPictureAlbums(ResultSet resultSet){
+		 ArrayList<PictureAlbum> events= new  ArrayList<PictureAlbum>();
+		 HashMap<Integer, String> locations= this.controller.getIntToStringLocations();
+		try {
+			while(resultSet.next()) {
+				int id=resultSet.getInt("Picture_Album_ID");
+				String name=resultSet.getString("Album_Name");
+				String description=resultSet.getString("Description");
+			String linkname=resultSet.getString("Link");
+				Date End_time=resultSet.getDate("End_time");
+				String desc=resultSet.getString("Description_");
+				int UserId = resultSet.getInt("UserID");
+				int LocId = resultSet.getInt("LOC_ID");
+				Privacy privacy = new Privacy(resultSet.getString("Privacy_Name"));
+				Location location=new Location(LocId ,locations.get(LocId));
+				 ArrayList<Picture> pictures= new  ArrayList<Picture>();
+				 ArrayList<Comment> com= new  ArrayList<Comment>();
+				 PictureAlbum albm = new PictureAlbum(id,name,description,linkname,pictures,location,UserId,privacy,com);
+				
+				events.add(albm);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return events;
+	}
+	private ArrayList<Event> turnresultSetToEvent(ResultSet resultSet){
+		 ArrayList<Event> events= new  ArrayList<Event>();
+		 HashMap<Integer, String> locations= this.controller.getIntToStringLocations();
+		try {
+			while(resultSet.next()) {
+				int id=resultSet.getInt("GATHERING_ID");
+				String ven=resultSet.getString("Venue");
+				String name=resultSet.getString("Name");
+			Date start_time=resultSet.getDate("Start_time");
+				Date End_time=resultSet.getDate("End_time");
+				String desc=resultSet.getString("Description_");
+				int CreatId = resultSet.getInt("Creator_ID");
+				int LocId = resultSet.getInt("LOC_ID");
+				Timestamp st = new Timestamp(start_time.getTime());
+				Timestamp et = new Timestamp(End_time.getTime());
+				Privacy privacy = new Privacy(resultSet.getString("Privacy_Name"));
+				Location location=new Location(LocId  ,locations.get(LocId ));
+				Event evnt = new Event(id,ven,name,st,et,desc,CreatId,location,privacy);
 
+				events.add(evnt);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return events;
+	}
 	private ArrayList<Picture> turnresultSetToPictures(ResultSet resultSet){
 		 ArrayList<Picture> pictures= new  ArrayList<Picture>();
 		try {
@@ -157,8 +210,31 @@ public class UserModel {
 		}
 		return pictures;
 	}
-	
-	
+	private ArrayList<Link> turnresultSetToLinks(ResultSet resultSet){
+		 ArrayList<Link> links =new  ArrayList<Link>();
+		
+		try {
+			while(resultSet.next()) {
+				int id=resultSet.getInt("Link_ID");
+				String name=resultSet.getString("Name");
+				String URL=resultSet.getString("URL");
+				String message =resultSet.getString("Message");
+				String Description=resultSet.getString("Description");
+				String caption =resultSet.getString("Caption");
+				int UserId =resultSet.getInt("UserID");
+				
+				
+
+				Link link = new Link(id,name,URL,message,Description,caption,UserId);
+				links.add(link);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return links;
+	}
+	// TJELI TON PINAKA PU COMMENTS 
 	private ArrayList<Video> turnresultSetToVideos(ResultSet resultSet){
 		 ArrayList<Video> videos= new  ArrayList<Video>();
 		try {
@@ -170,10 +246,10 @@ public class UserModel {
 				String src=resultSet.getString("SRC");
 				int userID =resultSet.getInt("UserID");
 				String privacyName =resultSet.getString("Privacy_Name");
-				
-				
+				Privacy pr = new Privacy(privacyName);
+				ArrayList<Comment> com = new ArrayList<Comment>();
 
-				Video video = new Video(id,message, description,length,src,userID,new Privacy(privacyName) ,null);
+				Video video = new Video(id,message, description,length,src,userID,pr,com);
 				videos.add(video);
 			}
 		} catch (SQLException e) {
@@ -225,9 +301,10 @@ public class UserModel {
 				double length= resultSet.getDouble("Length");
 				String src = resultSet.getString("SRC");
 				int UserID=resultSet.getInt("UserID");
-				ArrayList<Comment> workedFor = new ArrayList<Comment>();
+				ArrayList<Comment> com = new ArrayList<Comment>();
 				String privacy=resultSet.getString("Privacy_Name");
-				Video vid=new Video(id,message,Description,length,src,UserID,workedFor,privacy);
+				Privacy priv=new Privacy(privacy);
+				Video vid=new Video(id,message,Description,length,src,UserID,priv,com);
 				vids.add(vid);
 			}
 		} catch (SQLException e) {

@@ -11,7 +11,6 @@ public class Video extends FBItem{
 	protected int user_id;
 	protected Privacy privacy;
 	protected ArrayList<Comment> comments;
-    protected  String Privacy_Name;
 
 
 	//new constr with user id
@@ -26,7 +25,7 @@ public class Video extends FBItem{
 		this.user_id = user_id;
 		this.privacy=privacy;
 		this.comments = comments;
-		this.Privacy_Name=prv;
+		
 	}
 	public ArrayList<Comment> getComments() {
 		return comments;
