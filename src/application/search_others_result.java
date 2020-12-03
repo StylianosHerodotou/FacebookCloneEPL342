@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class searchResult {
+public class search_others_result {
 
 	private ArrayList<Picture> turnresultSetToPictures(ResultSet resultSet) {
 		ArrayList<Picture> pictures = new ArrayList<Picture>();
@@ -31,22 +31,22 @@ public class searchResult {
 		return pictures;
 	}
 
-	public FBItem[] searchUsers(int id, String albStr,String picStr,
-			String vidStr,  String linkStr,  String eventStr) {
+	public FBItem[] searchUsers( String albStr,  String picStr,
+			String vidStr, String linkStr, String eventStr) {
 //		String protype = "id: -1, taken_loc_id: 0, user_id: 0, privacy: null,firstName: "
 //				+ ", lastName: , email 'ewgfergwegerg ' drop users; : , website: , link: , birthday: null,gender: M"
 //				+ ", workedFor: [], educationPlaces: [], quotes: [], FriendRequests: "
 //				+ "null,isVerified: false, hometown: null,livesInLocation: null,username: , password: , \r\n";
 		ArrayList<FBItem> items = new ArrayList<FBItem>();
-
+	
 		try {
 
 			ResultSet resultSet = null;
 
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_Album(?,?)}",
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_Album(?,?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
-			cstmt.setInt(columnIndex++, id);
+			
 			cstmt.setString(columnIndex++, albStr);
 
 			boolean results = cstmt.execute();
@@ -83,10 +83,10 @@ public class searchResult {
 
 			ResultSet resultSet = null;
 
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_pic(?,?)}",
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_pic(?,?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
-			cstmt.setInt(columnIndex++, id);
+			
 			cstmt.setString(columnIndex++, picStr);
 
 			boolean results = cstmt.execute();
@@ -123,10 +123,10 @@ public class searchResult {
 
 			ResultSet resultSet = null;
 
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_vid3(?,?)}",
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_vid3(?,?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
-			cstmt.setInt(columnIndex++, id);
+			
 			cstmt.setString(columnIndex++, vidStr);
 
 			boolean results = cstmt.execute();
@@ -163,10 +163,10 @@ public class searchResult {
 
 			ResultSet resultSet = null;
 
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_link3(?,?)}",
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_link3(?,?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
-			cstmt.setInt(columnIndex++, id);
+			
 			cstmt.setString(columnIndex++, linkStr);
 
 			boolean results = cstmt.execute();
@@ -202,10 +202,10 @@ public class searchResult {
 
 			ResultSet resultSet = null;
 
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_link3(?,?)}",
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_link3(?,?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
-			cstmt.setInt(columnIndex++, id);
+			
 			cstmt.setString(columnIndex++, linkStr);
 
 			boolean results = cstmt.execute();
@@ -242,10 +242,10 @@ public class searchResult {
 
 			ResultSet resultSet = null;
 
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_event3(?,?)}",
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_event3(?,?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
-			cstmt.setInt(columnIndex++, id);
+			
 			cstmt.setString(columnIndex++, eventStr);
 
 			boolean results = cstmt.execute();
