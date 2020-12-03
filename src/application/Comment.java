@@ -29,6 +29,10 @@ public class Comment extends FBItem{
 		this.item=item;
 	}
 	
+	public String toString() {
+		return this.comment;
+	}
+	
 	
 	
 

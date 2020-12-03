@@ -168,6 +168,22 @@ public class UserModel {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	public ArrayList<Video> getUserVideos(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public ArrayList<PictureAlbum> getUserAlbums(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public ArrayList<Link> getUserLinks(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public ArrayList<Event> getUserEvents(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 }

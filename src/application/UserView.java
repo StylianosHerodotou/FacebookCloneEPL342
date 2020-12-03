@@ -2,8 +2,8 @@ package application;
 
 import java.io.FileInputStream;
 import java.lang.reflect.Field;
-import java.security.Timestamp;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -52,7 +52,6 @@ import javafx.util.Callback;
 
 public class UserView {
 
-	private static HashMap <String, String>allPossibleFields;
 	private static int initXlevel = 0;
 	private static int initYlevel = 2;
 
@@ -63,60 +62,60 @@ public class UserView {
 
 	public void setController(UserController controller) {
 		this.controller = controller;
-		this.allPossibleFields=getAllFields();
+//		this.allPossibleFields=getAllFields();
 	}
-	public static HashMap<String,String> getAllFields(){
-		HashMap<String, String> fields = new HashMap<String,String>();
-		fields.put("id", "int");
-		fields.put("username", "String");
-		fields.put("password", "String");
-		fields.put("firstName", "String");
-		fields.put("lastName", "String");
-		fields.put("email", "String");
-		fields.put("website", "String");
-		fields.put("link", "String");
-		fields.put("birthday", "Date");
-		fields.put("gender", "boolean");
-		fields.put("workedFor", "ArrayList<String>");
-		fields.put("educationPlaces", "ArrayList<String>");
-		fields.put("quotes", "ArrayList<String>");
-		fields.put("isVerified", "boolean");
-		fields.put("hometown", "Location");
-		fields.put("livesInLocation", "Location");
-		fields.put("privacy", "Privacy");
-		fields.put("width", "double");
-		fields.put("height", "double");
-		fields.put("source", "String");
-		fields.put("comments", "ArrayList<Comment>");
-		fields.put("message", "String");
-		fields.put("description", "String");
-		fields.put("length", "double");
-		fields.put("user_id", "int");
-		fields.put("name", "String");
-		fields.put("pictures", "ArrayList<Picture>");
-		fields.put("taken_loc_id", "int");
-		fields.put("LocationTaken", "Location");
-		fields.put("URL", "String");
-		fields.put("caption", "String");
-		fields.put("senter", "User");
-		fields.put("receiver", "User");
-		fields.put("sentDate", "Date");
-		fields.put("venue", "String");
-		fields.put("startTime", "Timestamp");
-		fields.put("endTime", "Timestamp");
-		fields.put("loc_id", "int");
-		fields.put("commenter", "User");
-		fields.put("comment", "String");
-		fields.put("item", "FBItem");
-		fields.put("name", "String");
-		fields.put("name", "String");
-		fields.put("name", "String");
-		fields.put("name", "String");
-
-
-
-		return fields;
-	}
+//	public static HashMap<String,String> getAllFields(){
+//		HashMap<String, String> fields = new HashMap<String,String>();
+//		fields.put("id", "int");
+//		fields.put("username", "String");
+//		fields.put("password", "String");
+//		fields.put("firstName", "String");
+//		fields.put("lastName", "String");
+//		fields.put("email", "String");
+//		fields.put("website", "String");
+//		fields.put("link", "String");
+//		fields.put("birthday", "Date");
+//		fields.put("gender", "boolean");
+//		fields.put("workedFor", "ArrayList<String>");
+//		fields.put("educationPlaces", "ArrayList<String>");
+//		fields.put("quotes", "ArrayList<String>");
+//		fields.put("isVerified", "boolean");
+//		fields.put("hometown", "Location");
+//		fields.put("livesInLocation", "Location");
+//		fields.put("privacy", "Privacy");
+//		fields.put("width", "double");
+//		fields.put("height", "double");
+//		fields.put("source", "String");
+//		fields.put("comments", "ArrayList<Comment>");
+//		fields.put("message", "String");
+//		fields.put("description", "String");
+//		fields.put("length", "double");
+//		fields.put("user_id", "int");
+//		fields.put("name", "String");
+//		fields.put("pictures", "ArrayList<Picture>");
+//		fields.put("taken_loc_id", "int");
+//		fields.put("LocationTaken", "Location");
+//		fields.put("URL", "String");
+//		fields.put("caption", "String");
+//		fields.put("senter", "User");
+//		fields.put("receiver", "User");
+//		fields.put("sentDate", "Date");
+//		fields.put("venue", "String");
+//		fields.put("startTime", "Timestamp");
+//		fields.put("endTime", "Timestamp");
+//		fields.put("loc_id", "int");
+//		fields.put("commenter", "User");
+//		fields.put("comment", "String");
+//		fields.put("item", "FBItem");
+//		fields.put("name", "String");
+//		fields.put("name", "String");
+//		fields.put("name", "String");
+//		fields.put("name", "String");
+//
+//
+//
+//		return fields;
+//	}
 	public UserView(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
@@ -132,16 +131,34 @@ public class UserView {
 		this.tabPane= new TabPane();
 		int index=0;
 
+//      Tab profileTab = new Tab("Profile",this.getMyProfileView(index++));
+//      Tab changeProfileTab = new Tab("changeProfileTab",this.getFormView(index++, this.controller.getUser()));
+//      Tab seeItemTab = new Tab("Picture View",this.getItemView(index++, this.controller.generateDummyPicture()));
+//      Tab seeAlmbuTab = new Tab("Album View",this.getItemView(index++, this.controller.generatePictureAlbum()));
+//
+//
+//      tabPane.getTabs().add(profileTab);
+//      tabPane.getTabs().add(changeProfileTab);
+//      tabPane.getTabs().add(seeItemTab);
+//      tabPane.getTabs().add(seeAlmbuTab);
+		
       Tab profileTab = new Tab("Profile",this.getMyProfileView(index++));
-      Tab changeProfileTab = new Tab("changeProfileTab",this.getFormView(index++, this.controller.getUser()));
-      Tab seeItemTab = new Tab("Picture View",this.getItemView(index++, this.controller.generateDummyPicture()));
-      Tab seeAlmbuTab = new Tab("Album View",this.getItemView(index++, this.controller.generatePictureAlbum()));
+      Tab pictureTab = new Tab("Profile",this.getItemView(index++, this.controller.generateDummyPicture(),true));
+      Tab AlbumTab = new Tab("Profile",this.getItemView(index++, this.controller.generateDummyPictureAlbum(),true));
+      Tab videoTab = new Tab("Profile",this.getItemView(index++, this.controller.generateDummyVideo(),true));
+      Tab EventTab = new Tab("Profile",this.getItemView(index++, this.controller.generateDummyEvent(),true));
+      Tab LinkTab = new Tab("Profile",this.getItemView(index++, this.controller.generateDummyLink(),true));
+
+    tabPane.getTabs().add(profileTab);
+    tabPane.getTabs().add(pictureTab);
+    tabPane.getTabs().add(AlbumTab);
+    tabPane.getTabs().add(videoTab);
+    tabPane.getTabs().add(EventTab);
+    tabPane.getTabs().add(LinkTab);
 
 
-      tabPane.getTabs().add(profileTab);
-      tabPane.getTabs().add(changeProfileTab);
-      tabPane.getTabs().add(seeItemTab);
-      tabPane.getTabs().add(seeAlmbuTab);
+
+
 
 	}
 	protected static boolean is_field_sensitive(String filed_name) {
@@ -187,7 +204,7 @@ public class UserView {
 		initXlevel = 0;
 		initYlevel = 2;
 		GridPane grid = new GridPane();
-		ArrayList<FBItem> users = new ArrayList<FBItem>(UserController.generateDummyUser());
+		ArrayList<FBItem> users = new ArrayList<FBItem>(UserController.generateDummyUsers());
 		this.getResultsView(grid,users );
 		for(int index=0; index<users.size(); index++) {
 			Button button = new Button("this is a button");
@@ -220,22 +237,27 @@ public class UserView {
 
 
 	protected ScrollPane getMyProfileView(int tabIndex) {
-		GridPane grid = this.getItemView(tabIndex, this.controller.getUser(), false);
+		GridPane grid = (GridPane) this.getItemView(tabIndex, this.controller.getUser(), false).getContent();
 		this.prepareProfileScene(grid, this.controller.getUser());
-		Button showPictures = new Button("show pictures");
-		showPictures.setOnAction(event->this.controller.showUserImagesView(tabIndex));
-		Button showVideos = new Button("show videos");
-		Button showAlbums = new Button("show Albums");
-		Button showLinks = new Button("show Links");
-		Button showEvents = new Button("show Events");
+		Button showPicturesButton = new Button("show pictures");
+		showPicturesButton.setOnAction(event->this.controller.showUserImagesView(tabIndex));
+		Button showVideosButton = new Button("show videos");
+		showVideosButton.setOnAction(event->this.controller.showUserVideosView(tabIndex));
+		Button showAlbumsButton = new Button("show Albums");
+		showAlbumsButton.setOnAction(event->this.controller.showUserAlbumsView(tabIndex));
+		Button showLinksButton = new Button("show Links");
+		showLinksButton.setOnAction(event->this.controller.showUserLinksView(tabIndex));
+		Button showEventsButton = new Button("show Events");
+		showEventsButton.setOnAction(event->this.controller.showUserEventsView(tabIndex));
+
 
 
 		UserView.initYlevel++;
-		grid.add(showPictures, initXlevel, initYlevel);
-		grid.add(showVideos, initXlevel+1, initYlevel++);
-		grid.add(showAlbums, initXlevel,initYlevel);
-		grid.add(showLinks, initXlevel+1, initYlevel++);
-		grid.add(showEvents, initXlevel, initYlevel);
+		grid.add(showPicturesButton, initXlevel, initYlevel);
+		grid.add(showVideosButton, initXlevel+1, initYlevel++);
+		grid.add(showAlbumsButton, initXlevel,initYlevel);
+		grid.add(showLinksButton, initXlevel+1, initYlevel++);
+		grid.add(showEventsButton, initXlevel, initYlevel);
 
 		ScrollPane scene = new ScrollPane(grid);
 		return scene;
@@ -410,8 +432,9 @@ return new ScrollPane(grid);
 	private void addItemLabel(Field field, Object object, ArrayList<Node> retriveFields) {
 //		System.out.print(object.toString());
 		String fieldName=field.getName();
-		String fieldType=(String) allPossibleFields.get(fieldName);
-
+//		String fieldType=(String) allPossibleFields.get(fieldName);
+		String fieldType= field.getType().getSimpleName();
+		
 		if(fieldType==null) {
 			System.out.println(fieldName);
 		}
@@ -542,8 +565,8 @@ return new ScrollPane(grid);
 
 	protected void addItemField(Field field, Object object, ArrayList<Node> retriveFields) throws IllegalArgumentException, IllegalAccessException {
 		String fieldName=field.getName();
-		String fieldType=(String) allPossibleFields.get(fieldName);
-
+//		String fieldType=(String) allPossibleFields.get(fieldName);
+		String fieldType= field.getType().getSimpleName();
 		Object fieldValue=null;
 		if(fieldType==null) {
 			System.out.print("field name "+fieldName);
@@ -564,15 +587,15 @@ return new ScrollPane(grid);
 //				addGenderField((char)field.get(object),retriveFields);
 //				}
 //			break;
-			case "ArrayList<String>":
+			case "ArrayList":
 				addTextFieldRow(ArrayListToString((ArrayList<Object>) field.get(object)),retriveFields);
 			break;
-			case "ArrayList<Comment>":
-				addTextFieldRow(ArrayListToString((ArrayList<Object>) field.get(object)),retriveFields);
-			break;
-			case "ArrayList<Picture>":
-				addTextFieldRow(ArrayListToString((ArrayList<Object>) field.get(object)),retriveFields);
-			break;
+//			case "ArrayList<Comment>":
+//				addTextFieldRow(ArrayListToString((ArrayList<Object>) field.get(object)),retriveFields);
+//			break;
+//			case "ArrayList<Picture>":
+//				addTextFieldRow(ArrayListToString((ArrayList<Object>) field.get(object)),retriveFields);
+//			break;
 			case "Date":
 				addDateField((Date)field.get(object),retriveFields);
 			break;
@@ -598,8 +621,9 @@ return new ScrollPane(grid);
 			case "Privacy":
 				addTextFieldRow(((Privacy) field.get(object)).name, retriveFields);
 			break;
+
 			default:
-				System.out.print("there was a new field "+field.getName() );
+				System.out.print("there was a new field "+fieldName + "field type "+fieldType );
 			break;
 
 		}
@@ -608,8 +632,12 @@ return new ScrollPane(grid);
 
 	private Object retriveDataFromField(Object object, Field field,Node node) {
 		String fieldName=field.getName();
-		String fieldType=(String) allPossibleFields.get(fieldName);
+		String fieldType= field.getType().getSimpleName();
 
+		
+		
+		
+		
 		switch(fieldType) {
 			case "String":
 				return ((TextField) node).getText();
@@ -617,6 +645,8 @@ return new ScrollPane(grid);
 				return new Privacy(((TextField) node).getText());
 		case "int" :
 				return Integer.parseInt(((TextField) node).getText());
+		case "double" :
+			return Double.parseDouble(((TextField) node).getText());
 //		case "char":
 //				if(field.getName().equals("gender")) {
 //					String strGender=(String) ((ComboBox)node).getValue();
@@ -627,10 +657,18 @@ return new ScrollPane(grid);
 //					return gender;
 //				}
 //			break;
-			case "ArrayList<String>":
-				return new ArrayList<String>(Arrays.asList(((TextField) node).getText().split("\\*",0)));
+			case "ArrayList":
+				if(fieldName.equals("comments")) {
+					return null;
+				}else if (fieldName.equals("pictures")){
+					return null;
+				}else {
+					return new ArrayList<String>(Arrays.asList(((TextField) node).getText().split("\\*",0)));
+				}
 		case "Date":
 				return Date.valueOf( ((DatePicker)node).getValue());
+		case "Timestamp":
+			return Timestamp.valueOf(((TextField) node).getText());
 		case "boolean":
 			if(field.getName().equals("gender")) {
 			String strGender=(String) ((ComboBox)node).getValue();
@@ -653,6 +691,7 @@ return new ScrollPane(grid);
 				String strLocation= (String) ((ComboBox)node).getValue();
 				Location hometown=new Location(locationHashmap.get(strLocation), strLocation);
 				return hometown;
+		
 
 			default:
 				System.out.print("there was a new field "+field.getName() );
@@ -900,8 +939,8 @@ return grid;
 		sp.setFitToWidth(true);
 		grid.setHgrow(sp, Priority.ALWAYS);
 		sp.setContent(grid);
-		grid.add(logOutButton, 10,0);
-		grid.add(showProfileButton, 10,1);
+		grid.add(logOutButton, this.initXlevel+10,this.initYlevel);
+		grid.add(showProfileButton, this.initXlevel+10,this.initYlevel+2);
 
 	}
 
@@ -922,7 +961,6 @@ return grid;
 
 	protected GridPane getItemView(int tabIndex, FBItem item) {
 		GridPane grid = new GridPane();
-		prepareItemScene(grid, item.getClass().getSimpleName(), tabIndex);
 
 		Field[] all_fields = item.getClass().getDeclaredFields();
 		ArrayList<Field> fields= getNonSensitiveFields(item, all_fields);
@@ -947,15 +985,17 @@ return grid;
 		editButton.setOnAction(event->{
 			this.controller.showFormView( tabIndex, item);
 		});
-		grid.add(editButton,initXlevel+1 , fields.size() +initYlevel);
+		grid.add(editButton,initXlevel+5 , fields.size() +initYlevel+1);
 		return grid;
 	}
-	protected GridPane getItemView(int tabIndex, FBItem item,boolean doPrepareScene) {
+	
+	
+	protected ScrollPane getItemView(int tabIndex, FBItem item,boolean doPrepareScene) {
 		GridPane grid = this.getItemView(tabIndex, item);
 		if(doPrepareScene==true) {
 			this.prepareItemScene(grid, item.getClass().getSimpleName(),tabIndex);
 		}
-		return grid;
+		return new ScrollPane(grid);
 	}
 	public ScrollPane getItemCrollView(FBItem[] items, int tabIndex) {
 		GridPane grid = new GridPane();

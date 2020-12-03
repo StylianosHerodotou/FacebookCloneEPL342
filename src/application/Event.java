@@ -39,6 +39,8 @@ public class Event extends FBItem{
 		this.privacy = privacy;
 	}
 
+
+
 	public int getUser_id() {
 		return user_id;
 	}
