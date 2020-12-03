@@ -360,7 +360,7 @@ return new ScrollPane(grid);
 		for (int field_index = 0; field_index < fields.size(); field_index++) {
 				try {
 					Field currentField=fields.get(field_index);
-					HelperFunctions.addItemField(currentField,object, retriveFields,field_index, this, false);
+					HelperFunctions.addItemField(currentField,object, retriveFields,field_index, this, true,tabIndex);
 					HelperFunctions.addFielditemInGrid(grid, currentField.getName(),field_index, retriveFields);
 				} catch (IllegalArgumentException | IllegalAccessException e) {
 					// TODO Auto-generated catch block
@@ -373,7 +373,7 @@ return new ScrollPane(grid);
 		submitButton.setOnAction(event->{
 			ArrayList<Object> newData = null;
 			try {
-				newData = HelperFunctions.getDataFromFields(object, fields, retriveFields, this);
+				newData = HelperFunctions.getDataFromFields(object, fields, retriveFields, this, tabIndex);
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

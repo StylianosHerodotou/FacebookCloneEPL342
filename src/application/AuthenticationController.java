@@ -88,6 +88,11 @@ public class AuthenticationController {
 	public static void startController(Stage primaryStage) {
 		AuthenticationController controller = new AuthenticationController(primaryStage);
 		controller.model.connectToDB();
+		primaryStage.setOnCloseRequest(event->{
+			controller.model.disconnectToDB();
+			System.out.println("Exiting Program");
+			primaryStage.close();
+		});
 //		controller.view.startView();
 		
 		//TODO Delete this

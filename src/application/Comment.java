@@ -30,7 +30,9 @@ public class Comment extends FBItem{
 	}
 	
 	public String toString() {
-		return this.comment;
+		String comment = new String();
+		comment=this.commenter.username+ "commented "+this.comment;
+		return comment;
 	}
 	
 	

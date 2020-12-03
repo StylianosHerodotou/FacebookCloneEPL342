@@ -163,14 +163,41 @@ public class HelperFunctions {
 		}
 		nodes.add(datePicker);
 }
-	protected static void addPictureField( Picture fieldValue, ArrayList<Node> nodes, int tabIndex,UserView view) {
-		HBox box = new HBox(view.getItemView(tabIndex, fieldValue));
+	protected static void addPictureLabel( Picture fieldValue, ArrayList<Node> nodes, int tabIndex,UserView view) {
+		HBox box=null;
+		if(fieldValue==null) {
+			box = new HBox();
+		}
+		else {
+			box = new HBox(view.getItemView(tabIndex, fieldValue));
+		}
 		nodes.add(box);
 }
-
+	protected static void addPictureField( Picture fieldValue, ArrayList<Node> nodes, int tabIndex,UserView view) {
+		HBox box=null;
+		if(fieldValue==null) {
+			box = new HBox();
+		}
+		else {
+			box = new HBox(view.getFormView(tabIndex, fieldValue));
+		}
+		nodes.add(box);
+}
+	protected static void addAlmbumLabel(ArrayList<Picture> pictures, ArrayList<Node> nodes, int tabIndex,UserView view) {
+		for (Picture pic : pictures) {
+			addPictureLabel(pic,nodes,tabIndex,view);
+		}
+	}
+	
+	protected static void addAlmbumField(ArrayList<Picture> pictures, ArrayList<Node> nodes, int tabIndex,UserView view) {
+		for (Picture pic : pictures) {
+			addPictureField(pic,nodes,tabIndex,view);
+		}
+	}
+	
 
 	protected static Object addItemField(Field field, Object object, ArrayList<Node> retriveFields,
-			int filedIndex,UserView view, boolean forRead) throws IllegalArgumentException, IllegalAccessException {
+			int fieldIndex,UserView view, boolean forRead, int tabIndex) throws IllegalArgumentException, IllegalAccessException {
 		String fieldName=field.getName();
 //		String fieldType=(String) allPossibleFields.get(fieldName);
 		String fieldType= field.getType().getSimpleName();
@@ -181,56 +208,71 @@ public class HelperFunctions {
 
 		switch(fieldType) {
 			case "String":
-				if(forRead)
+				if(forRead) {
 				addTextFieldRow((String) field.get(object),retriveFields);
+				break;
+				}
 				else
-				return ((TextField) retriveFields.get(filedIndex)).getText();
+				return ((TextField) retriveFields.get(fieldIndex)).getText();
 
 			case "int" :
-				if(forRead)
+				if(forRead) {
 				addTextFieldRow(Integer.toString((int)field.get(object)),retriveFields);
+				break;
+				}
 				else
-				return Integer.parseInt(((TextField) retriveFields.get(filedIndex)).getText());
-
-			break;
+				return Integer.parseInt(((TextField) retriveFields.get(fieldIndex)).getText());
 			case "double" :
-				if(forRead)
+				if(forRead) {
 				addTextFieldRow(Double.toString((double)field.get(object)),retriveFields);
+				break;
+				}
 				else
-					return Double.parseDouble(((TextField) retriveFields.get(filedIndex)).getText());
-			break;
+				return Double.parseDouble(((TextField) retriveFields.get(fieldIndex)).getText());
 			case "ArrayList":
-				if(forRead)
-				addTextFieldRow(ArrayListToString((ArrayList<Object>) field.get(object)),retriveFields);
+				if(forRead) {
+					if(fieldName.equals("comments")) {
+						System.out.print(" field "+fieldName + "field type "+fieldType );
+						String comments= toStringCommnets((ArrayList<Comment>)field.get(object) );
+						addTextFieldRow(comments,retriveFields);
+
+					}else if (fieldName.equals("pictures")){
+						addAlmbumLabel((ArrayList<Picture>) field.get(object), retriveFields, tabIndex, view);
+					}else {
+						addTextFieldRow(ArrayListToString((ArrayList<Object>) field.get(object)),retriveFields);
+					}
+					break;
+				}
 				else {
 					if(fieldName.equals("comments")) {
 						return null;
+
 					}else if (fieldName.equals("pictures")){
 						return null;
 					}else {
-						return new ArrayList<String>(Arrays.asList(((TextField) retriveFields.get(filedIndex)).getText().split("\\*",0)));
+						return new ArrayList<String>(Arrays.asList(((TextField) retriveFields.get(fieldIndex)).getText().split("\\*",0)));
 					}
 				}
-			break;
 			case "Date":
-				if(forRead)
+				if(forRead) {
 				addDateField((Date)field.get(object),retriveFields);
+				break;}
 				else
-					return Date.valueOf( ((DatePicker)retriveFields.get(filedIndex)).getValue());
-			break;
+					return Date.valueOf( ((DatePicker)retriveFields.get(fieldIndex)).getValue());
 			case "Timestamp":
-				if(forRead)
+				if(forRead) {
 				addTextFieldRow(field.get(object).toString(),retriveFields);
+				break;}
 				else
-					return Timestamp.valueOf(((TextField) retriveFields.get(filedIndex)).getText());
-			break;
+					return Timestamp.valueOf(((TextField) retriveFields.get(fieldIndex)).getText());
 			case "boolean":
 				if(field.getName().equals("gender"))
 				{
-					if(forRead)
+					if(forRead) {
 					addGenderField((boolean)field.get(object),retriveFields);
+					break;}
 					else {
-						String strGender=(String) ((ComboBox)retriveFields.get(filedIndex)).getValue();
+						String strGender=(String) ((ComboBox)retriveFields.get(fieldIndex)).getValue();
 						boolean gender=true;
 						if(strGender.equals("Male")) {
 							gender=false;
@@ -238,39 +280,34 @@ public class HelperFunctions {
 						return gender;
 					}
 				}else if((field.getName().equals("isVerified"))) {
-					if(forRead)
+					if(forRead) {
 					addIsVerifiedField((boolean )field.get(object),retriveFields);
+					break;}
 					else {
-						String isVerified= (String) ((ComboBox)retriveFields.get(filedIndex)).getValue();
+						String isVerified= (String) ((ComboBox)retriveFields.get(fieldIndex)).getValue();
 						if(isVerified.equals("True"))
 							return true;
 						else
 							return false;
 					}
 				}
-			break;
+			break; // dame pai kati lathos??
 			case "Location":
-				if(forRead)
+				if(forRead) {
 				addLocationField((Location )field.get(object),retriveFields,view);
+				break;}
 				else {
 					HashMap<String, Integer> locationHashmap = view.controller.getLocations();
-					String strLocation= (String) ((ComboBox)retriveFields.get(filedIndex)).getValue();
+					String strLocation= (String) ((ComboBox)retriveFields.get(fieldIndex)).getValue();
 					Location hometown=new Location(locationHashmap.get(strLocation), strLocation);
 					return hometown;
 				}
-			break;
-			case "Picture":
-				if(forRead)
-				addPictureField((Picture) field.get(object),retriveFields,0,view);
-				else
-			break;
 			case "Privacy":
-				if(forRead)
+				if(forRead) {
 				addTextFieldRow(((Privacy) field.get(object)).name, retriveFields);
+				break;}
 				else
-				return new Privacy(((TextField) retriveFields.get(filedIndex)).getText());
-			break;
-
+				return new Privacy(((TextField) retriveFields.get(fieldIndex)).getText());
 			default:
 				System.out.print("there was a new field "+fieldName + "field type "+fieldType );
 			break;
@@ -279,10 +316,23 @@ public class HelperFunctions {
 	}
 
 
-	static ArrayList<Object> getDataFromFields(Object object,ArrayList<Field> fields, ArrayList<Node> retriveFields,UserView view) throws IllegalArgumentException, IllegalAccessException{
+	private static String toStringCommnets(ArrayList<Comment> object) {
+		String s= new String();
+		if(object==null) {
+			return s;
+		}
+		for (int index=0; index<object.size(); index++) {
+			Comment comment = object.get(index);
+			String stringComment =comment.toString()+"*\n";
+			s=s+stringComment;
+		}
+		return s;
+	}
+
+	static ArrayList<Object> getDataFromFields(Object object,ArrayList<Field> fields, ArrayList<Node> retriveFields,UserView view, int tabIndex) throws IllegalArgumentException, IllegalAccessException{
 		 ArrayList<Object> data= new ArrayList<Object>();
 		 for (int fieldIndex=0; fieldIndex<retriveFields.size(); fieldIndex++) {
-			 data.add(addItemField( fields.get(fieldIndex), object,retriveFields,fieldIndex,view, false));
+			 data.add(addItemField( fields.get(fieldIndex), object,retriveFields,fieldIndex,view, false,tabIndex));
 		 }
 		 return data;
 
