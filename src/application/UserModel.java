@@ -143,24 +143,26 @@ public class UserModel {
 		}
 		return resultSet;
 	}
-	private ArrayList<PictureAlbum> turnresultSetToPictureAlbums(ResultSet resultSet){
-		 ArrayList<PictureAlbum> events= new  ArrayList<PictureAlbum>();
-		 HashMap<Integer, String> locations= this.controller.getIntToStringLocations();
+
+	private ArrayList<PictureAlbum> turnresultSetToPictureAlbums(ResultSet resultSet) {
+		ArrayList<PictureAlbum> events = new ArrayList<PictureAlbum>();
+		HashMap<Integer, String> locations = this.controller.getIntToStringLocations();
 		try {
-			while(resultSet.next()) {
-				int id=resultSet.getInt("Picture_Album_ID");
-				String name=resultSet.getString("Album_Name");
-				String description=resultSet.getString("Description");
-			String linkname=resultSet.getString("Link");
-				Date End_time=resultSet.getDate("End_time");
-				String desc=resultSet.getString("Description_");
+			while (resultSet.next()) {
+				int id = resultSet.getInt("Picture_Album_ID");
+				String name = resultSet.getString("Album_Name");
+				String description = resultSet.getString("Description");
+				String linkname = resultSet.getString("Link");
+				Date End_time = resultSet.getDate("End_time");
+				String desc = resultSet.getString("Description_");
 				int UserId = resultSet.getInt("UserID");
 				int LocId = resultSet.getInt("LOC_ID");
 				Privacy privacy = new Privacy(resultSet.getString("Privacy_Name"));
-				Location location=new Location(LocId ,locations.get(LocId));
-				 ArrayList<Picture> pictures= new  ArrayList<Picture>();
-				 ArrayList<Comment> com= new  ArrayList<Comment>();
-				 PictureAlbum albm = new PictureAlbum(id,name,description,linkname,pictures,location,UserId,privacy,com);
+				Location location = new Location(LocId, locations.get(LocId));
+				ArrayList<Picture> pictures = new ArrayList<Picture>();
+				ArrayList<Comment> com = new ArrayList<Comment>();
+				PictureAlbum albm = new PictureAlbum(id, name, description, linkname, pictures, location, UserId,
+						privacy, com);
 
 				events.add(albm);
 			}
@@ -170,24 +172,25 @@ public class UserModel {
 		}
 		return events;
 	}
-	private ArrayList<Event> turnresultSetToEvent(ResultSet resultSet){
-		 ArrayList<Event> events= new  ArrayList<Event>();
-		 HashMap<Integer, String> locations= this.controller.getIntToStringLocations();
+
+	private ArrayList<Event> turnresultSetToEvent(ResultSet resultSet) {
+		ArrayList<Event> events = new ArrayList<Event>();
+		HashMap<Integer, String> locations = this.controller.getIntToStringLocations();
 		try {
-			while(resultSet.next()) {
-				int id=resultSet.getInt("GATHERING_ID");
-				String ven=resultSet.getString("Venue");
-				String name=resultSet.getString("Name");
-			Date start_time=resultSet.getDate("Start_time");
-				Date End_time=resultSet.getDate("End_time");
-				String desc=resultSet.getString("Description_");
+			while (resultSet.next()) {
+				int id = resultSet.getInt("GATHERING_ID");
+				String ven = resultSet.getString("Venue");
+				String name = resultSet.getString("Name");
+				Date start_time = resultSet.getDate("Start_time");
+				Date End_time = resultSet.getDate("End_time");
+				String desc = resultSet.getString("Description_");
 				int CreatId = resultSet.getInt("Creator_ID");
 				int LocId = resultSet.getInt("LOC_ID");
 				Timestamp st = new Timestamp(start_time.getTime());
 				Timestamp et = new Timestamp(End_time.getTime());
 				Privacy privacy = new Privacy(resultSet.getString("Privacy_Name"));
-				Location location=new Location(LocId  ,locations.get(LocId ));
-				Event evnt = new Event(id,ven,name,st,et,desc,CreatId,location,privacy);
+				Location location = new Location(LocId, locations.get(LocId));
+				Event evnt = new Event(id, ven, name, st, et, desc, CreatId, location, privacy);
 
 				events.add(evnt);
 			}
@@ -197,8 +200,9 @@ public class UserModel {
 		}
 		return events;
 	}
-	private ArrayList<Picture> turnresultSetToPictures(ResultSet resultSet){
-		 ArrayList<Picture> pictures= new  ArrayList<Picture>();
+
+	private ArrayList<Picture> turnresultSetToPictures(ResultSet resultSet) {
+		ArrayList<Picture> pictures = new ArrayList<Picture>();
 		try {
 			while (resultSet.next()) {
 				int id = resultSet.getInt("Picture_ID");
@@ -206,11 +210,11 @@ public class UserModel {
 				double height = resultSet.getDouble("Height");
 				String Link = resultSet.getString("Link");
 				String src = resultSet.getString("SRC");
-				int userId=resultSet.getInt("UserId");
+				int userId = resultSet.getInt("UserId");
 				Privacy privacy = new Privacy(resultSet.getString("Privacy_Name"));
 				ArrayList<Comment> comments = null;
-				Picture pic = new Picture(id, width, height, Link, src, privacy, comments,userId);
-				comments=this.getItemComments(pic);
+				Picture pic = new Picture(id, width, height, Link, src, privacy, comments, userId);
+				comments = this.getItemComments(pic);
 				pic.setComments(comments);
 				pictures.add(pic);
 			}
@@ -220,24 +224,25 @@ public class UserModel {
 		}
 		return pictures;
 	}
-	private ArrayList<Comment> getItemComments(FBItem item) {
-		ArrayList<Comment> commnets=null;
 
-		String SPsql =null;
-		int id=0;
-		switch(item.getClass().getSimpleName()) {
-		case"Picture":
-			SPsql="EXEC getPictureComments ? "; // for stored proc taking 2 parameters
-			id=((Picture)item).id;
-		break;
-		case"Video":
-			SPsql="EXEC getVideoComments ? "; // for stored proc taking 2 parameters
-			id=((Video)item).id;
-		break;
-		case"PictureAlbum":
-			SPsql="EXEC getAlbumComments ? "; // for stored proc taking 2 parameters
-			id=((PictureAlbum)item).id;
-		break;
+	private ArrayList<Comment> getItemComments(FBItem item) {
+		ArrayList<Comment> commnets = null;
+
+		String SPsql = null;
+		int id = 0;
+		switch (item.getClass().getSimpleName()) {
+		case "Picture":
+			SPsql = "EXEC getPictureComments ? "; // for stored proc taking 2 parameters
+			id = ((Picture) item).id;
+			break;
+		case "Video":
+			SPsql = "EXEC getVideoComments ? "; // for stored proc taking 2 parameters
+			id = ((Video) item).id;
+			break;
+		case "PictureAlbum":
+			SPsql = "EXEC getAlbumComments ? "; // for stored proc taking 2 parameters
+			id = ((PictureAlbum) item).id;
+			break;
 		}
 
 		ResultSet resultSet = null;
@@ -256,22 +261,20 @@ public class UserModel {
 		return commnets;
 	}
 
-	private ArrayList<Link> turnresultSetToLinks(ResultSet resultSet){
-		 ArrayList<Link> links =new  ArrayList<Link>();
+	private ArrayList<Link> turnresultSetToLinks(ResultSet resultSet) {
+		ArrayList<Link> links = new ArrayList<Link>();
 
 		try {
-			while(resultSet.next()) {
-				int id=resultSet.getInt("Link_ID");
-				String name=resultSet.getString("Name");
-				String URL=resultSet.getString("URL");
-				String message =resultSet.getString("Message");
-				String Description=resultSet.getString("Description");
-				String caption =resultSet.getString("Caption");
-				int UserId =resultSet.getInt("UserID");
+			while (resultSet.next()) {
+				int id = resultSet.getInt("Link_ID");
+				String name = resultSet.getString("Name");
+				String URL = resultSet.getString("URL");
+				String message = resultSet.getString("Message");
+				String Description = resultSet.getString("Description");
+				String caption = resultSet.getString("Caption");
+				int UserId = resultSet.getInt("UserID");
 
-
-
-				Link link = new Link(id,name,URL,message,Description,caption,UserId);
+				Link link = new Link(id, name, URL, message, Description, caption, UserId);
 				links.add(link);
 			}
 		} catch (SQLException e) {
@@ -280,23 +283,23 @@ public class UserModel {
 		}
 		return links;
 	}
-	
+
 	// TJELI TON PINAKA PU COMMENTS
-	private ArrayList<Video> turnresultSetToVideos(ResultSet resultSet){
-		 ArrayList<Video> videos= new  ArrayList<Video>();
+	private ArrayList<Video> turnresultSetToVideos(ResultSet resultSet) {
+		ArrayList<Video> videos = new ArrayList<Video>();
 		try {
-			while(resultSet.next()) {
-				int id=resultSet.getInt("Video_ID");
-				String message=resultSet.getString("Message");
-				String description=resultSet.getString("Description");
-				int length =resultSet.getInt("Length");
-				String src=resultSet.getString("SRC");
-				int userID =resultSet.getInt("UserID");
-				String privacyName =resultSet.getString("Privacy_Name");
+			while (resultSet.next()) {
+				int id = resultSet.getInt("Video_ID");
+				String message = resultSet.getString("Message");
+				String description = resultSet.getString("Description");
+				int length = resultSet.getInt("Length");
+				String src = resultSet.getString("SRC");
+				int userID = resultSet.getInt("UserID");
+				String privacyName = resultSet.getString("Privacy_Name");
 				Privacy pr = new Privacy(privacyName);
 				ArrayList<Comment> com = new ArrayList<Comment>();
 
-				Video video = new Video(id,message, description,length,src,userID,pr,com);
+				Video video = new Video(id, message, description, length, src, userID, pr, com);
 				videos.add(video);
 			}
 		} catch (SQLException e) {
@@ -339,7 +342,7 @@ public class UserModel {
 		}
 		return users;
 	}
-	
+
 	public ArrayList<Picture> getUserImages(int id) {
 		String SPsql = "EXEC retrieveUserImages ? "; // for stored proc taking 2 parameters
 		ResultSet resultSet = null;
@@ -637,14 +640,55 @@ public class UserModel {
 		PreparedStatement ps;
 		try {
 			ps = AuthenticationModel.conn.prepareStatement(SPsql);
-		ps.setInt(1, userId);
-		ps.setEscapeProcessing(true);
-		resultSet = ps.executeQuery();
-		user = turnResultIntoSingleUser(resultSet);
+			ps.setInt(1, userId);
+			ps.setEscapeProcessing(true);
+			resultSet = ps.executeQuery();
+			user = turnResultIntoSingleUser(resultSet);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return user;
+	}
+
+	protected boolean addEvent(Event event) {
+		ResultSet resultSet = null;
+		String SPsql = "EXEC addEvent (?,?,?,?,?,?,?,?,?) "; // for stored proc taking 2 parameters
+		CallableStatement cstmt;
+		try {
+			cstmt = AuthenticationModel.conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
+
+			int index = 1;
+//		cstmt.setInt(index++,);
+//		cstmt.setString(index++,);
+//		cstmt.setString(index++,);
+//		cstmt.setTimestamp(index++,);
+//		cstmt.setTimestamp(index++,);
+//		cstmt.setString(index++,);
+//		cstmt.setInt(index++,);
+//		cstmt.setInt(index++,);
+//		cstmt.setString(index++,);
+			cstmt.setEscapeProcessing(true);
+			cstmt.registerOutParameter(index, java.sql.Types.BIT);
+			cstmt.execute();
+			resultSet = cstmt.executeQuery();
+
+			if (cstmt.getInt(index) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (SQLException e) {
+			System.out.print(e);
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }
