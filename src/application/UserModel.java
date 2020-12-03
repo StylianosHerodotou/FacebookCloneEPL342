@@ -202,13 +202,14 @@ public class UserModel {
 		try {
 			while (resultSet.next()) {
 				int id = resultSet.getInt("Picture_ID");
-				int width = resultSet.getInt("Width");
-				int height = resultSet.getInt("Height");
+				double width = resultSet.getDouble("Width");
+				double height = resultSet.getDouble("Height");
 				String Link = resultSet.getString("Link");
 				String src = resultSet.getString("SRC");
+				int userId=resultSet.getInt("UserId");
 				Privacy privacy = new Privacy(resultSet.getString("Privacy_Name"));
 				ArrayList<Comment> comments = null;
-				Picture pic = new Picture(id, width, height, Link, src, privacy, comments);
+				Picture pic = new Picture(id, width, height, Link, src, privacy, comments,userId);
 				comments=this.getItemComments(pic);
 				pic.setComments(comments);
 				pictures.add(pic);
