@@ -494,10 +494,6 @@ public class UserModel {
 		return pictures;
 	}
 
-	public boolean updatePicture(Picture updatedPic) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	public ArrayList<Video> getUserVideos(int id) {
 		String SPsql = "EXEC getVideosOfUser ? "; // for stored proc taking 2 parameters
@@ -860,60 +856,22 @@ public class UserModel {
 		}
 		return user;
 	}
-
-	protected boolean addEvent(Event event) {
+	protected boolean addEvent(Event obj) {
 		ResultSet resultSet = null;
-		String SPsql = "EXEC addEvent (?,?,?,?,?,?,?,?) "; // for stored proc taking 2 parameters
-		CallableStatement cstmt=null;
-		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
-
-			int index = 1;
-//		cstmt.setString(index++,);
-//		cstmt.setString(index++,);
-//		cstmt.setTimestamp(index++,);
-//		cstmt.setTimestamp(index++,);
-//		cstmt.setString(index++,);
-//		cstmt.setInt(index++,);
-//		cstmt.setInt(index++,);
-//		cstmt.setString(index++,);
-			cstmt.setEscapeProcessing(true);
-			cstmt.registerOutParameter(index, java.sql.Types.BIT);
-			cstmt.execute();
-			resultSet = cstmt.executeQuery();
-
-			if (cstmt.getInt(index) == 1) {
-				return true;
-			} else {
-				return false;
-			}
-
-		} catch (SQLException e) {
-			System.out.print(e);
-			return false;
-		} finally {
-			try {
-				cstmt.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	protected boolean addVideo(Video vid) {
-		ResultSet resultSet = null;
-		String SPsql = "EXEC addVideo (?,?,?,?,?,?) "; // for stored proc taking 2 parameters
+		String SPsql = "EXEC insertEvent (?,?,?,?,?,?,?,?) "; // for stored proc taking 2 parameters
 		CallableStatement cstmt = null;
 		try {
 			cstmt = AuthenticationModel.conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
 
 			int index = 1;
-//		cstmt.setString(index++,);
-//		cstmt.setString(index++,);
-//		cstmt.setInt(index++,);
-//		cstmt.setString(index++,);
-//		cstmt.setInt(index++,);
-//		cstmt.setString(index++,);
+			cstmt.setString(index++, obj.getVenue());
+			cstmt.setString(index++, obj.getName());
+			cstmt.setTimestamp(index++, obj.getStartTime());
+			cstmt.setTimestamp(index++, obj.getEndTime());
+			cstmt.setString(index++, obj.description);
+			cstmt.setInt(index++, obj.user_id);
+			cstmt.setInt(index++, obj.loc.getId());
+			cstmt.setString(index++, obj.getPrivacy().name);
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
 			cstmt.execute();
@@ -937,6 +895,247 @@ public class UserModel {
 			}
 		}
 	}
-	
+
+	protected boolean addVideo(Video obj) {
+		ResultSet resultSet = null;
+		String SPsql = "EXEC insertVideo (?,?,?,?,?,?) "; // for stored proc taking 2 parameters
+		CallableStatement cstmt = null;
+		try {
+			cstmt = AuthenticationModel.conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
+
+			int index = 1;
+			cstmt.setString(index++, obj.getMessage());
+			cstmt.setString(index++, obj.getDescription());
+			cstmt.setInt(index++, obj.length);
+			cstmt.setString(index++, obj.getSource());
+			cstmt.setInt(index++, obj.user_id);
+			cstmt.setString(index++, obj.privacy.name);
+			cstmt.setEscapeProcessing(true);
+			cstmt.registerOutParameter(index, java.sql.Types.BIT);
+			cstmt.execute();
+			resultSet = cstmt.executeQuery();
+
+			if (cstmt.getInt(index) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (SQLException e) {
+			System.out.print(e);
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	protected boolean addPicture(Picture obj) {
+		ResultSet resultSet = null;
+		String SPsql = "EXEC insertPicture (?,?,?,?,?,?) "; // for stored proc taking 2 parameters
+		CallableStatement cstmt = null;
+		try {
+			cstmt = AuthenticationModel.conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
+
+			int index = 1;
+			cstmt.setFloat(index++, (float) obj.width);
+			cstmt.setFloat(index++, (float) obj.getHeight());
+			cstmt.setString(index++, obj.link);
+			cstmt.setString(index++, obj.getSource());
+			cstmt.setString(index++, obj.privacy.name);
+			cstmt.setInt(index++, obj.UserId);
+
+			cstmt.setEscapeProcessing(true);
+			cstmt.registerOutParameter(index, java.sql.Types.BIT);
+			cstmt.execute();
+			resultSet = cstmt.executeQuery();
+
+			if (cstmt.getInt(index) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (SQLException e) {
+			System.out.print(e);
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	protected boolean addLink(Link obj) {
+		ResultSet resultSet = null;
+
+		String SPsql = "EXEC insertLink (?,?,?,?,?,?) "; // for stored proc taking 2 parameters
+		CallableStatement cstmt = null;
+
+		try {
+			cstmt = AuthenticationModel.conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
+
+			int index = 1;
+			cstmt.setString(index++,obj.getName());
+			cstmt.setString(index++,obj.getURL());
+			cstmt.setString(index++,obj.getMessage());
+			cstmt.setString(index++,obj.getDescription());
+			cstmt.setString(index++,obj.getCaption());
+			cstmt.setInt(index++,obj.getUser_id());
+
+			cstmt.setEscapeProcessing(true);
+			cstmt.registerOutParameter(index, java.sql.Types.BIT);
+			cstmt.execute();
+			resultSet = cstmt.executeQuery();
+
+			if (cstmt.getInt(index) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (SQLException e) {
+			System.out.print(e);
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	protected boolean addAlbum(PictureAlbum obj) {
+		ResultSet resultSet = null;
+
+		String SPsql = "EXEC insertAlbum (?,?,?,?,?,?) "; // for stored proc taking 2 parameters
+		CallableStatement cstmt = null;
+		try {
+			cstmt = AuthenticationModel.conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
+
+			int index = 1;
+			cstmt.setString(index++,obj.getName());
+			cstmt.setString(index++,obj.getDescription());
+		cstmt.setString(index++,obj.link);
+		cstmt.setInt(index++,obj.LocationTaken.id);
+		cstmt.setInt(index++,obj.user_id);
+		cstmt.setString(index++,obj.privacy.name);
+		
+			cstmt.setEscapeProcessing(true);
+			cstmt.registerOutParameter(index, java.sql.Types.BIT);
+			cstmt.execute();
+			resultSet = cstmt.executeQuery();
+
+			if (cstmt.getInt(index) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (SQLException e) {
+			System.out.print(e);
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	protected boolean updateVideo(Video obj) {
+		CallableStatement cstmt = null;
+		int id = obj.id;
+		String message = obj.message;
+		String description = obj.description;
+		double length = obj.getLength();
+		String source = obj.getSource();
+		int user_id = obj.getId();
+		Privacy privacy = obj.privacy;
+
+		try {
+			cstmt = AuthenticationModel.conn.prepareCall("{call updateVideo(?,?,?,?,?,?,?)}");
+			int columnIndex = 1;
+			cstmt.setInt(columnIndex++, id);
+			cstmt.setString(columnIndex++, message);
+			cstmt.setString(columnIndex++, description);
+			cstmt.setInt(columnIndex++, (int) length);
+			cstmt.setString(columnIndex++, source);
+			cstmt.setInt(columnIndex++, user_id);
+			cstmt.setString(columnIndex++, privacy.name);
+			cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
+			cstmt.execute();
+			System.out.print("okay sinexise\n");
+			if (cstmt.getInt(columnIndex) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	protected boolean updatePicture(Picture obj) {
+		CallableStatement cstmt = null;
+		int id = obj.id;
+		double height = obj.getHeight();
+		double width = obj.getHeight();
+		String link = obj.link;
+		String source = obj.getSource();
+		Privacy privacy = obj.privacy;
+		int user_id = obj.getId();
+
+		try {
+			cstmt = AuthenticationModel.conn.prepareCall("{call updateVideo(?,?,?,?,?,?,?)}");
+			int columnIndex = 1;
+			cstmt.setInt(columnIndex++, id);
+			cstmt.setDouble(columnIndex++, height);
+			cstmt.setDouble(columnIndex++, width);
+			cstmt.setString(columnIndex++, link);
+			cstmt.setString(columnIndex++, source);
+			cstmt.setString(columnIndex++, privacy.name);
+			cstmt.setInt(columnIndex++, user_id);
+			cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
+			cstmt.execute();
+			System.out.print("okay sinexise\n");
+			if (cstmt.getInt(columnIndex) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
 	
 }
