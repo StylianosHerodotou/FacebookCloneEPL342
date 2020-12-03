@@ -1,5 +1,6 @@
 package application;
 
+import java.net.Socket;
 import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -169,11 +170,10 @@ public class UserModel {
 				String src=resultSet.getString("SRC");
 				int userID =resultSet.getInt("UserID");
 				String privacyName =resultSet.getString("Privacy_Name");
-
-
-
 				
-				Video video = new Video();
+				
+
+				Video video = new Video(id,message, description,length,src,userID,new Privacy(privacyName) ,null);
 				videos.add(video);
 			}
 		} catch (SQLException e) {
@@ -445,22 +445,6 @@ public ArrayList<User> FriendsSameInterests(int id) {
 }
 	return users;
 }
-public ArrayList<Event> getLeastAttendableEvent() {
-	String SPsql = "SHOW_LEAST_POPULAR_GATHERINGS ";   // for stored proc taking 2 parameters
-	ResultSet resultSet=null;
-	ArrayList<Event> Events = new ArrayList<Event>();
-	try {
-	PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
-	ps.setEscapeProcessing(true);
-	resultSet = ps.executeQuery();
-	Events=turnresultSetToUser(resultSet);
-	System.out.println(Events);
 
-} catch (SQLException e) {
-	// TODO Auto-generated catch block
-	System.out.println(e);
-	e.printStackTrace();
-}
-	return Events;
-}
+
 }
