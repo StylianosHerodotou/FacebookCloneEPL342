@@ -242,10 +242,10 @@ public class UserModel {
 		ResultSet resultSet = null;
 		try {
 			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
-			ps.setInt(1, pic.id);
+			ps.setInt(1, id);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
-			commnets = turnresultSetToComments(resultSet, pic);
+			commnets = turnresultSetToComments(resultSet, item);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
