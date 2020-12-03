@@ -159,11 +159,12 @@ public class UserModel {
 				int LocId = resultSet.getInt("LOC_ID");
 				Privacy privacy = new Privacy(resultSet.getString("Privacy_Name"));
 				Location location = new Location(LocId, locations.get(LocId));
-				ArrayList<Picture> pictures = new ArrayList<Picture>();
-				ArrayList<Comment> com = new ArrayList<Comment>();
+				ArrayList<Picture> pictures = this.getPicturesByAlbum(id);
+				
 				PictureAlbum albm = new PictureAlbum(id, name, description, linkname, pictures, location, UserId,
-						privacy, com);
-
+						privacy, null);
+				ArrayList<Comment> com = getItemComments(albm);
+				albm.setComments(com);
 				events.add(albm);
 			}
 		} catch (SQLException e) {
@@ -171,6 +172,26 @@ public class UserModel {
 			e.printStackTrace();
 		}
 		return events;
+	}
+
+	private ArrayList<Picture> getPicturesByAlbum(int id) {
+		String SPsql = "EXEC SHOW_ALBUMS_PICTURES ? "; // for stored proc taking 2 parameters
+		ResultSet resultSet = null;
+		ArrayList<Picture> pictures = new ArrayList<Picture>();
+		try {
+			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+			ps.setInt(1, id);
+			ps.setEscapeProcessing(true);
+			resultSet = ps.executeQuery();
+			pictures = turnresultSetToPictures(resultSet);
+			System.out.println(pictures);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		return pictures;
 	}
 
 	private ArrayList<Event> turnresultSetToEvent(ResultSet resultSet) {
@@ -299,7 +320,9 @@ public class UserModel {
 				Privacy pr = new Privacy(privacyName);
 				ArrayList<Comment> com = new ArrayList<Comment>();
 
-				Video video = new Video(id, message, description, length, src, userID, pr, com);
+				Video video = new Video(id, message, description, length, src, userID, pr, null);
+				com = this.getItemComments(video);
+				video.setComments(com);
 				videos.add(video);
 			}
 		} catch (SQLException e) {
