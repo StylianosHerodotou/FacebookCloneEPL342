@@ -1,28 +1,31 @@
 package application;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DbFunctions {
 	//GET LOC HASHES
-	public User convertObjArrToUser(Object[] obj) {
-		char gender = 'M';
-		if (!(boolean)obj[7]) {
-			gender = 'F';
-		}
-		boolean isVerified = false;
-		if (!(boolean)obj[11]) {
-			isVerified = true;
-		}
-		return new User((int)obj[0], (String) obj[1], (String) obj[2], (String) obj[3], 
-				(String) obj[4], (String) obj[5], (Timestamp) obj[6], gender, null, null, null, isVerified, hometown, livesInLocation)
-				
-		
-	}
+//	public User convertObjArrToUser(Object[] obj) {
+//		char gender = 'M';
+//		if (!(boolean)obj[7]) {
+//			gender = 'F';
+//		}
+//		boolean isVerified = false;
+//		if (!(boolean)obj[11]) {
+//			isVerified = true;
+//		}
+//		return new User((int)obj[0], (String) obj[1], (String) obj[2], (String) obj[3], 
+//				(String) obj[4], (String) obj[5], (Timestamp) obj[6], gender, null, null, null, isVerified, hometown, livesInLocation)
+//				
+//		
+//	}
+	static HashMap<String, Integer> locationHashmap = SearchUserController.getLocations();
 	public static List<Object[]> resultSetToList(ResultSet rs){
 		List<Object[]> results = new ArrayList<Object[]>();
 		try {
@@ -80,8 +83,15 @@ public class DbFunctions {
 
 	}
 	public static User covertObjectArray(Object[] temp) {
-		return null;
-//		return new User((int) temp[0], (String) temp[1], (String) temp[2], (String) temp[3], temp[4].toString(),
-//				(boolean) (temp[7]), (String) temp[5], (String) temp[6]);
+		
+	return new User((String) temp[3],(String) temp[4],
+			(String) temp[5], (String) temp[6], (String) temp[7],
+			(Date) temp[8], (boolean)temp[9],(ArrayList<String>) null,(ArrayList<String>) null,
+			(ArrayList<String>) null, (boolean)temp[10],
+			new Location(-1,""),
+			new Location(-1,""),
+			"", "");
+
+
 	}
 }
