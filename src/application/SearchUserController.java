@@ -22,8 +22,9 @@ public class SearchUserController {
 		controller.view.startView();
 	}
 	
-	public static HashMap<String, Integer> getLocations() {
-		ResultSet result= SearchUserModel.getLocations();
+	
+	public HashMap<String, Integer> getStringToIntLocations() {
+		ResultSet result= this.model.getLocations();
 		HashMap<String, Integer> locations = new HashMap<String, Integer>();
 		
 		try {
@@ -40,6 +41,41 @@ public class SearchUserController {
 		return locations;
 		// TODO Auto-generated method stub
 	}
+	
+	public static HashMap<Integer, String> getIntToStringLocations() {
+		ResultSet result= SearchUserModel.getLocations();
+		HashMap<Integer, String> locations = new HashMap<Integer, String>();
+		
+		try {
+			while (result.next()) {
+				String name = result.getString("Name");
+				int id = result.getInt("LOC_ID");
+				locations.put(id, name);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return locations;
+		// TODO Auto-generated method stub
+	}
+
+	public static String[] convert(Set<String> setOfString) {
+
+		// Create String[] of size of setOfString
+		String[] arrayOfString = new String[setOfString.size()];
+
+		// Copy elements from set to string array
+		// using advanced for loop
+		int index = 0;
+		for (String str : setOfString)
+			arrayOfString[index++] = str;
+
+		// return the formed String[]
+		return arrayOfString;
+	}
+	
 	public SearchUserController(Stage primaryStage) {
 		this.view = new SearchUserView(primaryStage);
 		this.model = new SearchUserModel();
@@ -69,20 +105,7 @@ public class SearchUserController {
 
 	}
 
-	public static String[] convert(Set<String> setOfString) {
-
-		// Create String[] of size of setOfString
-		String[] arrayOfString = new String[setOfString.size()];
-
-		// Copy elements from set to string array
-		// using advanced for loop
-		int index = 0;
-		for (String str : setOfString)
-			arrayOfString[index++] = str;
-
-		// return the formed String[]
-		return arrayOfString;
-	}
+	
 
 	public User[] searchUsers (User newUser) {
 		User[] users = this.model.searchUsers(newUser);

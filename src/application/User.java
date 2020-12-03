@@ -158,7 +158,10 @@ public class User extends FBItem {
 		this.hometown=hometown;
 		this.livesInLocation=livesInLocation;
 	}
-	
+	public User(int id) {
+		super("this is a user");
+		this.id = id;
+	}
 	public User(int id, String firstName, String lastName, String email,
 			String webiste, String link, Date birthday, boolean gender,
 			ArrayList<String> workedFor, ArrayList<String> educationPlaces, 

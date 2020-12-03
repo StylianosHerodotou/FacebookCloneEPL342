@@ -61,7 +61,7 @@ public class SearchUserView {
 
 		GridPane grid = new GridPane();
 
-		HashMap<String, Integer> locationHashmap = this.controller.getLocations();
+		HashMap<String, Integer> locationHashmap = this.controller.getStringToIntLocations();
 		locationHashmap.put("?", -1);
 		String[] locations = AuthenticationController.convert(locationHashmap.keySet());
 		
@@ -194,6 +194,7 @@ public class SearchUserView {
 		User a = new User(firstName, lastName, email, website, link, birthday, gender, workedForPlaces, educationPlaces, quotes, isVerified, hometown, livesIn, username, "");
 			
 			
+			//oti thelo
 			System.out.println(this.controller.searchUsers(a));
 			
 		});

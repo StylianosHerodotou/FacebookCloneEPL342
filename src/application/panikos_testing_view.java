@@ -51,7 +51,7 @@ public class panikos_testing_view extends Application {
 
 			GridPane grid = new GridPane();
 			
-			HashMap<String, Integer> locationHashmap = SearchUserController.getLocations();
+			HashMap<String, Integer> locationHashmap = SearchUserController.getStringToIntLocations();
 			locationHashmap.put("?", -1);
 			String[] locations = AuthenticationController.convert(locationHashmap.keySet());
 			
