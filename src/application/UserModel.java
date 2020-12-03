@@ -1133,6 +1133,78 @@ public class UserModel {
 
 	}
 
+	protected boolean updateLink(Link obj) {
+		CallableStatement cstmt = null;
+		int id = obj.id;
+
+		try {
+			cstmt = AuthenticationModel.conn.prepareCall("{call updateLink(?,?,?,?,?,?,?,?)}");
+			int columnIndex = 1;
+			cstmt.setInt(columnIndex++, id);
+			cstmt.setString(columnIndex++, obj.getName());
+			cstmt.setString(columnIndex++, obj.getURL());
+			cstmt.setString(columnIndex++, obj.getMessage());
+			cstmt.setString(columnIndex++, obj.getDescription());
+			cstmt.setString(columnIndex++, obj.caption);
+			cstmt.setInt(columnIndex++, obj.user_id);
+			cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
+			cstmt.execute();
+			System.out.print("okay sinexise\n");
+			if (cstmt.getInt(columnIndex) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	protected boolean updateAlbum(PictureAlbum obj) {
+		CallableStatement cstmt = null;
+		int id = obj.id;
+
+		try {
+			cstmt = AuthenticationModel.conn.prepareCall("{call updateAlbum(?,?,?,?,?,?,?,?)}");
+			int columnIndex = 1;
+			cstmt.setInt(columnIndex++, id);
+			cstmt.setString(columnIndex++, obj.getName());
+			cstmt.setString(columnIndex++, obj.getDescription());
+			cstmt.setString(columnIndex++, obj.getLink());
+			cstmt.setInt(columnIndex++, obj.LocationTaken.id);
+			cstmt.setInt(columnIndex++, obj.user_id);
+			cstmt.setString(columnIndex++, obj.privacy.name);
+			cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
+			cstmt.execute();
+			System.out.print("okay sinexise\n");
+			if (cstmt.getInt(columnIndex) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
 	protected boolean updateEvent(Event obj) {
 		CallableStatement cstmt = null;
 		int id = obj.id;
