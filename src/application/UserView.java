@@ -110,7 +110,7 @@ public class UserView {
 
 	protected ScrollPane tempView(int tabIndex) {
 		HelperFunctions.initXlevel = 0;
-		HelperFunctions.initYlevel = 2;
+		HelperFunctions.initYlevel = HelperFunctions.initYlevel+5;
 		GridPane grid = new GridPane();
 		ArrayList<FBItem> users = new ArrayList<FBItem>(UserController.generateDummyUsers());
 		this.getResultsView(grid,users );
@@ -145,8 +145,8 @@ public class UserView {
 
 
 	protected ScrollPane getMyProfileView(int tabIndex) {
-		GridPane grid = (GridPane) this.getItemView(tabIndex, this.controller.getUser(), false).getContent();
-		this.prepareProfileScene(grid, this.controller.getUser());
+		HelperFunctions.initYlevel=0;
+		GridPane grid = (GridPane) this.getItemView(tabIndex, this.controller.getUser(), true).getContent();
 		Button showPicturesButton = new Button("show pictures");
 		showPicturesButton.setOnAction(event->this.controller.showUserImagesView(tabIndex));
 		Button showVideosButton = new Button("show videos");
@@ -160,7 +160,7 @@ public class UserView {
 
 
 
-		HelperFunctions.initYlevel++;
+		HelperFunctions.initYlevel = User.class.getDeclaredFields().length+6;
 		grid.add(showPicturesButton, HelperFunctions.initXlevel, HelperFunctions.initYlevel);
 		grid.add(showVideosButton, HelperFunctions.initXlevel+1, HelperFunctions.initYlevel++);
 		grid.add(showAlbumsButton, HelperFunctions.initXlevel,HelperFunctions.initYlevel);
@@ -299,6 +299,7 @@ return new ScrollPane(grid);
 	
 	protected ScrollPane getFormView(int tabIndex, FBItem object) {
 		GridPane grid = new GridPane();
+		prepareItemScene(grid, object.getClass().getSimpleName(), tabIndex);
 		String className= object.getClass().getSimpleName();
 		if(className.equals("User")) {
 			prepareProfileScene(grid,(User)object );
@@ -312,7 +313,7 @@ return new ScrollPane(grid);
 //		ArrayList<Field> fields= getBothSensitiveAndNonSensitiveFields(object, all_fields);
 
 		HelperFunctions.initXlevel = 0;
-		HelperFunctions.initYlevel = 2;
+		HelperFunctions.initYlevel = HelperFunctions.initYlevel+5;
 		ArrayList<Node> retriveFields = new ArrayList<Node>();
 		for (int field_index = 0; field_index < fields.size(); field_index++) {
 				try {
@@ -487,59 +488,19 @@ return grid;
 return grid;
 	}
 
-	private void prepareItemScene(GridPane grid, String className, int tabIndex) {
-		grid.setAlignment(Pos.BASELINE_LEFT);
-		grid.setHgap(18);
-		grid.setVgap(18);
-		// grid.setPadding(new Insets(00, 00, 00, 00));
-		Text scenetitle = null;
-		User myUser=this.controller.getUser();
-		scenetitle = new Text(myUser.getUsername()+ "'s "+className);
-
-		scenetitle = new Text(this.controller.getUser().getUsername()+"'s Profile");
-		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
-		grid.add(scenetitle, 1, 1, 10, 1);
-		Button logOutButton = new Button("Log Out");
-		logOutButton.setOnAction(event->{
-			this.controller.logOut();
-		});
-		Button showProfileButton = new Button("Go Back to profile");
-		showProfileButton.setOnAction(event->{
-			this.controller.showProfile(tabIndex);
-		});
-		ScrollPane sp = new ScrollPane(grid);
-		sp.setFitToWidth(true);
-		grid.setHgrow(sp, Priority.ALWAYS);
-		sp.setContent(grid);
-		grid.add(logOutButton, HelperFunctions.initXlevel+10,HelperFunctions.initYlevel);
-		grid.add(showProfileButton,HelperFunctions.initXlevel+10,HelperFunctions.initYlevel+2);
-
-	}
-
-	private void prepareProfileScene(GridPane grid, User user) {
-		grid.setAlignment(Pos.BASELINE_LEFT);
-		grid.setHgap(18);
-		grid.setVgap(18);
-		// grid.setPadding(new Insets(00, 00, 00, 00));
-		Text scenetitle = new Text(user.getUsername()+ "'s Profile");
-		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
-		grid.add(scenetitle, 1, 1, 10, 1);
-		Button logOutButton = new Button("Log Out");
-		logOutButton.setOnAction(event->{
-			this.controller.logOut();
-		});
-		grid.add(logOutButton, 10,0);
-	}
+	
 
 	protected GridPane getItemView(int tabIndex, FBItem item) {
 		GridPane grid = new GridPane();
+		if (item.getClass()!=User.class)
+		prepareItemScene(grid, item.getClass().getSimpleName(), tabIndex);
 
 		Field[] all_fields = item.getClass().getDeclaredFields();
 		ArrayList<Field> fields= HelperFunctions.getNonSensitiveFields(item, all_fields);
 //		ArrayList<Field> fields= getBothSensitiveAndNonSensitiveFields(object, all_fields);
 
 		HelperFunctions.initXlevel = 0;
-		HelperFunctions.initYlevel = 2;
+		HelperFunctions.initYlevel = HelperFunctions.initYlevel+5;
 		ArrayList<Node> retriveFields = new ArrayList<Node>();
 		for (int field_index = 0; field_index < fields.size(); field_index++) {
 				try {
@@ -565,12 +526,17 @@ return grid;
 	protected ScrollPane getItemView(int tabIndex, FBItem item,boolean doPrepareScene) {
 		GridPane grid = this.getItemView(tabIndex, item);
 		if(doPrepareScene==true) {
-			this.prepareItemScene(grid, item.getClass().getSimpleName(),tabIndex);
+			if(item.getClass()==User.class) {
+				this.prepareProfileScene(grid, (User)item);
+			}
+			else
+				this.prepareItemScene(grid, item.getClass().getSimpleName(),tabIndex);
 		}
 		return new ScrollPane(grid);
 	}
 	public ScrollPane getItemCrollView(FBItem[] items, int tabIndex, boolean canEditItems) {
 		GridPane grid = new GridPane();
+//		prepareItemScene(grid, items[0].getClass().getSimpleName(), tabIndex);
 		grid.setHgap(8); // horizontal
 		grid.setVgap(10);// vertical
 
@@ -586,5 +552,53 @@ return grid;
 			}
 		}
 		return new ScrollPane(grid);
+	}
+	
+	private void prepareItemScene(GridPane grid, String className, int tabIndex) {
+		HelperFunctions.initXlevel=2;
+		HelperFunctions.initYlevel=0;
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		// grid.setPadding(new Insets(00, 00, 00, 00));
+		Text scenetitle = null;
+		User myUser=this.controller.getUser();
+		scenetitle = new Text(myUser.getUsername()+ "'s "+className);
+
+		scenetitle = new Text(className);
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 1, 1, 10, 1);
+		Button logOutButton = new Button("Log Out");
+		logOutButton.setOnAction(event->{
+			this.controller.logOut();
+		});
+		Button showProfileButton = new Button("Go Back to profile");
+		showProfileButton.setOnAction(event->{
+			this.controller.showProfile(tabIndex);
+		});
+		ScrollPane sp = new ScrollPane(grid);
+		sp.setFitToWidth(true);
+		grid.setHgrow(sp, Priority.ALWAYS);
+		sp.setContent(grid);
+		grid.add(logOutButton, HelperFunctions.initXlevel+10,HelperFunctions.initYlevel);
+		grid.add(showProfileButton,HelperFunctions.initXlevel+10,HelperFunctions.initYlevel+1);
+
+	}
+
+	private void prepareProfileScene(GridPane grid, User user) {
+		HelperFunctions.initXlevel=2;
+		HelperFunctions.initYlevel=0;
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		// grid.setPadding(new Insets(00, 00, 00, 00));
+		Text scenetitle = new Text(user.getUsername()+ "'s Profile");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 1, 1, 10, 1);
+		Button logOutButton = new Button("Log Out");
+		logOutButton.setOnAction(event->{
+			this.controller.logOut();
+		});
+		grid.add(logOutButton, 10,0);
 	}
 }
