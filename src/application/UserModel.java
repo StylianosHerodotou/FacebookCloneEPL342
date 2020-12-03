@@ -216,8 +216,28 @@ public class UserModel {
 	public ArrayList<Event> getUserEvents(int id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
 	public ArrayList<User> getUserFriendRequests(int id) {
 		String SPsql = "EXEC GET_FRIEND_REQUESTS ? ";   // for stored proc taking 2 parameters
+		ResultSet resultSet=null;
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+		PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+		ps.setInt(1,id );
+		ps.setEscapeProcessing(true);
+		resultSet = ps.executeQuery();
+		users=turnresultSetToUser(resultSet);
+		System.out.println(users);
+
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		System.out.println(e);
+		e.printStackTrace();
+	}
+		return users;
+	}
+	public ArrayList<User> getUserFriendsRequests(int id) {
+		String SPsql = "SHOW_FRIENDS ? ";   // for stored proc taking 2 parameters
 		ResultSet resultSet=null;
 		ArrayList<User> users = new ArrayList<User>();
 		try {

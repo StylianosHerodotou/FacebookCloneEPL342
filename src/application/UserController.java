@@ -420,13 +420,9 @@ public void addFriend(int id,int tabint) {
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
-	public ObservableList<FriendRequest> getFriendRequests(int id)  {
+	public ArrayList<User> getFriendRequests(int id)  {
 		ArrayList<User> UsersThatSendFriendRequest= this.model.getUserFriendRequests(id);
-		//AHHAHAHAHHAHHAHAHHAHAHHAHHAHAHHAHAHHAHHAAHHAHAHHAHAHAH
-
-
-		// TODO Auto-generated method stub
-		return null;
+		return UsersThatSendFriendRequest;
 	}
 
 
