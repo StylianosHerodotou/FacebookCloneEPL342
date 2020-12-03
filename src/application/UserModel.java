@@ -99,34 +99,113 @@ public class UserModel {
 
 	// From friend request tu id 1 remove the guy with id2
 	public boolean removeFromFriendRequest(int id, int id2) {
-		// TODO Auto-generated method stub
-		return false;
+		CallableStatement cstmt=null;
+		try {
+		int outs=3;
+		cstmt = AuthenticationModel.conn.prepareCall("{call DELETE_A_REQUEST(? ,?,?)}");
+		cstmt.setInt(1, id);
+		cstmt.setInt(2, id2);
+		cstmt.registerOutParameter(outs, java.sql.Types.BIT);
+		cstmt.execute();
+		if (cstmt.getInt(outs) == 1) {
+			return true;
+		} else {
+			return false;
+		}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
 	}
 
 	public boolean banFromFriendRequest(int id, int id2) {
-		// TODO Auto-generated method stub
-		return false;
+		CallableStatement cstmt=null;
+		try {
+		int outs=3;
+		cstmt = AuthenticationModel.conn.prepareCall("{call IGNORE_A_REQUEST(? ,?,?)}");
+		cstmt.setInt(1, id);
+		cstmt.setInt(2, id2);
+		cstmt.registerOutParameter(outs, java.sql.Types.BIT);
+		cstmt.execute();
+		if (cstmt.getInt(outs) == 1) {
+			return true;
+		} else {
+			return false;
+		}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public boolean addToFriends(int id, int id2) {
-		// TODO Auto-generated method stub
-		return false;
+		CallableStatement cstmt=null;
+		try {
+		int outs=3;
+		cstmt = AuthenticationModel.conn.prepareCall("{call ACCEPT_A_REQUEST(? ,?,?)}");
+		cstmt.setInt(1, id);
+		cstmt.setInt(2, id2);
+		cstmt.registerOutParameter(outs, java.sql.Types.BIT);
+		cstmt.execute();
+		if (cstmt.getInt(outs) == 1) {
+			return true;
+		} else {
+			return false;
+		}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	// id en o user ke to id2 en tutos pu tha gini removed from friend list tu id
 	public boolean removeFromFriends(int id, int id2) {
-		String SPsql = "EXEC DELETE_FRIENDS "; // for stored proc taking 2 parameters
-		ResultSet resultSet = null;
+		CallableStatement cstmt=null;
 		try {
-			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
-			ps.setEscapeProcessing(true);
-			resultSet = ps.executeQuery();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e);
-			e.printStackTrace();
+		int outs=3;
+		cstmt = AuthenticationModel.conn.prepareCall("{call DELETE_FRIENDS(? ,?,?)}");
+		cstmt.setInt(1, id);
+		cstmt.setInt(2, id2);
+		cstmt.registerOutParameter(outs, java.sql.Types.BIT);
+		cstmt.execute();
+		if (cstmt.getInt(outs) == 1) {
+			return true;
+		} else {
+			return false;
 		}
-		return true;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public ResultSet getLocations() {
@@ -716,7 +795,7 @@ public class UserModel {
 	protected boolean addVideo(Video vid) {
 		ResultSet resultSet = null;
 		String SPsql = "EXEC addVideo (?,?,?,?,?,?) "; // for stored proc taking 2 parameters
-		CallableStatement cstmt;
+		CallableStatement cstmt = null;
 		try {
 			cstmt = AuthenticationModel.conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
 
