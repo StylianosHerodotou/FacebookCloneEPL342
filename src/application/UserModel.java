@@ -1138,4 +1138,50 @@ public class UserModel {
 
 	}
 	
+	protected boolean updateEvent(Event obj) {
+		CallableStatement cstmt = null;
+		int id = obj.id;
+		String ven =obj.venue;
+		String name = obj.name;
+		Timestamp startTim = obj.startTime;
+		Timestamp endTim = obj.endTime;
+		String descri = obj.description;
+		int user_id = obj.getUser_id();
+		Privacy privacy = obj.privacy;
+		Location loca = obj.loc;
+
+		try {
+			cstmt = AuthenticationModel.conn.prepareCall("{call updateEvent(?,?,?,?,?,?,?,?,?,?)}");
+			int columnIndex = 1;
+			cstmt.setInt(columnIndex++, id);
+			cstmt.setString(columnIndex++, ven);
+			cstmt.setString(columnIndex++, name);
+			cstmt.setDate(columnIndex++, new Date(startTim.getTime()));
+			cstmt.setDate(columnIndex++, new Date(endTim.getTime()));
+			cstmt.setString(columnIndex++, descri);
+			cstmt.setInt(columnIndex++, user_id);
+			cstmt.setString(columnIndex++, privacy.name);
+			cstmt.setInt(columnIndex++, loca.getId());
+			cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
+			cstmt.execute();
+			System.out.print("okay sinexise\n");
+			if (cstmt.getInt(columnIndex) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+	
 }
