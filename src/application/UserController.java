@@ -442,6 +442,12 @@ public void addFriend(int id,int tabint) {
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
+
+	public void startChris(int tabIndex) {
+		Tab currentTab = this.view.tabPane.getTabs().get(tabIndex);
+		currentTab.setContent(this.view.getFriendView(tabIndex));
+		
+	}
 	
 
 

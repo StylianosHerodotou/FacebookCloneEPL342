@@ -77,35 +77,33 @@ public class UserView {
 		this.tabPane = new TabPane();
 		int index = 0;
 
-//      Tab profileTab = new Tab("Profile",this.getMyProfileView(index++));
-//      Tab changeProfileTab = new Tab("changeProfileTab",this.getFormView(index++, this.controller.getUser()));
-//      Tab seeItemTab = new Tab("Picture View",this.getItemView(index++, this.controller.generateDummyPicture()));
-//      Tab seeAlmbuTab = new Tab("Album View",this.getItemView(index++, this.controller.generatePictureAlbum()));
-//
-//
-//      tabPane.getTabs().add(profileTab);
-//      tabPane.getTabs().add(changeProfileTab);
-//      tabPane.getTabs().add(seeItemTab);
-//      tabPane.getTabs().add(seeAlmbuTab);
-
 		Tab profileTab = new Tab("Profile", this.getMyProfileView(index++));
-		Tab pictureTab = new Tab("Profile", this.getItemView(index++, this.controller.generateDummyPicture(), true));
-		Tab AlbumTab = new Tab("Profile", this.getItemView(index++, this.controller.generateDummyPictureAlbum(), true));
-		Tab videoTab = new Tab("Profile", this.getItemView(index++, this.controller.generateDummyVideo(), true));
-		Tab EventTab = new Tab("Profile", this.getItemView(index++, this.controller.generateDummyEvent(), true));
-		Tab LinkTab = new Tab("Profile", this.getItemView(index++, this.controller.generateDummyLink(), true));
+		Tab chrisTab = new Tab("chris", this.ChrisView(index++));
+		Tab panikosTab = new Tab("panikos", this.PanikosView(index++));
+
 
 		tabPane.getTabs().add(profileTab);
-		tabPane.getTabs().add(pictureTab);
-		tabPane.getTabs().add(AlbumTab);
-		tabPane.getTabs().add(videoTab);
-		tabPane.getTabs().add(EventTab);
-		tabPane.getTabs().add(LinkTab);
+		tabPane.getTabs().add(chrisTab);
+		tabPane.getTabs().add(panikosTab);
+
 
 	}
-
-
-
+	
+	protected ScrollPane ChrisView(int tabIndex) {
+		GridPane grid = new GridPane();
+		Button goButton = new Button("Start Chris");
+		goButton.setOnAction(event-> this.controller.startChris(tabIndex));
+		grid.add(goButton, 0, 0);
+		return new ScrollPane(grid);
+	}
+	
+	protected ScrollPane PanikosView(int tabIndex) {
+		GridPane grid = new GridPane();
+		Button goButton = new Button("Start Panikos");
+		goButton.setOnAction(event-> this.controller.startChris(tabIndex));
+		grid.add(goButton, 0, 0);
+		return new ScrollPane(grid);
+	}
 
 
 
