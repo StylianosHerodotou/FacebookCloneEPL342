@@ -11,7 +11,6 @@ public class Event extends FBItem{
 	protected Timestamp endTime;
 	protected String description;
 	protected int user_id ;
-	protected int loc_id;
 	protected Privacy privacy;
 	protected Location loc;
 	public Privacy getPrivacy() {
