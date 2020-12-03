@@ -653,13 +653,12 @@ public class UserModel {
 
 	protected boolean addEvent(Event event) {
 		ResultSet resultSet = null;
-		String SPsql = "EXEC addEvent (?,?,?,?,?,?,?,?,?) "; // for stored proc taking 2 parameters
+		String SPsql = "EXEC addEvent (?,?,?,?,?,?,?,?) "; // for stored proc taking 2 parameters
 		CallableStatement cstmt;
 		try {
 			cstmt = AuthenticationModel.conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
 
 			int index = 1;
-//		cstmt.setInt(index++,);
 //		cstmt.setString(index++,);
 //		cstmt.setString(index++,);
 //		cstmt.setTimestamp(index++,);
@@ -691,4 +690,43 @@ public class UserModel {
 			}
 		}
 	}
+	protected boolean addVideo(Video vid) {
+		ResultSet resultSet = null;
+		String SPsql = "EXEC addVideo (?,?,?,?,?,?) "; // for stored proc taking 2 parameters
+		CallableStatement cstmt;
+		try {
+			cstmt = AuthenticationModel.conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
+
+			int index = 1;
+//		cstmt.setString(index++,);
+//		cstmt.setString(index++,);
+//		cstmt.setInt(index++,);
+//		cstmt.setString(index++,);
+//		cstmt.setInt(index++,);
+//		cstmt.setString(index++,);
+			cstmt.setEscapeProcessing(true);
+			cstmt.registerOutParameter(index, java.sql.Types.BIT);
+			cstmt.execute();
+			resultSet = cstmt.executeQuery();
+
+			if (cstmt.getInt(index) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (SQLException e) {
+			System.out.print(e);
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
 }
