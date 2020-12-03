@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.sun.media.sound.AlawCodec;
 
 import javafx.animation.Animation;
 
@@ -901,7 +900,7 @@ public class UserModel {
 		ResultSet resultSet = null;
 		CallableStatement cstmt = null;
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call insertVideo (?,?,?,?,?,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call insertVideo (?,?,?,?,?,?,?)}");
 
 			int index = 1;
 			cstmt.setString(index++, obj.getMessage());
@@ -938,7 +937,7 @@ public class UserModel {
 		ResultSet resultSet = null;
 		CallableStatement cstmt = null;
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call insertPicture (?,?,?,?,?,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call insertPicture (?,?,?,?,?,?,?)}");
 
 			int index = 1;
 			cstmt.setFloat(index++, (float) obj.width);
@@ -978,7 +977,7 @@ public class UserModel {
 		CallableStatement cstmt = null;
 
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call insertLink (?,?,?,?,?,?) }");
+			cstmt = AuthenticationModel.conn.prepareCall("{call insertLink (?,?,?,?,?,?,?) }");
 
 			int index = 1;
 			cstmt.setString(index++, obj.getName());
@@ -1016,7 +1015,7 @@ public class UserModel {
 		ResultSet resultSet = null;
 		CallableStatement cstmt = null;
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call insertAlbum (?,?,?,?,?,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call insertAlbum (?,?,?,?,?,?,?)}");
 
 			int index = 1;
 			cstmt.setString(index++, obj.getName());
@@ -1061,7 +1060,7 @@ public class UserModel {
 		Privacy privacy = obj.privacy;
 
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call updateVideo(?,?,?,?,?,?,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call updateVideo(?,?,?,?,?,?,?,?)}");
 			int columnIndex = 1;
 			cstmt.setInt(columnIndex++, id);
 			cstmt.setString(columnIndex++, message);
@@ -1103,7 +1102,7 @@ public class UserModel {
 		int user_id = obj.getId();
 
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call updatePicture(?,?,?,?,?,?,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call updatePicture(?,?,?,?,?,?,?,?)}");
 			int columnIndex = 1;
 			cstmt.setInt(columnIndex++, id);
 			cstmt.setDouble(columnIndex++, height);
@@ -1139,7 +1138,7 @@ public class UserModel {
 		int id = obj.id;
 
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call updateLink(?,?,?,?,?,?,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call updateLink(?,?,?,?,?,?,?,?)}");
 			int columnIndex = 1;
 			cstmt.setInt(columnIndex++, id);
 			cstmt.setString(columnIndex++, obj.getName());
@@ -1175,7 +1174,7 @@ public class UserModel {
 		int id = obj.id;
 
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call updateAlbum(?,?,?,?,?,?,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call updateAlbum(?,?,?,?,?,?,?,?)}");
 			int columnIndex = 1;
 			cstmt.setInt(columnIndex++, id);
 			cstmt.setString(columnIndex++, obj.getName());
