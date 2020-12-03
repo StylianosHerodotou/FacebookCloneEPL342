@@ -11,7 +11,7 @@ public class Picture extends FBItem{
 	protected String source;
 	protected Privacy privacy;
 	protected ArrayList<Comment> comments;
-	
+	protected int UserId; 
 	public ArrayList<Comment> getComments() {
 		return comments;
 	}
@@ -21,7 +21,7 @@ public class Picture extends FBItem{
 	}
 	
 	public Picture(int id, double width, double height, String link, String source, Privacy privacy,
-			ArrayList<Comment> comments) {
+			ArrayList<Comment> comments,int userid) {
 		super("this is a picture");
 		this.id = id;
 		this.width = width;
@@ -30,6 +30,7 @@ public class Picture extends FBItem{
 		this.source = source;
 		this.privacy = privacy;
 		this.comments = comments;
+		this.UserId=userid;
 	}
 
 	public Picture(int id, double width, double height, String link, String source) {

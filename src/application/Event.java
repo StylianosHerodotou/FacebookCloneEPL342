@@ -25,19 +25,7 @@ public class Event extends FBItem{
 
 	
 
-	public Event(int id, String venue, String name, Timestamp startTime, Timestamp endTime, String description,
-			int user_id, int loc_id, Privacy privacy) {
-		super("this is an event");
-		this.id = id;
-		this.venue = venue;
-		this.name = name;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.description = description;
-		this.user_id = user_id;
-		this.loc_id = loc_id;
-		this.privacy = privacy;
-	}
+	
 	public Event(int id, String venue, String name, Timestamp startTime, Timestamp endTime, String description,
 			int user_id, Location locs, Privacy privacy) {
 		super("this is an event");
@@ -62,13 +50,7 @@ public class Event extends FBItem{
 		this.user_id = user_id;
 	}
 
-	public int getLoc_id() {
-		return loc_id;
-	}
-
-	public void setLoc_id(int loc_id) {
-		this.loc_id = loc_id;
-	}
+	
 
 	public int getId() {
 		return id;
