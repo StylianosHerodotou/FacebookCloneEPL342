@@ -61,6 +61,43 @@ public class UserController {
 		this.view.generateTabPane();
 		this.model.setController(this);
 	}
+	public HashMap<String, Integer> getStringToIntLocations() {
+		ResultSet result= this.model.getLocations();
+		HashMap<String, Integer> locations = new HashMap<String, Integer>();
+		
+		try {
+			while (result.next()) {
+				String name = result.getString("Name");
+				int id = result.getInt("LOC_ID");
+				locations.put(name, id);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return locations;
+		// TODO Auto-generated method stub
+	}
+	
+	public HashMap<Integer, String> getIntToStringLocations() {
+		ResultSet result= this.model.getLocations();
+		HashMap<Integer, String> locations = new HashMap<Integer, String>();
+		
+		try {
+			while (result.next()) {
+				String name = result.getString("Name");
+				int id = result.getInt("LOC_ID");
+				locations.put(id, name);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return locations;
+		// TODO Auto-generated method stub
+	}
 	public static void displayPopUp(String message) {
 		Stage popupwindow = new Stage();
 		popupwindow.initModality(Modality.APPLICATION_MODAL);

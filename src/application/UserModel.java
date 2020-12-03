@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class UserModel {
@@ -147,6 +148,7 @@ public class UserModel {
 	}
 	private ArrayList<User> turnresultSetToUser(ResultSet resultSet){
 		 ArrayList<User> users= new  ArrayList<User>();
+		 HashMap<Integer, String> locations= this.controller.getIntToStringLocations();
 		try {
 			while(resultSet.next()) {
 				int id=resultSet.getInt("User_ID");
@@ -158,21 +160,23 @@ public class UserModel {
 				String Website = resultSet.getString("WebSite");
 				String Link=resultSet.getString("Link");
 				Date Birthday = resultSet.getDate("Birthday");
-				int gender=resultSet.getInt("Gender");
-				int is_verified = resultSet.getInt("Is_verified");
+				boolean gender=resultSet.getBoolean("Gender");
+				boolean is_verified = resultSet.getBoolean("Is_verified");
 				int    hometown_loc_id =resultSet.getInt("Hometown_LOC_ID");
 				int    current_loc_id = resultSet.getInt("Current_LOC_ID");
-				Location home=new Location(hometown_loc_id ,AuthenticationController.
-				User user = new User(id,Username,password,First_Name,Last_Name,Email,Website,Link,Birthday,gender,is_verified,hometown_loc_id,current_loc_id);
-						
-						
-				pictures.add(pic);
+				Location home=new Location(hometown_loc_id ,locations.get(hometown_loc_id));
+			    Location current=new Location(current_loc_id  ,locations.get(current_loc_id ));
+				ArrayList<String> workedFor = this.getWorkOfUser(id);
+				ArrayList<String> educationPlaces = this.getEducationOfUser(id);
+				ArrayList<String> quotes= this.getQuotesOfUser(id);
+				User use=new User(id,First_Name,Last_Name,Email,Website,Link,Birthday,gender,workedFor,educationPlaces,quotes,is_verified,home,current);		
+				users.add(use);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return pictures;
+		return users;
 	}
 	public ArrayList<Picture> getUserImages(int id) {
 		String SPsql = "EXEC retrieveUserImages ? ";   // for stored proc taking 2 parameters
@@ -206,16 +210,86 @@ public class UserModel {
 		ps.setInt(1,id );
 		ps.setEscapeProcessing(true);
 		resultSet = ps.executeQuery();
-		users=turnresultSetToPictures(resultSet);
-		System.out.println(pictures);
+		users=turnresultSetToUser(resultSet);
+		System.out.println(users);
 
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		System.out.println(e);
 		e.printStackTrace();
 	}
-		return pictures;
+		return users;
 	}
-
-
+public ArrayList<String> getWorkOfUser(int UserID){
+		
+		String SPsql = "EXEC getWorkOfUser ?";   // for stored proc taking 2 parameters
+		PreparedStatement ps;
+		ResultSet resultSet=null;
+		ArrayList<String> workPlaces = new ArrayList<String>();
+		try {
+			ps = AuthenticationModel.conn.prepareStatement(SPsql);
+		
+		ps.setEscapeProcessing(true);
+		int index=1;
+		ps.setInt(index++, UserID);
+		resultSet= ps.executeQuery();
+		while(resultSet.next()) {
+			String workplace=resultSet.getString("Workplace");
+			workPlaces.add(workplace);
+		}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return workPlaces;
+		
+	}
+public ArrayList<String> getQuotesOfUser(int UserID){
+	
+	String SPsql = "EXEC getQuotesOfUser ?";   // for stored proc taking 2 parameters
+	PreparedStatement ps;
+	ResultSet resultSet=null;
+	ArrayList<String> quotes = new ArrayList<String>();
+	try {
+		ps = AuthenticationModel.conn.prepareStatement(SPsql);
+	
+	ps.setEscapeProcessing(true);
+	int index=1;
+	ps.setInt(index++, UserID);
+	resultSet= ps.executeQuery();
+	while(resultSet.next()) {
+		String quote=resultSet.getString("Quote");
+		quotes.add(quote);
+	}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return quotes;
+	
+}
+public ArrayList<String> getEducationOfUser(int UserID){
+	
+	String SPsql = "EXEC getEducationOfUser ?";   // for stored proc taking 2 parameters
+	PreparedStatement ps;
+	ResultSet resultSet=null;
+	ArrayList<String> educationPlaces = new ArrayList<String>();
+	try {
+		ps = AuthenticationModel.conn.prepareStatement(SPsql);
+	
+	ps.setEscapeProcessing(true);
+	int index=1;
+	ps.setInt(index++, UserID);
+	resultSet= ps.executeQuery();
+	while(resultSet.next()) {
+		String educationplace=resultSet.getString("Education_Place");
+		educationPlaces.add(educationplace);
+	}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return educationPlaces;
+	
+}
 }
