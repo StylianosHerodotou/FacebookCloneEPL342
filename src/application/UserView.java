@@ -546,7 +546,7 @@ return grid;
 		for (int field_index = 0; field_index < fields.size(); field_index++) {
 				try {
 					Field currentField=fields.get(field_index);
-					HelperFunctions.addItemLabel(currentField,item, retriveFields);
+					HelperFunctions.addItemLabel(currentField,item, retriveFields, tabIndex, this);
 					HelperFunctions.addFielditemInGrid(grid, currentField.getName(),field_index, retriveFields);
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block

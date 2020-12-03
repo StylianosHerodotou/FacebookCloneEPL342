@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.HBox;
 
 public class HelperFunctions {
 	static int initXlevel = 0;
@@ -24,7 +25,7 @@ public class HelperFunctions {
 	
 	
 	protected static boolean is_field_sensitive(String filed_name) {
-		String[] sensitive_info = { "password", "SSN", "id" };
+		String[] sensitive_info = { "password", "SSN", };
 		boolean is_sensitive = false;
 		for (int index = 0; index < sensitive_info.length; index++) {
 			if (filed_name.equals(sensitive_info[index])) {
@@ -35,12 +36,10 @@ public class HelperFunctions {
 		return is_sensitive;
 	}
 	
-	static void addItemLabel(Field field, Object object, ArrayList<Node> retriveFields) {
-//		System.out.print(object.toString());
+	static void addItemLabel(Field field, Object object, ArrayList<Node> retriveFields, int tabIndex, UserView view) {
 		String fieldName=field.getName();
-//		String fieldType=(String) allPossibleFields.get(fieldName);
 		String fieldType= field.getType().getSimpleName();
-		
+
 		if(fieldType==null) {
 			System.out.println(fieldName);
 		}
@@ -60,8 +59,11 @@ public class HelperFunctions {
 					else
 						addTextLabelRow("Male", retriveFields);
 				}
-				else {
-				addTextLabelRow(fieldValue.toString(), retriveFields);
+				else if (fieldName.equals("pictures")){
+					addAlbumLabel((ArrayList)fieldValue, retriveFields, tabIndex, view);
+				}
+				else{
+					addTextLabelRow(fieldValue.toString(), retriveFields);
 				}
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
@@ -163,7 +165,7 @@ public class HelperFunctions {
 		}
 		nodes.add(datePicker);
 }
-	protected static void addPictureLabel( Picture fieldValue, ArrayList<Node> nodes, int tabIndex,UserView view) {
+	protected static Node addPictureLabel( Picture fieldValue, int tabIndex,UserView view) {
 		HBox box=null;
 		if(fieldValue==null) {
 			box = new HBox();
@@ -171,9 +173,11 @@ public class HelperFunctions {
 		else {
 			box = new HBox(view.getItemView(tabIndex, fieldValue));
 		}
-		nodes.add(box);
+		return box;
 }
-	protected static void addPictureField( Picture fieldValue, ArrayList<Node> nodes, int tabIndex,UserView view) {
+	
+	
+	protected static Node addPictureField( Picture fieldValue, int tabIndex,UserView view) {
 		HBox box=null;
 		if(fieldValue==null) {
 			box = new HBox();
@@ -181,19 +185,33 @@ public class HelperFunctions {
 		else {
 			box = new HBox(view.getFormView(tabIndex, fieldValue));
 		}
-		nodes.add(box);
+		return box;
 }
-	protected static void addAlmbumLabel(ArrayList<Picture> pictures, ArrayList<Node> nodes, int tabIndex,UserView view) {
-		for (Picture pic : pictures) {
-			addPictureLabel(pic,nodes,tabIndex,view);
+	protected static void addAlbumLabel(ArrayList<Picture> pictures, ArrayList<Node> nodes, int tabIndex,UserView view) {
+		int ylevel=0;
+		int xlevel=2;
+		GridPane grid = new GridPane();	
+		if(pictures!=null) {
+			for (Picture pic : pictures) {
+				grid.add(addPictureLabel(pic,tabIndex,view),xlevel,ylevel++);
+			}
 		}
+
+		nodes.add(grid);
 	}
 	
 	protected static void addAlmbumField(ArrayList<Picture> pictures, ArrayList<Node> nodes, int tabIndex,UserView view) {
-		for (Picture pic : pictures) {
-			addPictureField(pic,nodes,tabIndex,view);
+			
+			int ylevel=0;
+			int xlevel=2;
+			GridPane grid = new GridPane();	
+			if(pictures!=null) {
+			for (Picture pic : pictures) {
+				grid.add(addPictureField(pic,tabIndex,view),xlevel,ylevel++);
+			}
+			}
+			nodes.add(grid);
 		}
-	}
 	
 
 	protected static Object addItemField(Field field, Object object, ArrayList<Node> retriveFields,
@@ -237,7 +255,7 @@ public class HelperFunctions {
 						addTextFieldRow(comments,retriveFields);
 
 					}else if (fieldName.equals("pictures")){
-						addAlmbumLabel((ArrayList<Picture>) field.get(object), retriveFields, tabIndex, view);
+						addAlbumLabel((ArrayList<Picture>) field.get(object), retriveFields, tabIndex, view);
 					}else {
 						addTextFieldRow(ArrayListToString((ArrayList<Object>) field.get(object)),retriveFields);
 					}

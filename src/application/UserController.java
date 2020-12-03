@@ -267,6 +267,9 @@ public void addFriend(int id,int tabint) {
 	public static PictureAlbum generateDummyPictureAlbum() {
 		ArrayList<Picture> pictures = new ArrayList<Picture>();
 		pictures.add(generateDummyPicture());
+		pictures.add(generateDummyPicture());
+		pictures.add(generateDummyPicture());
+
 		return new PictureAlbum(0,"almbum name","description","link",pictures,
 				generateDummyLocation(),0,new Privacy("public"), null);
 	}
@@ -285,19 +288,25 @@ public void addFriend(int id,int tabint) {
 
 
 	public HashMap<String, Integer> getLocations() {
-		ResultSet result= this.model.getLocations();
+//		ResultSet result= this.model.getLocations();
+//		HashMap<String, Integer> locations = new HashMap<String, Integer>();
+//
+//		try {
+//			while (result.next()) {
+//				String name = result.getString("Name");
+//				int id = result.getInt("LOC_ID");
+//				locations.put(name, id);
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		
 		HashMap<String, Integer> locations = new HashMap<String, Integer>();
+		locations.put("larnaka", 0);
+		locations.put("lefkosia", 1);
 
-		try {
-			while (result.next()) {
-				String name = result.getString("Name");
-				int id = result.getInt("LOC_ID");
-				locations.put(name, id);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		return locations;
 		// TODO Auto-generated method stub
@@ -401,6 +410,11 @@ public void addFriend(int id,int tabint) {
 
 	public void showUserVideosView(int tabIndex) {
 		ArrayList<Video> Videos= this.model.getUserVideos(this.user.getId());
+//		ArrayList<Video> Videos= new ArrayList<Video>();
+//		Videos.add(generateDummyVideo());
+//		Videos.add(generateDummyVideo());
+//		Videos.add(generateDummyVideo());
+
 		FBItem[] videoItems= turnVideosToFBArray(Videos);
 		ScrollPane grid = this.view.getItemCrollView(videoItems,tabIndex,true);
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
