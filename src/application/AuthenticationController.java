@@ -88,7 +88,11 @@ public class AuthenticationController {
 	public static void startController(Stage primaryStage) {
 		AuthenticationController controller = new AuthenticationController(primaryStage);
 		controller.model.connectToDB();
-		controller.view.startView();
+//		controller.view.startView();
+		
+		//TODO Delete this
+		User tempUser=generateDummyUser();
+		UserController.startController(primaryStage, tempUser);
 	}
 
 //	public void signUp() {

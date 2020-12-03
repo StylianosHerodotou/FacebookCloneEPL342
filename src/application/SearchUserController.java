@@ -1,5 +1,8 @@
 package application;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Set;
 
 import javafx.geometry.Pos;
@@ -18,7 +21,25 @@ public class SearchUserController {
 		SearchUserController controller = new SearchUserController(primaryStage);
 		controller.view.startView();
 	}
-
+	
+	public static HashMap<String, Integer> getLocations() {
+		ResultSet result= SearchUserModel.getLocations();
+		HashMap<String, Integer> locations = new HashMap<String, Integer>();
+		
+		try {
+			while (result.next()) {
+				String name = result.getString("Name");
+				int id = result.getInt("LOC_ID");
+				locations.put(name, id);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return locations;
+		// TODO Auto-generated method stub
+	}
 	public SearchUserController(Stage primaryStage) {
 		this.view = new SearchUserView(primaryStage);
 		this.model = new SearchUserModel();
@@ -63,16 +84,16 @@ public class SearchUserController {
 		return arrayOfString;
 	}
 
-	public void searchUser(User newUser) {
+	public User[] searchUsers (User newUser) {
 		User[] users = this.model.searchUsers(newUser);
 		if (users==null) {
 			String message = "Could not find Users";
 			displayPopUp(message);
+			return null;
 		}
-		else {
-			
-		}
-		this.showSearchUserView();
+		
+		return users;
+		
 		
 
 	}

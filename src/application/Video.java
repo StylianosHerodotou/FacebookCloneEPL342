@@ -3,12 +3,16 @@ package application;
 import java.util.ArrayList;
 
 public class Video extends FBItem{
-	private int id;
-	private String message;
-	private String description;
-	private double length;
-	private String source;
-	private int user_id;
+	protected int id;
+	protected String message;
+	protected String description;
+	protected double length;
+	protected String source;
+	protected int user_id;
+	protected ArrayList<Comment> comments;
+
+	
+	
 	//new constr with user id
 	public Video(int id, String message, String description, double length, String source, int user_id,
 			ArrayList<Comment> comments) {
@@ -21,17 +25,12 @@ public class Video extends FBItem{
 		this.user_id = user_id;
 		this.comments = comments;
 	}
-
-	private ArrayList<Comment> comments;
-	
 	public ArrayList<Comment> getComments() {
 		return comments;
 	}
-
 	public void setComments(ArrayList<Comment> comments) {
 		this.comments = comments;
 	}
-	
 	public Video(int id, String message, String description, double length, String source) {
 		super("this is a video");
 

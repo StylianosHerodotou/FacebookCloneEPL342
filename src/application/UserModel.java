@@ -13,7 +13,7 @@ import java.util.List;
 
 public class UserModel {
 	UserController controller;
-	
+
 	public UserModel(UserController controller) {
 		this.controller= controller;
 	}
@@ -42,32 +42,32 @@ public class UserModel {
 			//newer with pass and username
 			 String username=updatedUser.username;
 			 String password=updatedUser.password;
-			
+
 				try {
 					System.out.print("okay sinexise\n");
 				cstmt = AuthenticationModel.conn.prepareCall("{call updateUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
-				int columnIndex=1;		
+				int columnIndex=1;
 				cstmt.setString(columnIndex++, firstName);
 				cstmt.setString(columnIndex++, lastName);
 				cstmt.setString(columnIndex++, username);
 				cstmt.setString(columnIndex++, password);
-				
+
 				cstmt.setString(columnIndex++, email);
 				cstmt.setString(columnIndex++, website);
 				cstmt.setString(columnIndex++, link);
 				cstmt.setDate(columnIndex++, birthday);
-				
+
 				cstmt.setBoolean(columnIndex++, gender);
 				cstmt.setString(columnIndex++, workedFor);
 				cstmt.setString(columnIndex++, educationPlaces);
 				cstmt.setString(columnIndex++, quotes);
-				
+
 				cstmt.setBoolean(columnIndex++, isVerified);
 				cstmt.setInt(columnIndex++, hometownFK);
 				cstmt.setInt(columnIndex++, livesInLocationFK);
 				cstmt.setInt(columnIndex++, id);
 
-				
+
 				cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
 				cstmt.execute();
 				System.out.print("okay sinexise\n");
@@ -89,9 +89,9 @@ public class UserModel {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
-	//From friend request tu id 1 remove the guy with id2 
+	//From friend request tu id 1 remove the guy with id2
 	public boolean removeFromFriendRequest(int id, int id2) {
 		// TODO Auto-generated method stub
 		return false;
@@ -123,7 +123,7 @@ public class UserModel {
 	}
 		return resultSet;
 	}
-	
+
 	private ArrayList<Picture> turnresultSetToPictures(ResultSet resultSet){
 		 ArrayList<Picture> pictures= new  ArrayList<Picture>();
 		try {
@@ -137,7 +137,7 @@ public class UserModel {
 				ArrayList<Comment> comments=null;
 				Picture pic = new Picture(id,width,height,Link,src,
 						privacy,comments);
-						
+
 				pictures.add(pic);
 			}
 		} catch (SQLException e) {
@@ -169,7 +169,7 @@ public class UserModel {
 				ArrayList<String> workedFor = this.getWorkOfUser(id);
 				ArrayList<String> educationPlaces = this.getEducationOfUser(id);
 				ArrayList<String> quotes= this.getQuotesOfUser(id);
-				User use=new User(id,First_Name,Last_Name,Email,Website,Link,Birthday,gender,workedFor,educationPlaces,quotes,is_verified,home,current);		
+				User use=new User(id,First_Name,Last_Name,Email,Website,Link,Birthday,gender,workedFor,educationPlaces,quotes,is_verified,home,current);
 				users.add(use);
 			}
 		} catch (SQLException e) {
@@ -201,6 +201,21 @@ public class UserModel {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	public ArrayList<Video> getUserVideos(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public ArrayList<PictureAlbum> getUserAlbums(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public ArrayList<Link> getUserLinks(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public ArrayList<Event> getUserEvents(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	public ArrayList<User> getUserFriendRequests(int id) {
 		String SPsql = "EXEC GET_FRIEND_REQUESTS ? ";   // for stored proc taking 2 parameters
 		ResultSet resultSet=null;
@@ -221,14 +236,14 @@ public class UserModel {
 		return users;
 	}
 public ArrayList<String> getWorkOfUser(int UserID){
-		
+
 		String SPsql = "EXEC getWorkOfUser ?";   // for stored proc taking 2 parameters
 		PreparedStatement ps;
 		ResultSet resultSet=null;
 		ArrayList<String> workPlaces = new ArrayList<String>();
 		try {
 			ps = AuthenticationModel.conn.prepareStatement(SPsql);
-		
+
 		ps.setEscapeProcessing(true);
 		int index=1;
 		ps.setInt(index++, UserID);
@@ -242,17 +257,17 @@ public ArrayList<String> getWorkOfUser(int UserID){
 			e.printStackTrace();
 		}
 		return workPlaces;
-		
+
 	}
 public ArrayList<String> getQuotesOfUser(int UserID){
-	
+
 	String SPsql = "EXEC getQuotesOfUser ?";   // for stored proc taking 2 parameters
 	PreparedStatement ps;
 	ResultSet resultSet=null;
 	ArrayList<String> quotes = new ArrayList<String>();
 	try {
 		ps = AuthenticationModel.conn.prepareStatement(SPsql);
-	
+
 	ps.setEscapeProcessing(true);
 	int index=1;
 	ps.setInt(index++, UserID);
@@ -266,17 +281,17 @@ public ArrayList<String> getQuotesOfUser(int UserID){
 		e.printStackTrace();
 	}
 	return quotes;
-	
+
 }
 public ArrayList<String> getEducationOfUser(int UserID){
-	
+
 	String SPsql = "EXEC getEducationOfUser ?";   // for stored proc taking 2 parameters
 	PreparedStatement ps;
 	ResultSet resultSet=null;
 	ArrayList<String> educationPlaces = new ArrayList<String>();
 	try {
 		ps = AuthenticationModel.conn.prepareStatement(SPsql);
-	
+
 	ps.setEscapeProcessing(true);
 	int index=1;
 	ps.setInt(index++, UserID);
@@ -290,6 +305,6 @@ public ArrayList<String> getEducationOfUser(int UserID){
 		e.printStackTrace();
 	}
 	return educationPlaces;
-	
+
 }
 }
