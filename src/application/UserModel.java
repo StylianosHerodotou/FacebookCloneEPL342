@@ -265,7 +265,10 @@ public class UserModel {
 				Privacy privacy = new Privacy(resultSet.getString("Privacy_Name"));
 				Location location = new Location(LocId, locations.get(LocId));
 				ArrayList<Picture> pictures = this.getPicturesByAlbum(id);
-				
+				for(int i=0;i<pictures.size();i++) {
+					ArrayList<Comment> comen=getItemComments(pictures.get(i));
+					pictures.get(i).setComments(comen);
+				}
 				PictureAlbum albm = new PictureAlbum(id, name, description, linkname, pictures, location, UserId,
 						privacy, null);
 				ArrayList<Comment> com = getItemComments(albm);
