@@ -61,7 +61,7 @@ public class SearchUserView {
 
 		GridPane grid = new GridPane();
 
-		HashMap<String, Integer> locationHashmap = AuthenticationController.getLocations();
+		HashMap<String, Integer> locationHashmap = this.controller.getLocations();
 		locationHashmap.put("?", -1);
 		String[] locations = AuthenticationController.convert(locationHashmap.keySet());
 		
@@ -164,9 +164,9 @@ public class SearchUserView {
 			}
 			
 			String strGender = (String) genderBox.getValue();
-			char gender = 'F';
+			boolean gender = false;
 			if (strGender.equals("Male")) {
-				gender = 'M';
+				gender = true;
 			}
 			String tempString = workedAtField.getText();
 			if (tempString.equals("")) {
@@ -191,11 +191,10 @@ public class SearchUserView {
 			// na ta valume tuta?
 			String username = UserNameField.getText();
 			
-
-			User newUser = new User(firstName, lastName, email, website, link, birthday, gender, workedForPlaces,
-					educationPlaces, quotes, isVerified, hometown, livesIn, username, "");
-			///
-			this.controller.searchUser(newUser);
+		User a = new User(firstName, lastName, email, website, link, birthday, gender, workedForPlaces, educationPlaces, quotes, isVerified, hometown, livesIn, username, "");
+			
+			
+			System.out.println(this.controller.searchUsers(a));
 			
 		});
 		
