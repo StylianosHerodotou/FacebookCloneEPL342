@@ -279,6 +279,7 @@ public class UserModel {
 		}
 		return links;
 	}
+	
 	// TJELI TON PINAKA PU COMMENTS
 	private ArrayList<Video> turnresultSetToVideos(ResultSet resultSet){
 		 ArrayList<Video> videos= new  ArrayList<Video>();
@@ -337,29 +338,7 @@ public class UserModel {
 		}
 		return users;
 	}
-	private ArrayList<Video> turnresultSetToVideo(ResultSet resultSet){
-		 ArrayList<Video> vids= new  ArrayList<Video>();
-
-		try {
-			while(resultSet.next()) {
-				int id=resultSet.getInt("Video_ID");
-				String message=resultSet.getString("Message");
-				String Description=resultSet.getString("Description");
-				double length= resultSet.getDouble("Length");
-				String src = resultSet.getString("SRC");
-				int UserID=resultSet.getInt("UserID");
-				ArrayList<Comment> com = new ArrayList<Comment>();
-				String privacy=resultSet.getString("Privacy_Name");
-				Privacy priv=new Privacy(privacy);
-				Video vid=new Video(id,message,Description,length,src,UserID,priv,com);
-				vids.add(vid);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return vids;
-	}
+	
 	public ArrayList<Picture> getUserImages(int id) {
 		String SPsql = "EXEC retrieveUserImages ? "; // for stored proc taking 2 parameters
 		ResultSet resultSet = null;
