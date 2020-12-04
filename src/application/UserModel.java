@@ -75,11 +75,12 @@ public class UserModel {
 			cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
 			cstmt.execute();
 			System.out.print("okay sinexise\n");
-			if (cstmt.getInt(columnIndex) == 1) {
-				return true;
-			} else {
-				return false;
-			}
+			return true;
+//			if (cstmt.getInt(columnIndex) == 1) {
+//				return true;
+//			} else {
+//				return false;
+//			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -914,7 +915,7 @@ public class UserModel {
 			resultSet.next();
 			int id = resultSet.getInt("UserID");
 			String Username = resultSet.getString("Username");
-			int password = resultSet.getInt("Pass");
+			String password = resultSet.getString("Pass");
 			String First_Name = resultSet.getString("First_Name");
 			String Last_Name = resultSet.getString("Last_Name");
 			String Email = resultSet.getString("Email");
@@ -931,7 +932,7 @@ public class UserModel {
 			ArrayList<String> educationPlaces = this.getEducationOfUser(id);
 			ArrayList<String> quotes = this.getQuotesOfUser(id);
 			user = new User(id, First_Name, Last_Name, Email, Website, Link, Birthday, gender, workedFor,
-					educationPlaces, quotes, is_verified, home, current);
+					educationPlaces, quotes, is_verified, home, current,Username,password);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1048,6 +1049,7 @@ public class UserModel {
 
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
+			cstmt.execute();
 
 			if (cstmt.getInt(index) == 1) {
 				return true;

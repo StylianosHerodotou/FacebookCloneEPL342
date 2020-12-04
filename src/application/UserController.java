@@ -413,7 +413,6 @@ public void addFriend(int id,int tabint) {
 		case "Picture":
 			Picture newPicture= new Picture(newData,(Picture)object);
 			newPicture.setUserId(this.user.id);
-
 			this.model.updatePicture(newPicture);
 			break;
 		case "Album":
@@ -538,7 +537,6 @@ public void addFriend(int id,int tabint) {
 		case "Picture":
 			Picture newPicture= new Picture(newData,(Picture)object);
 			newPicture.setUserId(this.user.id);
-
 			this.model.addPicture(newPicture);
 			break;
 		case "Album":

@@ -86,8 +86,6 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 		tabPane.getTabs().add(friendRequesTab);
 		tabPane.getTabs().add(panikosTab);
 		tabPane.getTabs().add(searchItemsTab);
-
-
 	}
 
 	protected ScrollPane ChrisView(int tabIndex) {
@@ -956,15 +954,36 @@ return new ScrollPane(grid);
 		grid.add(scenetitle, 1, 1, 10, 1);
 	}
 
-	private ScrollPane prepareForeignItemScene(GridPane grid, FBItem item, int tabIndex) {
-			prepareScene(grid,tabIndex);
+	private void prepareForeignItemScene(GridPane grid, FBItem item, int tabIndex) {
+			
+			prepareScene(grid, tabIndex);
 			Text scenetitle = null;
+			User myUser = this.controller.getUser();
 			if(item.getClass().equals(User.class)) {
 				scenetitle = new Text(((User)item).username+"'s profile");
 			}else {
 				scenetitle = new Text("foreign "+ item.getClass().getSimpleName());
 			}
-			return new ScrollPane(grid);
+			scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+			Button showProfileButton = new Button("Go Back to profile");
+			if(tabIndex==2) {
+				showProfileButton.setOnAction(event -> {
+					this.controller.showSearchUsersView(tabIndex);
+				});
+				grid.add(showProfileButton, HelperFunctions.initXlevel + 10, HelperFunctions.initYlevel + 1);
+
+			}else if(tabIndex==2) {
+				showProfileButton.setOnAction(event -> {
+					this.controller.showSearchItemsView(tabIndex);
+				});
+				grid.add(showProfileButton, HelperFunctions.initXlevel + 10, HelperFunctions.initYlevel + 1);
+
+				
+			}else {
+				
+			}
+
+			grid.add(scenetitle, 1, 1, 10, 1);
 		}
 
 	private void prepareItemScene(GridPane grid, String className, int tabIndex) {

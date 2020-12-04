@@ -257,7 +257,6 @@ public class HelperFunctions {
 					}else if (fieldName.equals("pictures")){
 						addAlbumLabel((ArrayList<Picture>) field.get(object), retriveFields, tabIndex, view,canEdit,mine,isInsert);
 					}else {
-						AuthenticationController.displayPopUp(ArrayListToString((ArrayList<Object>) field.get(object)));
 						addTextFieldRow(ArrayListToString((ArrayList<Object>) field.get(object)),retriveFields);
 					}
 					break;
