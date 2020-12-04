@@ -1499,7 +1499,7 @@ public class UserModel {
 			int columnIndex = 1;
 
 			cstmt.setString(columnIndex++, albStr);
-			cstmt.setInt(columnIndex, userID);
+			cstmt.setInt(columnIndex, id);
 
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
@@ -1537,7 +1537,7 @@ public class UserModel {
 			int columnIndex = 1;
 
 			cstmt.setString(columnIndex++, picStr);
-			cstmt.setInt(columnIndex, userID);
+			cstmt.setInt(columnIndex, id);
 
 
 			boolean results = cstmt.execute();
@@ -1573,7 +1573,7 @@ public class UserModel {
 			int columnIndex = 1;
 
 			cstmt.setString(columnIndex++, vidStr);
-			cstmt.setInt(columnIndex, userID);
+			cstmt.setInt(columnIndex, id);
 
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
@@ -1609,8 +1609,8 @@ public class UserModel {
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
 
-			cstmt.setString(columnIndex++, linkStr);
-			cstmt.setInt(columnIndex, userID);
+			cstmt.setString(columnIndex++, eventStr);
+			cstmt.setInt(columnIndex, id);
 
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
@@ -1647,7 +1647,7 @@ public class UserModel {
 			int columnIndex = 1;
 
 			cstmt.setString(columnIndex++, linkStr);
-			cstmt.setInt(columnIndex, userID);
+			cstmt.setInt(columnIndex, id);
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
 
@@ -1892,7 +1892,7 @@ public class UserModel {
 
 			ResultSet resultSet = null;
 
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_Album_m(?,?)}",
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_Album_c(?,?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
 
@@ -1931,7 +1931,7 @@ public class UserModel {
 
 			ResultSet resultSet = null;
 
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_pic_m(?,?)}",
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_pic_c(?,?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
 
@@ -1966,7 +1966,7 @@ public class UserModel {
 
 			ResultSet resultSet = null;
 
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_vid_m(?,?)}",
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_vid_c(?,?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
 
@@ -2003,7 +2003,7 @@ public class UserModel {
 
 			ResultSet resultSet = null;
 
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_event_m(?,?)}",
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_event_c(?,?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
 
@@ -2039,7 +2039,7 @@ public class UserModel {
 
 			ResultSet resultSet = null;
 
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_link_m(?,?)}",
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_link_c(?,?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
 
