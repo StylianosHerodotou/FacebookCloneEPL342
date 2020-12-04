@@ -759,12 +759,13 @@ public class UserModel {
 	}
 
 	public ArrayList<User> getFriendsWithBiggerAlbumThanX(int id, int x) {
-		String SPsql = "EXEC FRIENDS_WITH_BIGGER_ALBUM_THAN_X ? ?"; // for stored proc taking 2 parameters
+		String SPsql = "EXEC FRIENDS_WITH_BIGGER_ALBUM_THAN_X ?,?"; // for stored proc taking 2 parameters
 		ResultSet resultSet = null;
 		ArrayList<User> users = new ArrayList<User>();
 		try {
 			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
-			ps.setInt(1, id);
+			ps.setInt(1,id);
+			ps.setInt(2,x);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
@@ -782,12 +783,13 @@ public class UserModel {
 	}
 
 	public ArrayList<User> getFriendsNetworkWithBiggerAlbumThanX(int id, int x) {
-		String SPsql = "EXEC FRIENDS_NETOWRK_WITH_BIGGER_ALBUM_THAN_X ? ?"; // for stored proc taking 2 parameters
+		String SPsql = "EXEC FRIENDS_NETOWRK_WITH_BIGGER_ALBUM_THAN_X ?,?"; // for stored proc taking 2 parameters
 		ResultSet resultSet = null;
 		ArrayList<User> users = new ArrayList<User>();
 		try {
 			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
-			ps.setInt(1, id);
+			ps.setInt(1,id);
+			ps.setInt(2,x);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))

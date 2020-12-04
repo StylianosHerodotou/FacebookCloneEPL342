@@ -413,6 +413,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 			this.controller.showSearchBiggerThanXNetworkFriends(tabIndex);
 		});
 		grid.add(NetBigX, 5, 5);
+		
 		Button SameInter = new Button("Friends with same interests");
 		SameInter.setOnAction(event -> {
 			try {
@@ -423,6 +424,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 			}
 		});
 		grid.add(SameInter, 5, 6);
+		
 		Button notPopularEvents=new Button("Least Popular Events");
 		notPopularEvents.setOnAction(event -> {
 			try {
@@ -432,7 +434,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 				e.printStackTrace();
 			}
 		});
-		grid.add(SameInter, 5, 7);
+		grid.add(notPopularEvents, 5, 7);
 		return new ScrollPane(grid);
 	}
 
@@ -662,7 +664,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 			grid.setVgap(30);
 			ArrayList<Event> Events= this.controller.getLeastAttendableEvents();
 			if(Events == null) {
-				Label empty = new Label("No Friend Requests :");
+				Label empty = new Label("No Least Attendable Events :");
 				grid.add(empty, 0, 1);
 				return new ScrollPane(grid);
 			}
