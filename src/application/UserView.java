@@ -78,11 +78,15 @@ public class UserView {
 		Tab chrisTab = new Tab("My friends", this.ChrisView(index++));
 //		Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index++));
 		Tab panikosTab = new Tab("panikos", this.PanikosView(index++));
+		Tab searchItemsTab = new Tab("panikos", this.getSearchForItemsView(index++));
+
 
 		tabPane.getTabs().add(profileTab);
 		tabPane.getTabs().add(chrisTab);
 //		tabPane.getTabs().add(friendRequesTab);
 		tabPane.getTabs().add(panikosTab);
+		tabPane.getTabs().add(searchItemsTab);
+
 
 	}
 
