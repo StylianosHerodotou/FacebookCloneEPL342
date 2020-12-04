@@ -75,11 +75,13 @@ public class UserView {
 		int index = 0;
 
 		Tab profileTab = new Tab("Profile", this.getMyProfileView(index++));
-		Tab chrisTab = new Tab("Myfriends", this.ChrisView(index++));
+		Tab chrisTab = new Tab("My friends", this.ChrisView(index++));
+		Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index++));
 		Tab panikosTab = new Tab("panikos", this.PanikosView(index++));
 
 		tabPane.getTabs().add(profileTab);
 		tabPane.getTabs().add(chrisTab);
+		tabPane.getTabs().add(friendRequesTab);
 		tabPane.getTabs().add(panikosTab);
 
 	}
@@ -502,34 +504,36 @@ public class UserView {
 				grid.add(em, 2, row);
 				row++;
 			}
-
-	protected ScrollPane SameInterestsFriendsView(int tabIndex) {
-		GridPane grid = new GridPane();
-		grid.setAlignment(Pos.BASELINE_LEFT);
-		grid.setHgap(30);
-		grid.setVgap(30);
-		ArrayList<User> SameInterestsFriends = this.controller
-				.getSameInterestFriends(this.controller.getUser().getId());
-		Text scenetitle = new Text("Friends with exact same interests ");
-		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
-		grid.add(scenetitle, 0, 0);
-		Label name = new Label("First Name :");
-		grid.add(name, 0, 1);
-		Label lastname = new Label("Last Name :");
-		grid.add(lastname, 1, 1);
-		Label Email = new Label("Email :");
-		grid.add(Email, 2, 1);
-
-		int row = 2;
-		for (int i = 0; i < SameInterestsFriends.size(); i++) {
-			Text fname = new Text(SameInterestsFriends.get(i).getFirstName());
-			Text lname = new Text(SameInterestsFriends.get(i).getLastName());
-			Text em = new Text(SameInterestsFriends.get(i).getEmail());
-			grid.add(fname, 0, row);
-			grid.add(lname, 1, row);
-			grid.add(em, 2, row);
-			row++;
+			return new ScrollPane(grid);
 		}
+
+//	protected ScrollPane SameInterestsFriendsView(int tabIndex) {
+//		GridPane grid = new GridPane();
+//		grid.setAlignment(Pos.BASELINE_LEFT);
+//		grid.setHgap(30);
+//		grid.setVgap(30);
+//		ArrayList<User> SameInterestsFriends = this.controller
+//				.getSameInterestFriends(this.controller.getUser().getId());
+//		Text scenetitle = new Text("Friends with exact same interests ");
+//		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+//		grid.add(scenetitle, 0, 0);
+//		Label name = new Label("First Name :");
+//		grid.add(name, 0, 1);
+//		Label lastname = new Label("Last Name :");
+//		grid.add(lastname, 1, 1);
+//		Label Email = new Label("Email :");
+//		grid.add(Email, 2, 1);
+//
+//		int row = 2;
+//		for (int i = 0; i < SameInterestsFriends.size(); i++) {
+//			Text fname = new Text(SameInterestsFriends.get(i).getFirstName());
+//			Text lname = new Text(SameInterestsFriends.get(i).getLastName());
+//			Text em = new Text(SameInterestsFriends.get(i).getEmail());
+//			grid.add(fname, 0, row);
+//			grid.add(lname, 1, row);
+//			grid.add(em, 2, row);
+//			row++;
+//		}
 		protected ScrollPane LeastAttendableEvents(
 				int tabIndex) {
 			GridPane grid = new GridPane();
