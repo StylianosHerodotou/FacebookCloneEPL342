@@ -174,6 +174,50 @@ public class UserView {
 
 	}
 	// FRIEND REQUEST VIEW
+	protected ScrollPane getIgnoredFriendRequestView(int tabIndex ) throws FileNotFoundException {
+		GridPane grid = new GridPane();
+		ArrayList<User> FriendRequests = this.controller.getIgnoredFriendRequests(this.controller.getUser().getId());
+		ArrayList<Button> unignb = new ArrayList<Button>();
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		for(int i=0;i<FriendRequests.size();i++) {
+			int b=i;
+			Button unign= new Button("UnIgnore");
+			unign.setOnAction(event ->{this.controller.unignoreFriend(FriendRequests.get(b).getId(), tabIndex);});
+			unignb.add(unign);
+
+		}
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		// grid.setPadding(new Insets(00, 00, 00, 00));
+		Text scenetitle = new Text("Friend Requests");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 0,0);
+		Label name = new Label("First Name :");
+		grid.add(name, 0,1 );
+		Label lastname = new Label("Last Name :");
+		grid.add(lastname, 1,1 );
+		Label Email = new Label("Email :");
+		grid.add(Email, 2,1 );
+		Label Uningnore = new Label("Uningnore :");
+		grid.add(Uningnore, 3,1 );
+		
+         int row=2;
+         for(int i=0;i<FriendRequests.size();i++) {
+ 			Text fname = new Text(FriendRequests.get(i).getFirstName());
+ 			Text lname = new Text(FriendRequests.get(i).getLastName());
+ 			Text em = new Text(FriendRequests.get(i).getEmail());
+ 			grid.add(fname, 0, row);
+ 			grid.add(lname, 1, row);
+ 			grid.add(em, 2, row);
+ 			grid.add(unignb.get(i), 3, row);
+ 			row++;
+ 		}
+return new ScrollPane(grid);
+
+	}
 	protected ScrollPane getFriendRequestView(int tabIndex ) {
 		GridPane grid = new GridPane();
 		ArrayList<User> FriendRequests = this.controller.getFriendRequests(this.controller.getUser().getId());
@@ -236,6 +280,7 @@ public class UserView {
 return new ScrollPane(grid);
 
 	}
+	
 	protected ScrollPane getFriendView(int tabIndex ) {
 		GridPane grid = new GridPane();
 		ArrayList<User> Friends= this.controller.getFriends(this.controller.getUser().getId());
