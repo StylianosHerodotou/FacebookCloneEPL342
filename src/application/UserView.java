@@ -175,7 +175,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 		GridPane grid = new GridPane();
 		ArrayList<User> FriendRequests = this.controller.getIgnoredFriendRequests(this.controller.getUser().getId());
 		if(FriendRequests == null) {
-			Label empty = new Label("No Friend Requests :");
+			Label empty = new Label("No Ignored Friend Requests :");
 			grid.add(empty, 0, 1);
 			return new ScrollPane(grid);
 		}
@@ -197,7 +197,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 		grid.setHgap(18);
 		grid.setVgap(18);
 		// grid.setPadding(new Insets(00, 00, 00, 00));
-		Text scenetitle = new Text("Friend Requests");
+		Text scenetitle = new Text("Ignored Friend Requests");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
 		grid.add(scenetitle, 0, 0);
 		Label name = new Label("First Name :");
@@ -413,6 +413,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 			this.controller.showSearchBiggerThanXNetworkFriends(tabIndex);
 		});
 		grid.add(NetBigX, 5, 5);
+		
 		Button SameInter = new Button("Friends with same interests");
 		SameInter.setOnAction(event -> {
 			try {
@@ -423,6 +424,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 			}
 		});
 		grid.add(SameInter, 5, 6);
+		
 		Button notPopularEvents=new Button("Least Popular Events");
 		notPopularEvents.setOnAction(event -> {
 			try {
@@ -432,7 +434,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 				e.printStackTrace();
 			}
 		});
-		grid.add(SameInter, 5, 7);
+		grid.add(notPopularEvents, 5, 7);
 		return new ScrollPane(grid);
 	}
 
@@ -570,7 +572,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 		grid.setVgap(30);
 		ArrayList<User> PopularFriends= this.controller.getMostPopularFriends(this.controller.getUser().getId());
 		if(PopularFriends == null) {
-			Label empty = new Label("No Friend Requests :");
+			Label empty = new Label("You dont have most popular friends :");
 			grid.add(empty, 0, 1);
 			return new ScrollPane(grid);
 		}
@@ -604,7 +606,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 			grid.setVgap(30);
 			ArrayList<User> SameInterestsFriends= this.controller.getSameInterestFriends(this.controller.getUser().getId());
 			if(SameInterestsFriends == null) {
-				Label empty = new Label("No Friend Requests :");
+				Label empty = new Label("No Friend With exact ame interests :");
 				grid.add(empty, 0, 1);
 				return new ScrollPane(grid);
 			}
@@ -666,7 +668,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 			grid.setVgap(30);
 			ArrayList<Event> Events= this.controller.getLeastAttendableEvents();
 			if(Events == null) {
-				Label empty = new Label("No Friend Requests :");
+				Label empty = new Label("No Least Attendable Events :");
 				grid.add(empty, 0, 1);
 				return new ScrollPane(grid);
 			}
@@ -745,11 +747,11 @@ return new ScrollPane(grid);
 			grid.setVgap(30);
 			ArrayList<User> FriendsNetworkwithAlbumBiggerThanX= this.controller.getNetworkFriendsWithAlbumBiggerThanX(this.controller.getUser().getId(), z);
 			if(FriendsNetworkwithAlbumBiggerThanX == null) {
-				Label empty = new Label("No Friend Requests :");
+				Label empty = new Label("No Friend with network bigger than X Albums:");
 				grid.add(empty, 0, 1);
 				return new ScrollPane(grid);
 			}
-			Text scenetitle = new Text("Friends with Album with more than "+z+" photos");
+			Text scenetitle = new Text("Friends with Network Album with more than "+z+" photos");
 			scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
 			grid.add(scenetitle, 0,0);
 			Label name = new Label("First Name :");
@@ -781,7 +783,7 @@ return new ScrollPane(grid);
 			grid.setVgap(30);
 			ArrayList<User> FriendswithAlbumBiggerThanX= this.controller.getFriendsWithAlbumBiggerThanX(this.controller.getUser().getId(), z);
 			if(FriendswithAlbumBiggerThanX == null) {
-				Label empty = new Label("No Friend Requests :");
+				Label empty = new Label("No Friend with album bigger than X :");
 				grid.add(empty, 0, 1);
 				return new ScrollPane(grid);
 			}
@@ -817,11 +819,11 @@ return new ScrollPane(grid);
 			grid.setVgap(30);
 			ArrayList<User> FriendswithSameFriends= this.controller.getFriendswithsamefriends(this.controller.getUser().getId());
 			if(FriendswithSameFriends == null) {
-				Label empty = new Label("No Friend Requests :");
+				Label empty = new Label("No Friend with common friends :");
 				grid.add(empty, 0, 1);
 				return new ScrollPane(grid);
 			}
-			Text scenetitle = new Text("Most Popular Friends");
+			Text scenetitle = new Text("Common Friends");
 			scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
 			grid.add(scenetitle, 0,0);
 			Label name = new Label("First Name :");
