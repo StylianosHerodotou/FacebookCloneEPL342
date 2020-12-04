@@ -1310,6 +1310,14 @@ return new ScrollPane(grid);
 			Button viewItemButton = new Button("View " + className);
 			viewItemButton.setOnAction(event -> this.controller.showItemView(object, tabIndex, canEditItems, mine,isInsert));
 			grid.add(viewItemButton, HelperFunctions.initXlevel + 2, objectIndex + HelperFunctions.initYlevel);
+			
+			
+			
+			if(tabIndex==5)//???{
+			{
+				Button addFriendButton = new Button("add Friend");
+				addFriendButton.setOnAction(event->this.controller.addFriend(((User) object).getId(), tabIndex));
+			}
 		}
 		return new ScrollPane(grid);
 	}
