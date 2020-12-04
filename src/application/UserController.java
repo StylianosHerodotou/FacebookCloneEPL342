@@ -178,10 +178,7 @@ public void addFriend(int id,int tabint) {
 		AuthenticationController.displayPopUp(message);
 	}
 
-	public void changeView(int tabIndex) {
-		Tab tab = this.view.tabPane.getTabs().get(tabIndex);
-		tab.setContent(this.view.getMyProfileView(tabIndex));
-	}
+
 
 //	public ObservableList<FRequest> getFriends(int id) {
 //		ObservableList<FRequest> Req = FXCollections.observableArrayList();
@@ -247,11 +244,11 @@ public void addFriend(int id,int tabint) {
 		return LeastEvents;
 	}
 
-	public static ArrayList<User> generateDummyUsers() {
-		ArrayList<User> users= new ArrayList<User>();
-		users.add(new User("sherod01",""));
-		users.add(new User("pchris04",""));
-		users.add(new User("cchris",""));
+	public static User[] generateDummyUsers() {
+		User[] users= new User[3];
+		users[0]= new User("sherod01","");
+		users[1]= new User("pchris04","");
+		users[2]= new User("cchris","");
 		return users;
 
 	}
@@ -312,9 +309,9 @@ public void addFriend(int id,int tabint) {
 		// TODO Auto-generated method stub
 	}
 
-	public void showFormView(int tabIndex, FBItem item) {
+	public void showFormView(int tabIndex, FBItem item, boolean mine) {
 		Tab currentTab=this.view.tabPane.getTabs().get(tabIndex);
-		currentTab.setContent(this.view.getFormView(tabIndex, item));
+		currentTab.setContent(this.view.getFormView(tabIndex, item,mine));
 	}
 
 	public FBItem[] turnPicturesToFBArray(ArrayList<Picture> objects) {
@@ -358,9 +355,9 @@ public void addFriend(int id,int tabint) {
 	}
 
 
-	public void  showItemView(FBItem object, int tabIndex) {
+	public void  showItemView(FBItem object, int tabIndex, boolean canEditItems,boolean mine) {
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
-		currentTab.setContent(this.view.getItemView(tabIndex, object));
+		currentTab.setContent(this.view.getItemView(tabIndex, object,canEditItems,mine));
 	}
 
 	public void showProfile(int tabIndex) {
@@ -400,42 +397,42 @@ public void addFriend(int id,int tabint) {
 
 	}
 
-	public void showUserImagesView(int tabIndex) {
+	public void showUserImagesView(int tabIndex,boolean mine) {
 		ArrayList<Picture> pictures= this.model.getUserImages(this.user.getId());
 		FBItem[] pictureItems= turnPicturesToFBArray(pictures);
-		ScrollPane grid = this.view.getItemCrollView(pictureItems,tabIndex,true);
+		ScrollPane grid = this.view.getItemCrollView(pictureItems,tabIndex,true,mine);
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
 
-	public void showUserVideosView(int tabIndex) {
+	public void showUserVideosView(int tabIndex,boolean mine) {
 		ArrayList<Video> Videos= this.model.getUserVideos(this.user.getId());
 
 
 		FBItem[] videoItems= turnVideosToFBArray(Videos);
-		ScrollPane grid = this.view.getItemCrollView(videoItems,tabIndex,true);
+		ScrollPane grid = this.view.getItemCrollView(videoItems,tabIndex,true,mine);
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
 
-	public void showUserAlbumsView(int tabIndex) {
+	public void showUserAlbumsView(int tabIndex,boolean mine) {
 		ArrayList<PictureAlbum> Albums= this.model.getUserAlbums(this.user.getId());
 		FBItem[] albumItems= turnAlbumToFBArray(Albums);
-		ScrollPane grid = this.view.getItemCrollView(albumItems,tabIndex,true);
+		ScrollPane grid = this.view.getItemCrollView(albumItems,tabIndex,true,mine);
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);	}
 
-	public void showUserLinksView(int tabIndex) {
+	public void showUserLinksView(int tabIndex,boolean mine) {
 		ArrayList<Link> links= this.model.getUserLinks(this.user.getId());
 		FBItem[] linkItems= turnLinksToFBArray(links);
-		ScrollPane grid = this.view.getItemCrollView(linkItems,tabIndex,true);
+		ScrollPane grid = this.view.getItemCrollView(linkItems,tabIndex,true,mine);
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
-	public void showUserEventsView(int tabIndex) {
+	public void showUserEventsView(int tabIndex,boolean mine) {
 		ArrayList<Event> events= this.model.getUserEvents(this.user.getId());
 		FBItem[] eventItems= turnEventsToFBArray(events);
-		ScrollPane grid = this.view.getItemCrollView(eventItems,tabIndex,true);
+		ScrollPane grid = this.view.getItemCrollView(eventItems,tabIndex,true,mine);
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
@@ -445,20 +442,28 @@ public void addFriend(int id,int tabint) {
 		currentTab.setContent(this.view.getFriendView(tabIndex));
 		
 	}
+	
+	public void startPanikos(int tabIndex) {
+		Tab currentTab = this.view.tabPane.getTabs().get(tabIndex);
+		currentTab.setContent(this.view.getSearchView(tabIndex));
+		
+	}
 	public void showSearchView(int tabIndex) {
 		Tab currentTab = this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(this.view.getSearchView(tabIndex));
 	}
 	
 	public void searchUsers (User newUser,int tabIndex) {
-		User[] users = this.model.searchUsers(newUser);
+//		User[] users = this.model.searchUsers(newUser);
+		User[] users =  this.generateDummyUsers();
+
 		if (users==null) {
 			String message = "Could not find Users";
 			displayPopUp(message);
 			return;
 		}
 		Tab currentTab = this.view.tabPane.getTabs().get(tabIndex);
-		currentTab.setContent(this.view.getItemCrollView(users, tabIndex, false));
+		currentTab.setContent(this.view.getItemCrollView(users, tabIndex, false,false));
 		
 				
 	}
