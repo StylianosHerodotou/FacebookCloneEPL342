@@ -137,27 +137,7 @@ public class User extends FBItem {
 		this.livesInLocation = livesInLocation;
 	}
 
-	public User(int id, String firstName, String lastName, String email,
-			String webiste, String link, Date birthday, boolean gender,
-			ArrayList<String> workedFor, ArrayList<String> educationPlaces, 
-			ArrayList<String> quotes,boolean isVerified, Location hometown, Location livesInLocation) {
-		super("this is a user");
-
-		this.id=id;
-		this.firstName=firstName;
-		this.lastName=lastName;
-		this.email=email;
-		this.website=webiste;
-		this.link=link;
-		this.birthday=birthday;
-		this.gender=gender;
-		this.workedFor=workedFor;
-		this.educationPlaces=educationPlaces;
-		this.quotes=quotes;
-		this.isVerified=isVerified;
-		this.hometown=hometown;
-		this.livesInLocation=livesInLocation;
-	}
+	
 	public User(int id) {
 		super("this is a user");
 		this.id = id;

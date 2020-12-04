@@ -365,8 +365,10 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 			delb.add(del);
 			Button see = new Button("See Prof");
 			see.setOnAction(event -> {
-				this.controller.showProfile(tabIndex);
+				this.controller.showItemView(Friends.get(b),tabIndex,false,false,false);
 			});
+			seeUser.add(see);
+
 		}
 		grid.setAlignment(Pos.BASELINE_LEFT);
 		grid.setHgap(18);
@@ -383,6 +385,8 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 		grid.add(Email, 2, 1);
 		Label Delete = new Label("Delete :");
 		grid.add(Delete, 3, 1);
+		Label ViewProf = new Label("View Profile :");
+		grid.add(ViewProf, 4, 1);
 		int row = 2;
 		for (int i = 0; i < Friends.size(); i++) {
 			Text fname = new Text(Friends.get(i).getFirstName());
@@ -392,6 +396,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 			grid.add(lname, 1, row);
 			grid.add(em, 2, row);
 			grid.add(delb.get(i), 3, row);
+			grid.add(seeUser.get(i), 4, row);
 			row++;
 		}
 		Button Famous=new Button("Famous friends");

@@ -182,7 +182,7 @@ public class UserModel {
 		CallableStatement cstmt = null;
 		try {
 			int outs = 3;
-			cstmt = AuthenticationModel.conn.prepareCall("{call ACCEPT_A_REQUEST(? ,?,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call ACCEPT_A_REQUEST(?,?,?)}");
 			cstmt.setInt(1, id);
 			cstmt.setInt(2, id2);
 			cstmt.registerOutParameter(outs, java.sql.Types.BIT);
@@ -461,7 +461,7 @@ public class UserModel {
 				ArrayList<String> educationPlaces = this.getEducationOfUser(id);
 				ArrayList<String> quotes = this.getQuotesOfUser(id);
 				User use = new User(id, First_Name, Last_Name, Email, Website, Link, Birthday, gender, workedFor,
-						educationPlaces, quotes, is_verified, home, current);
+						educationPlaces, quotes, is_verified, home, current,Username,password);
 				users.add(use);
 			}
 		} catch (SQLException e) {
