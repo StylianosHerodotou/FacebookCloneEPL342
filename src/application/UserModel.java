@@ -1656,9 +1656,16 @@ public class UserModel {
 			System.out.println(e);
 			return null;
 		}
-		
+		if (logs.size()==0) {
+			System.out.println("found nothing");
+			return null;
+		}
 		System.out.println(logs);
-		return (log[]) logs.toArray();
+		FBItem[] arr = new FBItem[logs.size()];
+		for (int i = 0; i < arr.length; i++) {
+			
+			arr[i] = logs.get(i);
+		}
 	}
 
 	
