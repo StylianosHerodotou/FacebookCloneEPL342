@@ -305,6 +305,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 		GridPane grid = new GridPane();
 		ArrayList<User> Friends = this.controller.getFriends(this.controller.getUser().getId());
 		if(Friends == null) {
+			System.out.println("lol");
 			Text scenetitle = new Text("Friends");
 			scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
 			grid.add(scenetitle, 0, 0);
@@ -349,7 +350,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 					e.printStackTrace();
 				}
 			});
-			grid.add(SameInter, 5, 7);
+			grid.add(notPopularEvents, 5, 7);
 			return new ScrollPane(grid);
 		}
 		ArrayList<Button> delb = new ArrayList<Button>();
@@ -680,7 +681,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 			Label location = new Label("Location");
 			grid.add(location, 1,1 );
 			Label venue = new Label("Venue");
-			grid.add(location, 2,1 );
+			grid.add(venue, 2,1 );
 
 
 	         int row=2;
