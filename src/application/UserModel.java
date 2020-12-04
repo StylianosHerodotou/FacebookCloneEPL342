@@ -242,7 +242,7 @@ public class UserModel {
 			resultSet = ps.executeQuery();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return resultSet;
@@ -293,7 +293,7 @@ public class UserModel {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return pictures;
@@ -381,7 +381,7 @@ public class UserModel {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return commnets;
@@ -488,7 +488,7 @@ public class UserModel {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return pictures;
@@ -511,7 +511,7 @@ public class UserModel {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return vids;
@@ -534,7 +534,7 @@ public class UserModel {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return Albums;
@@ -558,7 +558,7 @@ public class UserModel {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return links;
@@ -581,7 +581,7 @@ public class UserModel {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return events;
@@ -605,7 +605,7 @@ public class UserModel {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return users;
@@ -628,7 +628,7 @@ public class UserModel {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return users;
@@ -651,7 +651,7 @@ public class UserModel {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return users;
@@ -750,7 +750,7 @@ public class UserModel {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return users;
@@ -774,7 +774,7 @@ public class UserModel {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return users;
@@ -798,7 +798,7 @@ public class UserModel {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return users;
@@ -822,7 +822,7 @@ public class UserModel {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return users;
@@ -844,7 +844,7 @@ public class UserModel {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return events;
@@ -868,7 +868,7 @@ public class UserModel {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return users;
@@ -1448,7 +1448,7 @@ public class UserModel {
 		}
 
 		catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 			return new User[0];
 		}
 		System.out.println(users);
@@ -1476,7 +1476,7 @@ public class UserModel {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return users;
@@ -1485,16 +1485,18 @@ public class UserModel {
 	public FBItem[] searchUsers_other(String albStr, String picStr, String vidStr, String linkStr, String eventStr) {
 
 		ArrayList<FBItem> items = new ArrayList<FBItem>();
+		int userID=this.controller.getUser().getId();
 
 		try {
 
 			ResultSet resultSet = null;
 
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_Album_m(?)}",
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_Album_m(?,?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
 
 			cstmt.setString(columnIndex++, albStr);
+			cstmt.setInt(columnIndex, userID);
 
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
@@ -1521,17 +1523,19 @@ public class UserModel {
 		}
 
 		catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		try {
 
 			ResultSet resultSet = null;
 
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_pic_m(?)}",
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_pic_m(?,?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
 
 			cstmt.setString(columnIndex++, picStr);
+			cstmt.setInt(columnIndex, userID);
+
 
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
@@ -1555,17 +1559,18 @@ public class UserModel {
 		}
 
 		catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		try {
 
 			ResultSet resultSet = null;
 
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_vid_m(?)}",
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_vid_m(?,?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
 
 			cstmt.setString(columnIndex++, vidStr);
+			cstmt.setInt(columnIndex, userID);
 
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
@@ -1591,17 +1596,18 @@ public class UserModel {
 		}
 
 		catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		try {
 
 			ResultSet resultSet = null;
 
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_event_m(?)}",
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_event_m(?,?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
 
 			cstmt.setString(columnIndex++, linkStr);
+			cstmt.setInt(columnIndex, userID);
 
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
@@ -1626,17 +1632,19 @@ public class UserModel {
 		}
 
 		catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
+			e.printStackTrace();
 		}
 		try {
 
 			ResultSet resultSet = null;
 
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_link_m(?)}",
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_link_m(?,?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
 
 			cstmt.setString(columnIndex++, linkStr);
+			cstmt.setInt(columnIndex, userID);
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
 
@@ -1660,7 +1668,7 @@ public class UserModel {
 		}
 
 		catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		if (items.size() <= 0)
 			return null;
@@ -1690,6 +1698,8 @@ public class UserModel {
 			cstmt.setBoolean(columnIndex++, vid);
 			cstmt.setBoolean(columnIndex++, link);
 			cstmt.setBoolean(columnIndex++, event);
+			cstmt.setInt(columnIndex++, k);
+
 
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
@@ -1720,12 +1730,12 @@ public class UserModel {
 		}
 
 		catch (Exception e) {
-			System.out.println(e);
-			return null;
+			e.printStackTrace();
+			return new FBItem[0] ;
 		}
 		if (logs.size() == 0) {
 			System.out.println("found nothing");
-			return null;
+			return new FBItem[0];
 		}
 		System.out.println(logs);
 		FBItem[] arr = new FBItem[logs.size()];
@@ -1772,7 +1782,7 @@ public class UserModel {
 			ArrayList<Event> a = turnresultSetToEvent(resultSet);
 
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 			return null;
 		}
 		System.out.println(events);
@@ -1829,6 +1839,259 @@ public class UserModel {
 				return false;
 			}
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public FBItem[] searchThisUsers_other(String albumName, String pictureSource, String videoMessage, String linkName,
+			String eventName, int usersID) {
+		ArrayList<FBItem> items = new ArrayList<FBItem>();
+		
+
+		try {
+
+			ResultSet resultSet = null;
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_Album_m(?,?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+
+			cstmt.setString(columnIndex++, albumName);
+			cstmt.setInt(columnIndex, usersID);
+
+
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
+
+			ArrayList<PictureAlbum> res = turnresultSetToPictureAlbums(resultSet);
+
+			for (int i = 0; i < res.size(); i++) {
+				items.add(res.get(i));
+			}
+
+			cstmt.close();
+
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+
+			ResultSet resultSet = null;
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_pic_m(?,?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+
+			cstmt.setString(columnIndex++, pictureSource);
+			cstmt.setInt(columnIndex, usersID);
+
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
+
+			ArrayList<Picture> res = turnresultSetToPictures(resultSet);
+			for (int i = 0; i < res.size(); i++) {
+				items.add(res.get(i));
+			}
+			cstmt.close();
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+
+			ResultSet resultSet = null;
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_vid_m(?,?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+
+			cstmt.setString(columnIndex++, videoMessage);
+			cstmt.setInt(columnIndex, usersID);
+			
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
+
+			ArrayList<Video> res = turnresultSetToVideos(resultSet);
+			for (int i = 0; i < res.size(); i++) {
+				items.add(res.get(i));
+			}
+			cstmt.close();
+
+			cstmt.close();
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+
+			ResultSet resultSet = null;
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_event_m(?,?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+
+			cstmt.setString(columnIndex++, linkName);
+			cstmt.setInt(columnIndex, usersID);
+
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
+
+			ArrayList<Event> a = turnresultSetToEvent(resultSet);
+			for (int i = 0; i < a.size(); i++) {
+				items.add(a.get(i));
+			}
+
+			cstmt.close();
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+
+			ResultSet resultSet = null;
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_link_m(?,?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+
+			cstmt.setString(columnIndex++, eventName);
+			cstmt.setInt(columnIndex, usersID);
+
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
+
+			ArrayList<Link> a = turnresultSetToLinks(resultSet);
+			for (int i = 0; i < a.size(); i++) {
+				items.add(a.get(i));
+			}
+
+			cstmt.close();
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (items.size() <= 0)
+			return null;
+		FBItem[] arr = new FBItem[items.size()];
+		for (int i = 0; i < arr.length; i++) {
+
+			arr[i] = items.get(i);
+		}
+		return arr;
+
+	}
+
+	public boolean sentFriendRequest(int id, int id2) {
+		CallableStatement cstmt = null;
+		try {
+			int outs = 3;
+			cstmt = AuthenticationModel.conn.prepareCall("{call SEND_A_FRIEND_REQUEST (?,?,?)}");
+			cstmt.setInt(1, id);
+			cstmt.setInt(2, id2);
+			cstmt.registerOutParameter(outs, java.sql.Types.BIT);
+			cstmt.execute();
+			if (cstmt.getInt(outs) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public boolean userAttendEvent(int id, int id2) {
+		CallableStatement cstmt = null;
+		try {
+			int outs = 3;
+			cstmt = AuthenticationModel.conn.prepareCall("{call USER_ATTENDS_EVENT (?,?,?)}");
+			cstmt.setInt(1, id);
+			cstmt.setInt(2, id2);
+			cstmt.registerOutParameter(outs, java.sql.Types.BIT);
+			cstmt.execute();
+			if (cstmt.getInt(outs) == 1) {
+				return true;
+			} else {
+				return false;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;

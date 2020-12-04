@@ -79,6 +79,12 @@ public class UserView {
 Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index++));
 		Tab panikosTab = new Tab("panikos", this.PanikosView(index++));
 		Tab searchItemsTab = new Tab("panikos", this.getSearchForItemsView(index++));
+		Tab searchUsersItemsTab = new Tab("panikos", this.getSearchForItemsView(index++));
+		Tab logAllTab = new Tab("panikos", this.getKLogView(index++));
+		Tab logSingleTab = new Tab("panikos", this.getLogItemView(index++));
+
+
+
 
 
 		tabPane.getTabs().add(profileTab);
@@ -86,6 +92,49 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 		tabPane.getTabs().add(friendRequesTab);
 		tabPane.getTabs().add(panikosTab);
 		tabPane.getTabs().add(searchItemsTab);
+		tabPane.getTabs().add(searchUsersItemsTab);
+		tabPane.getTabs().add(logAllTab);
+		tabPane.getTabs().add(logSingleTab);
+
+	}
+
+	private ScrollPane getKLogView(int tabIndex) {
+		GridPane grid = new GridPane();
+		Text scenetitle = new Text("Give a number of latest k logs");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 0,0);
+		TextField putnumber = new TextField("1");
+		grid.add(putnumber, 1,1);
+		Button search = new Button("Search");
+		search.setOnAction(event -> {
+			int x =Integer.parseInt(putnumber.getText());
+			this.controller.showKLogs(tabIndex, x);
+		});
+         grid.add(search, 2, 1);
+         return new ScrollPane(grid);
+	}
+	
+	private ScrollPane getLogItemView(int tabIndex) {
+		GridPane grid = new GridPane();
+		Text scenetitle = new Text("Give a number of latest k logs");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 0,0);
+		TextField putnumber = new TextField("1");
+		grid.add(putnumber, 1,1);
+		Label hometownLabel = new Label("item:");
+		grid.add(hometownLabel, 2, 2);
+		String [] items= {"Picture","Album","Video","Link","Event"};
+		ComboBox hometownBox = new ComboBox(FXCollections.observableArrayList(items)); 
+		hometownBox.getSelectionModel().selectFirst();
+		grid.add(hometownBox, 2, 3);
+		Button search = new Button("search");
+		search.setOnAction(event -> {
+			int x =Integer.parseInt(putnumber.getText());
+			String ans=(String) hometownBox.getValue();
+			this.controller.showitemLogs(tabIndex, ans,x);
+		});
+         grid.add(search, 2, 1);
+         return new ScrollPane(grid);
 	}
 
 	protected ScrollPane ChrisView(int tabIndex) {
@@ -971,10 +1020,19 @@ return new ScrollPane(grid);
 			
 			prepareScene(grid, tabIndex);
 			Text scenetitle = null;
-			User myUser = this.controller.getUser();
 			if(item.getClass().equals(User.class)) {
+				User foreignUser = (User)item;
 				scenetitle = new Text(((User)item).username+"'s profile");
-			}else {
+				Button addFriendButton = new Button("Sent friend Request");
+				addFriendButton.setOnAction(event->this.controller.sentFriendRequest(foreignUser.getId(), tabIndex));
+				grid.add(addFriendButton, 5, 4);
+			}else if(item.getClass().equals(Event.class)) {
+				Button attendEventButton = new Button("Attend event");
+				attendEventButton.setOnAction(event->this.controller.attendEvent(((Event) item).getId(),tabIndex));
+				grid.add(attendEventButton, 5, 4);
+
+			}
+			else {
 				scenetitle = new Text("foreign "+ item.getClass().getSimpleName());
 			}
 			scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
@@ -1240,16 +1298,31 @@ return new ScrollPane(grid);
 		
 		Button SearchItemButton = new Button();
 		SearchItemButton.setText("Search Item");
-		SearchItemButton.setOnAction(event -> {
-			String albumName = AlbumField.getText();
-			String linkName = LinknameField.getText();
-			String eventName = EventnameField.getText();
-			String pictureSource = picSource.getText();
-			String videoMessage = VideoField.getText();
-			
-			this.controller.searchForItems(tabIndex,albumName,linkName,eventName,pictureSource,videoMessage);
+		if(tabIndex==4) {
+			SearchItemButton.setOnAction(event -> {
+				String albumName = AlbumField.getText();
+				String linkName = LinknameField.getText();
+				String eventName = EventnameField.getText();
+				String pictureSource = picSource.getText();
+				String videoMessage = VideoField.getText();
+				
+				this.controller.searchForItems(tabIndex,albumName,linkName,eventName,pictureSource,videoMessage);
 
-		});
+			});
+		}
+		else {
+			SearchItemButton.setOnAction(event -> {
+				String albumName = AlbumField.getText();
+				String linkName = LinknameField.getText();
+				String eventName = EventnameField.getText();
+				String pictureSource = picSource.getText();
+				String videoMessage = VideoField.getText();
+				
+				this.controller.searchForUsersItem(tabIndex,albumName,linkName,eventName,pictureSource,videoMessage);
+
+			});
+		}
+
 			
 			grid.add(SearchItemButton, xStartinglevel, ++yLevelIndex);
 
@@ -1323,9 +1396,8 @@ return new ScrollPane(grid);
 			if(tabIndex==3)//???{
 			{
 				Button addFriendButton = new Button("sent friend request");
-				addFriendButton.setOnAction(event->this.controller.addFriend(((User) object).getId(), tabIndex));
+				addFriendButton.setOnAction(event->this.controller.sentFriendRequest(((User) object).getId(), tabIndex));
 				grid.add(addFriendButton, HelperFunctions.initXlevel + 3, objectIndex + HelperFunctions.initYlevel);
-
 			}
 		}
 		return new ScrollPane(grid);

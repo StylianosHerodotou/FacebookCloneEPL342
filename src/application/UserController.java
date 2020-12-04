@@ -642,6 +642,82 @@ public void addFriend(int id,int tabint) {
 			tab.setContent(this.view.LeastAttendableEvents(tabIndex));
 }
 
+		public void searchForUsersItem(int tabIndex, String albumName, String linkName, String eventName,
+				String pictureSource, String videoMessage) {
+		FBItem[] items = this.model.searchThisUsers_other(albumName, pictureSource, videoMessage, linkName, eventName, this.getUser().getId());
+//		User[] users =  this.generateDummyUsers();
+
+		if (items==null) {
+			String message = "Could not find items";
+			displayPopUp(message);
+			return;
+		}
+		Tab currentTab = this.view.tabPane.getTabs().get(tabIndex);
+		currentTab.setContent(this.view.getItemCrollView(items, tabIndex, false,false,false));
+		
+		
+		// TODO Auto-generated method stub
+		
+
+			
+		}
+
+		public void sentFriendRequest(int id, int tabIndex) {
+			if(this.model.sentFriendRequest(this.getUser().getId(),id)) {
+				displayPopUp("Added to friends "+id);
+			}else {
+			displayPopUp("Failed to Add to friends"+id);
+			}
+			Tab tab= this.view.tabPane.getTabs().get(tabIndex);
+		}
+
+		public void showKLogs(int tabIndex, int k) {
+			FBItem[] logs= this.model.searchUsersLogs(this.getUser().getId(),true, true, true, true, true, true, k);
+			ScrollPane grid = this.view.getItemCrollView(logs,tabIndex,true,true,false);
+			Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
+			currentTab.setContent(grid);		
+		}
+
+		public void showitemLogs(int tabIndex, String ans, int k) {
+			FBItem[] logs=null;
+			switch(ans) {
+			case"Picture":
+				logs= this.model.searchUsersLogs(this.getUser().getId(),false, false, true, false, false, false, k);
+			break;
+			case"Album":
+				logs= this.model.searchUsersLogs(this.getUser().getId(),false, true, false, false, false, false, k);
+
+				break;
+			case"Video":
+				logs= this.model.searchUsersLogs(this.getUser().getId(),false, false, false, false, true, false, k);
+
+				break;
+			case"Link":
+				logs= this.model.searchUsersLogs(this.getUser().getId(),false, false, false, false, true, false, k);
+
+				break;
+			case"Event":
+				logs= this.model.searchUsersLogs(this.getUser().getId(),false, false, false, false, false, true, k);
+
+				break;
+				
+			}
+			ScrollPane grid = this.view.getItemCrollView(logs,tabIndex,true,true,false);
+			Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
+			currentTab.setContent(grid);		
+			
+		}
+
+		public void attendEvent(int id, int tabIndex) {
+			if(this.model.userAttendEvent(this.getUser().getId(),id)) {
+				displayPopUp("the user will atend event");
+			}else {
+			displayPopUp("Failed to attend event");
+			}
+			Tab tab= this.view.tabPane.getTabs().get(tabIndex);
+			tab.setContent(this.view.getFriendRequestView(tabIndex));
+		}
+
 	
 	
 
