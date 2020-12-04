@@ -257,6 +257,7 @@ public class HelperFunctions {
 					}else if (fieldName.equals("pictures")){
 						addAlbumLabel((ArrayList<Picture>) field.get(object), retriveFields, tabIndex, view,canEdit,mine,isInsert);
 					}else {
+						AuthenticationController.displayPopUp(ArrayListToString((ArrayList<Object>) field.get(object)));
 						addTextFieldRow(ArrayListToString((ArrayList<Object>) field.get(object)),retriveFields);
 					}
 					break;
@@ -321,6 +322,7 @@ public class HelperFunctions {
 				else {
 					HashMap<String, Integer> locationHashmap = view.controller.getLocations();
 					String strLocation= (String) ((ComboBox)retriveFields.get(fieldIndex)).getValue();
+					System.out.print(strLocation);
 					Location hometown=new Location(locationHashmap.get(strLocation), strLocation);
 					return hometown;
 				}
