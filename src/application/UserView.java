@@ -1034,7 +1034,7 @@ return new ScrollPane(grid);
 
 	}
 	
-	public ScrollPane searchForItemsView(int tabIndex) {
+	public ScrollPane getSearchForItemsView(int tabIndex) {
 		
 		GridPane grid = new GridPane();
 
@@ -1109,13 +1109,21 @@ return new ScrollPane(grid);
 				grid.add(showProfileButton, HelperFunctions.initXlevel + 10, HelperFunctions.initYlevel + 1);
 			});
 		} else if (tabIndex == 2) {
-			Button showSearchButton = new Button("Show search View");
+			Button showSearchButton = new Button("Show search users View");
 			showSearchButton.setOnAction(event -> {
 				this.controller.showSearchUsersView(tabIndex);
 				grid.add(showSearchButton, HelperFunctions.initXlevel + 10, HelperFunctions.initYlevel + 1);
 			});
 
-		} else {
+		}else if (tabIndex == 3) {
+			Button showSearchButton = new Button("Show search items View");
+			showSearchButton.setOnAction(event -> {
+				this.controller.showSearchUsersView(tabIndex);
+				grid.add(showSearchButton, HelperFunctions.initXlevel + 10, HelperFunctions.initYlevel + 1);
+			});
+
+		}
+		else {
 
 		}
 

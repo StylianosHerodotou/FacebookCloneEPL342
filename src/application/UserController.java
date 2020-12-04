@@ -490,6 +490,12 @@ public void addFriend(int id,int tabint) {
 		currentTab.setContent(this.view.getSearchUsersView(tabIndex));
 	}
 	
+	public void showSearchItemsView(int tabIndex) {
+		Tab currentTab = this.view.tabPane.getTabs().get(tabIndex);
+		currentTab.setContent(this.view.getSearchForItemsView(tabIndex));
+	}
+	
+	
 	public void searchUsers (User newUser,int tabIndex) {
 		User[] users = this.model.searchUsers(newUser);
 //		User[] users =  this.generateDummyUsers();
@@ -567,7 +573,7 @@ public void addFriend(int id,int tabint) {
 
 	public void searchForItems(int tabIndex,String albumName, String linkName, String eventName, String pictureSource,
 			String videoMessage) {
-		FBItem[] items = this.model.();
+		FBItem[] items = this.model.searchUsers_other(albumName, pictureSource, videoMessage, linkName, eventName);
 //		User[] users =  this.generateDummyUsers();
 
 		if (items==null) {
