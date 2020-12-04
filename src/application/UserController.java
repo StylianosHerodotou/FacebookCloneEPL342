@@ -387,23 +387,38 @@ public void addFriend(int id,int tabint) {
 		currentTab.setContent(this.view.getMyProfileView(tabIndex));
 	}
 
-	public void updateItem(ArrayList<Object> newData, String className, FBItem object, int tabIndex) {
-		AuthenticationController.displayPopUp(newData.toString());
-//		switch( className) {
-//		  case "User":
-//		    User updateduser = new User(newData, (User) object);
-//		    this.UpdateUser(updateduser);
-////			System.out.print(updateduser.toString());
-//		    break;
-//		  case "Picture":
-//			    Picture updatedPic = new Picture(newData, (Picture) object);
-//			    this.updatePicture(updatedPic,tabIndex);
-////				System.out.print(updateduser.toString());
-//			    break;
-////		  case 2:
-//
-//		}
+	public void updateItem(ArrayList<Object> newData, FBItem object, int tabIndex) {
+		String className= object.getClass().getSimpleName();
+		switch(className) {
+		case "Event":
+			Event newEvent= new Event(newData,(Event)object);
+			newEvent.setUser_id(this.user.id);
+			this.model.updateEvent(newEvent);
+		break;
+		case "Link":
+			Link newLink= new Link(newData,(Link)object);
+			newLink.setUser_id(this.user.id);
+			this.model.updateLink(newLink);
+		break;
+		case "Video":
+			Video newVideo= new Video(newData,(Video)object);
+			newVideo.setUser_id(this.user.id);
 
+			this.model.updateVideo(newVideo);
+			break;
+		case "Picture":
+			Picture newPicture= new Picture(newData,(Picture)object);
+			newPicture.setUserId(this.user.id);
+
+			this.model.updatePicture(newPicture);
+			break;
+		case "Album":
+			PictureAlbum newAlbum= new PictureAlbum(newData,(PictureAlbum)object);
+			newAlbum.setUser_id(this.user.id);
+			this.model.updateAlbum(newAlbum);
+			break;
+		}
+		this.showProfile(tabIndex);
 	}
 
 	private void updatePicture(Picture updatedPic, int tabIndex) {
@@ -467,12 +482,12 @@ public void addFriend(int id,int tabint) {
 	
 	public void startPanikos(int tabIndex) {
 		Tab currentTab = this.view.tabPane.getTabs().get(tabIndex);
-		currentTab.setContent(this.view.getSearchView(tabIndex));
+		currentTab.setContent(this.view.getSearchUsersView(tabIndex));
 		
 	}
-	public void showSearchView(int tabIndex) {
+	public void showSearchUsersView(int tabIndex) {
 		Tab currentTab = this.view.tabPane.getTabs().get(tabIndex);
-		currentTab.setContent(this.view.getSearchView(tabIndex));
+		currentTab.setContent(this.view.getSearchUsersView(tabIndex));
 	}
 	
 	public void searchUsers (User newUser,int tabIndex) {
@@ -521,6 +536,7 @@ public void addFriend(int id,int tabint) {
 			this.model.addAlbum(newAlbum);
 			break;
 		}
+		this.showProfile(tabIndex);
 
 	}
 
@@ -547,6 +563,24 @@ public void addFriend(int id,int tabint) {
 	public void showAddUserEventsView(int tabIndex, boolean b) {
 		Event newitem = new Event ();
 		this.showFormView(tabIndex, newitem,true, true, true);
+	}
+
+	public void searchForItems(int tabIndex,String albumName, String linkName, String eventName, String pictureSource,
+			String videoMessage) {
+		FBItem[] items = this.model.();
+//		User[] users =  this.generateDummyUsers();
+
+		if (items==null) {
+			String message = "Could not find Users";
+			displayPopUp(message);
+			return;
+		}
+		Tab currentTab = this.view.tabPane.getTabs().get(tabIndex);
+		currentTab.setContent(this.view.getItemCrollView(items, tabIndex, false,false,false));
+		
+		
+		// TODO Auto-generated method stub
+		
 	}
 
 

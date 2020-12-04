@@ -428,7 +428,7 @@ public class UserView {
 				e.printStackTrace();
 			}
 			if(isInsert==false)
-			this.controller.updateItem(newData, className, object, tabIndex);
+			this.controller.updateItem(newData, object, tabIndex);
 			else
 			this.controller.insertItem(newData,object,tabIndex);
 		});
@@ -887,7 +887,7 @@ return new ScrollPane(grid);
 		grid.add(scenetitle, 1, 1, 10, 1);
 	}
 
-	protected ScrollPane getSearchView(int tabIndex) {
+	protected ScrollPane getSearchUsersView(int tabIndex) {
 
 		GridPane grid = new GridPane();
 
@@ -1033,6 +1033,57 @@ return new ScrollPane(grid);
 		return new ScrollPane(grid);
 
 	}
+	
+	public ScrollPane searchForItemsView(int tabIndex) {
+		
+		GridPane grid = new GridPane();
+
+		int yLevelIndex = 3;
+		int xStartinglevel = 2;
+
+		Label Albumname = new Label("Album Name :");
+		grid.add(Albumname, xStartinglevel, yLevelIndex);
+		TextField AlbumField = new TextField();
+		grid.add(AlbumField, xStartinglevel + 1, yLevelIndex++);
+		
+		Label Linkname = new Label("Link Name :");
+		grid.add(Linkname, xStartinglevel, yLevelIndex);
+		TextField LinknameField = new TextField();
+		grid.add(LinknameField, xStartinglevel + 1, yLevelIndex++);
+		
+		Label Eventname = new Label("Event Name :");
+		grid.add(Eventname, xStartinglevel, yLevelIndex);
+		TextField EventnameField = new TextField();
+		grid.add(EventnameField, xStartinglevel + 1, yLevelIndex++);
+		
+		Label picSource = new Label("Picture Source :");
+		grid.add(picSource, xStartinglevel, yLevelIndex);
+		TextField PictureSourceField = new TextField();
+		grid.add(PictureSourceField, xStartinglevel + 1, yLevelIndex++);
+		
+		Label VideoMessage = new Label("Video message :");
+		grid.add(VideoMessage, xStartinglevel, yLevelIndex);
+		TextField VideoField = new TextField();
+		grid.add(VideoField, xStartinglevel + 1, yLevelIndex++);
+		
+		Button SearchItemButton = new Button();
+		SearchItemButton.setText("Search Item");
+		SearchItemButton.setOnAction(event -> {
+			String albumName = AlbumField.getText();
+			String linkName = LinknameField.getText();
+			String eventName = EventnameField.getText();
+			String pictureSource = picSource.getText();
+			String videoMessage = VideoField.getText();
+			
+			this.controller.searchForItems(tabIndex,albumName,linkName,eventName,pictureSource,videoMessage);
+
+		});
+			
+			grid.add(SearchItemButton, xStartinglevel, ++yLevelIndex);
+
+			return new ScrollPane(grid);
+		
+	}
 
 	public ScrollPane getItemCrollView(FBItem[] items, int tabIndex, boolean canEditItems, boolean mine,boolean isInsert) {
 
@@ -1060,7 +1111,7 @@ return new ScrollPane(grid);
 		} else if (tabIndex == 2) {
 			Button showSearchButton = new Button("Show search View");
 			showSearchButton.setOnAction(event -> {
-				this.controller.showSearchView(tabIndex);
+				this.controller.showSearchUsersView(tabIndex);
 				grid.add(showSearchButton, HelperFunctions.initXlevel + 10, HelperFunctions.initYlevel + 1);
 			});
 

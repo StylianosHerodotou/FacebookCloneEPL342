@@ -25,7 +25,7 @@ public class HelperFunctions {
 	
 	
 	protected static boolean is_field_sensitive(String filed_name) {
-		String[] sensitive_info = { "password", "SSN","id" };
+		String[] sensitive_info = { "password", "SSN","id","user_id","UserID" };
 		boolean is_sensitive = false;
 		for (int index = 0; index < sensitive_info.length; index++) {
 			if (filed_name.equals(sensitive_info[index])) {
