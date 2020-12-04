@@ -293,6 +293,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 		grid.add(Ignore, 4, 1);
 		Label Add = new Label("Add :");
 		grid.add(Add, 5, 1);
+		grid.add(seeIgnored, 6, 3);
 		int row = 2;
 		for (int i = 0; i < FriendRequests.size(); i++) {
 			Text fname = new Text(FriendRequests.get(i).getFirstName());
