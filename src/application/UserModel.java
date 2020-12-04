@@ -1727,7 +1727,7 @@ public class UserModel {
 					int index = 1;
 					logs.add(new log(resultSet.getInt(index++), resultSet.getString(index++),
 							resultSet.getString(index++), resultSet.getString(index++), resultSet.getTimestamp(index++),
-							resultSet.getInt(5)));
+							resultSet.getInt(index++)));
 				}
 			}
 		}
@@ -2097,7 +2097,9 @@ public class UserModel {
 				return false;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			AuthenticationController.displayPopUp("you cant sent a friend request twice");
+			
+//			e.printStackTrace();
 			return false;
 		} finally {
 			try {

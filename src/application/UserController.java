@@ -576,7 +576,7 @@ public void addFriend(int id,int tabint) {
 
 	public void searchForItems(int tabIndex,String albumName, String linkName, String eventName, String pictureSource,
 			String videoMessage) {
-		FBItem[] items = this.model.searchUsers_other(albumName, pictureSource, videoMessage, linkName, eventName);
+		FBItem[] items = this.model.searchUsers_other(albumName, pictureSource, videoMessage, linkName, eventName,this.getUser().getId());
 //		User[] users =  this.generateDummyUsers();
 
 		if (items==null) {
@@ -693,7 +693,7 @@ public void addFriend(int id,int tabint) {
 
 				break;
 			case"Video":
-				logs= this.model.searchUsersLogs(this.getUser().getId(),false, false, false, false, true, false, k);
+				logs= this.model.searchUsersLogs(this.getUser().getId(),false, false, false, true, false, false, k);
 
 				break;
 			case"Link":
