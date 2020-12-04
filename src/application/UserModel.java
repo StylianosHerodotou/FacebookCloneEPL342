@@ -10,11 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+import applicationVersionTwo.AuthenticationModel;
+import applicationVersionTwo.User;
 import javafx.animation.Animation;
 
 public class UserModel {
@@ -1485,10 +1488,11 @@ public class UserModel {
 		return users;
 	}
 
-	public FBItem[] searchUsers_other(String albStr, String picStr, String vidStr, String linkStr, String eventStr,int id) {
+	public FBItem[] searchUsers_other(String albStr, String picStr, String vidStr, String linkStr, String eventStr,
+			int id) {
 
 		ArrayList<FBItem> items = new ArrayList<FBItem>();
-		int userID=this.controller.getUser().getId();
+		int userID = this.controller.getUser().getId();
 
 		try {
 
@@ -1538,7 +1542,6 @@ public class UserModel {
 
 			cstmt.setString(columnIndex++, picStr);
 			cstmt.setInt(columnIndex, id);
-
 
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
@@ -1703,7 +1706,6 @@ public class UserModel {
 			cstmt.setBoolean(columnIndex++, event);
 			cstmt.setInt(columnIndex++, k);
 
-
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
 
@@ -1734,7 +1736,7 @@ public class UserModel {
 
 		catch (Exception e) {
 			e.printStackTrace();
-			return new FBItem[0] ;
+			return new FBItem[0];
 		}
 		if (logs.size() == 0) {
 			System.out.println("found nothing");
@@ -1751,13 +1753,11 @@ public class UserModel {
 
 	public FBItem[] search_events(Event event) {
 
-
 		ArrayList<Event> events = new ArrayList<Event>();
 		try {
 			ResultSet resultSet = null;
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall(
-					"{call handle_events(?,?,?,?, ?,?,?)}", ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call handle_events(?,?,?,?, ?,?,?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
 			cstmt.setString(columnIndex++, event.getVenue());
 			cstmt.setString(columnIndex++, event.getName());
@@ -1788,7 +1788,7 @@ public class UserModel {
 			return null;
 		}
 		System.out.println(events);
-		if (events.size()==0) {
+		if (events.size() == 0) {
 			return new FBItem[0];
 		}
 		FBItem[] arr = new FBItem[events.size()];
@@ -1799,80 +1799,43 @@ public class UserModel {
 		return arr;
 	}
 
-	protected boolean importData(String tableName, String path , Object obj) {
-
+	protected boolean importData() {
+		String line = "";
+		String splitBy = ",";
 		CallableStatement cstmt = null;
 		try {
-		Scanner sc = new Scanner(new File(path));
-		sc.useDelimiter(","); // sets the delimiter pattern
+			Scanner sc = new Scanner(new File("D:\\User\\Desktop\\IMP\\a.csv"));
+			sc.useDelimiter(","); // sets the delimiter pattern
 
-		switch (tableName) {
-		case "User": {
-			while (sc.hasNext()) // returns a boolean value
+			while (sc.hasNext()) { // returns a boolean value
+				String[] arr = line.split(splitBy);
+				cstmt = AuthenticationModel.conn
+						.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? )}");
+				int columnIndex = 1;
+				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
+				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
+				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
+				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
+				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
+				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
+				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
+				cstmt.setDate(columnIndex, (Date) new SimpleDateFormat("dd/MM/yyyy").parse(arr[columnIndex++ - 1]));
+				cstmt.setBoolean(columnIndex, Boolean.parseBoolean(arr[columnIndex++ - 1]));
+				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
+				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
+				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
+				cstmt.setBoolean(columnIndex, Boolean.parseBoolean(arr[columnIndex++ - 1]));
+				cstmt.setInt(columnIndex, Integer.parseInt(arr[columnIndex++ - 1]));
+				cstmt.setInt(columnIndex, Integer.parseInt(arr[columnIndex++ - 1]));
+				cstmt.setEscapeProcessing(true);
+				cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
+				cstmt.execute();
+				
 
-				cstmt  = AuthenticationModel.conn.prepareCall("{call inser (?,?,?,?, ?,?,?,?, ?)}");
-				obj = (User)obj;
-				int index = 1;
-//		cstmt.setString(index++, obj.getVenue());
-//		cstmt.setString(index++, obj.getName());
-//		cstmt.setTimestamp(index++, obj.getStartTime());
-//		cstmt.setTimestamp(index++, obj.getEndTime());
-//		cstmt.setString(index++, obj.description);
-//		cstmt.setInt(index++, obj.creatorID);
-//		cstmt.setInt(index++, obj.location.getId());
-//		cstmt.setString(index++, obj.getPrivacy().name);
-
-//				cstmt.setEscapeProcessing(true);
-//				cstmt.registerOutParameter(index, java.sql.Types.BIT);
-//				cstmt.execute();
-//
-//				if (cstmt.getInt(index) == 1) {
-//					return true;
-//				} else {
-//					return false;
-//				}
-
-		}
-
-		}
-
-
-				sc.close(); // closes the scanner
-			} catch (Exception e) {
-				e.printStackTrace();
-				return false;
-			} finally {
-				try {
-					cstmt.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		return true;
-
-
-	}
-
-	protected boolean exportDataToCSV(String tableName, String Path) {
-		// csv must be with header and FIRSTROW = 2, FIELDTERMINATOR =',', ROWTERMINATOR
-		// = '\n')'
-		CallableStatement cstmt = null;
-		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call exportDataToCSV (?,?)}");
-
-			int index = 1;
-			cstmt.setString(index++, tableName);
-			cstmt.setString(index++, Path);
-			cstmt.execute();
-
-			if (cstmt.getInt(index) == 1) {
-				return true;
-			} else {
-				return false;
 			}
 
-		} catch (SQLException e) {
+			sc.close(); // closes the scanner
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		} finally {
@@ -1883,12 +1846,35 @@ public class UserModel {
 				e.printStackTrace();
 			}
 		}
+		return true;
+
+	}
+
+	protected boolean exportDataToCSV(String tableName, String Path) {
+		
+		String query = "SELECT *\r\n" + "FROM USERS";
+		PreparedStatement stmt;
+		ResultSet results = null;
+		try {
+			stmt = AuthenticationModel.conn.prepareStatement(query);
+		
+		 results = stmt.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ArrayList<application.User> users = turnresultSetToUser(results);
+		for (int i = 0; i < users.size(); i++) {
+			System.out.println(users.get(i));
+
+		}
+		return true;
 	}
 
 	public FBItem[] searchThisUsers_other(String albumName, String pictureSource, String videoMessage, String linkName,
 			String eventName, int usersID) {
 		ArrayList<FBItem> items = new ArrayList<FBItem>();
-
 
 		try {
 
@@ -1900,7 +1886,6 @@ public class UserModel {
 
 			cstmt.setString(columnIndex++, albumName);
 			cstmt.setInt(columnIndex, usersID);
-
 
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
@@ -2139,7 +2124,37 @@ public class UserModel {
 			}
 		}
 	}
+	private static List<Object[]> getDataFromDB(String query) {
+		List<Object[]> results = new ArrayList<Object[]>();
 
+		ResultSet rs = null;
 
+		try {
+			PreparedStatement stmt = AuthenticationModel.conn.prepareStatement(query);
+			rs = stmt.executeQuery();
+			int cols = rs.getMetaData().getColumnCount();
+
+			while (rs.next()) {
+				Object[] attributes = new Object[cols];
+				for (int i = 0; i < cols; i++)
+					attributes[i] = rs.getObject(i + 1);
+				results.add(attributes); // many attributes make a record
+			}
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs == null)
+					return null; // In case of a query UPDATE
+				rs.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+		return results;
+
+	}
 
 }
