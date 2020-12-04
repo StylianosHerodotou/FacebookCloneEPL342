@@ -1733,7 +1733,7 @@ public class UserModel {
 		return arr;
 	}
 
-	public Event[] search_events(int id, String venue, String name, Date start, Date end, String descr, int creatorid,
+	public FBItem[] search_events(int id, String venue, String name, Date start, Date end, String descr, int creatorid,
 			int locid) {
 
 		ArrayList<Event> events = new ArrayList<Event>();
@@ -1778,7 +1778,7 @@ public class UserModel {
 
 			arr[i] = events.get(i);
 		}
-
+		return arr;
 	}
 
 }
