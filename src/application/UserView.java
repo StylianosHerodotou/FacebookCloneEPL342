@@ -378,13 +378,13 @@ return new ScrollPane(grid);
         // how does this work
 return new ScrollPane(grid);
 	}
-	protected ScrollPane SameInterestsFriendsVuew(
+	protected ScrollPane SameInterestsFriendsView(
 			int tabIndex) {
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.BASELINE_LEFT);
 		grid.setHgap(30);
 		grid.setVgap(30);
-		ObservableList<User> SameInterestsFriends= this.controller.getSameInterestFriends(this.controller.getUser().getId());
+		ArrayList<User> SameInterestsFriends= this.controller.getSameInterestFriends(this.controller.getUser().getId());
 		Text scenetitle = new Text("Friends with exact same interests ");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
 		grid.add(scenetitle, 0,0);
@@ -423,14 +423,18 @@ return new ScrollPane(grid);
 		grid.add(name, 0,1 );
 		Label location = new Label("Location");
 		grid.add(location, 1,1 );
+		Label venue = new Label("Venue");
+		grid.add(location, 2,1 );
 
 
          int row=2;
 		for(int i=0;i<Events.size();i++) {
 			Text nameText = new Text(Events.get(i).getName());
-			Text locationText = new Text(Events.get(i).getLoc_id());
+			Text locationText = new Text(Events.get(i).getLoc().getName());
+			Text venueText = new Text(Events.get(i).getVenue());
 			grid.add(nameText, 0, row);
 			grid.add(locationText, 1, row);
+			grid.add(venueText, 2, row);
 			row++;
 		}
 

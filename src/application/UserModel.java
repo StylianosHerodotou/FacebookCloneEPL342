@@ -750,6 +750,24 @@ public class UserModel {
 		}
 		return users;
 	}
+	public ArrayList<Event> getLeastAttendableEvent() {
+		String SPsql = "EXEC FRIENDS_WITH_SAME_INTERESTS ? "; // for stored proc taking 2 parameters
+		ResultSet resultSet = null;
+		ArrayList<Event> events = new ArrayList<Event>();
+		try {
+			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+			ps.setEscapeProcessing(true);
+			resultSet = ps.executeQuery();
+			events = turnresultSetToEvent(resultSet);
+			System.out.println(events);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		return events;
+	}
 
 // Gets Friends with same Interests
 	public ArrayList<User> FriendsSameInterests(int id) {
@@ -1357,9 +1375,6 @@ public class UserModel {
 		return (User[]) users.toArray();
 	}
 
-	public ArrayList<Event> getLeastAttendableEvent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }

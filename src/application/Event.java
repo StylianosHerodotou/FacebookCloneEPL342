@@ -37,7 +37,12 @@ public class Event extends FBItem{
 		this.privacy = privacy;
 	}
 
-
+public Location getLoc() {
+	return this.location;
+}
+public void setLoc(Location loc) {
+	this.location=loc;
+}
 
 	public int getUser_id() {
 		return creatorID;
