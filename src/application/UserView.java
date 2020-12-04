@@ -78,13 +78,11 @@ public class UserView {
 		Tab chrisTab = new Tab("My friends", this.ChrisView(index++));
 Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index++));
 		Tab panikosTab = new Tab("panikos", this.PanikosView(index++));
-		Tab searchItemsTab = new Tab("panikos", this.getSearchForItemsView(index++));
-		Tab searchUsersItemsTab = new Tab("panikos", this.getSearchForItemsView(index++));
-		Tab logAllTab = new Tab("panikos", this.getKLogView(index++));
-		Tab logSingleTab = new Tab("panikos", this.getLogItemView(index++));
-
-
-
+		Tab searchItemsTab = new Tab("search my stuff", this.getSearchForItemsView(index++));
+		Tab searchUsersItemsTab = new Tab("search other peoples stuff", this.getSearchForItemsView(index++));
+		Tab logAllTab = new Tab("log all", this.getKLogView(index++));
+		Tab logSingleTab = new Tab("log single category", this.getLogItemView(index++));
+		Tab searchEventsTab = new Tab("search events", this.getEvetsSearchView(index++));
 
 
 		tabPane.getTabs().add(profileTab);
@@ -95,6 +93,8 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 		tabPane.getTabs().add(searchUsersItemsTab);
 		tabPane.getTabs().add(logAllTab);
 		tabPane.getTabs().add(logSingleTab);
+		tabPane.getTabs().add(searchEventsTab);
+
 
 	}
 
@@ -1039,7 +1039,8 @@ return new ScrollPane(grid);
 	private void prepareForeignItemScene(GridPane grid, FBItem item, int tabIndex) {
 			
 			prepareScene(grid, tabIndex);
-			Text scenetitle = null;
+			
+			Text scenetitle = new Text("foreign "+ item.getClass().getSimpleName());
 			if(item.getClass().equals(User.class)) {
 				User foreignUser = (User)item;
 				scenetitle = new Text(((User)item).username+"'s profile");
@@ -1047,6 +1048,7 @@ return new ScrollPane(grid);
 				addFriendButton.setOnAction(event->this.controller.sentFriendRequest(foreignUser.getId(), tabIndex));
 				grid.add(addFriendButton, 5, 4);
 			}else if(item.getClass().equals(Event.class)) {
+				scenetitle = new Text("foreign "+ item.getClass().getSimpleName());
 				Button attendEventButton = new Button("Attend event");
 				attendEventButton.setOnAction(event->this.controller.attendEvent(((Event) item).getId(),tabIndex));
 				grid.add(attendEventButton, 5, 4);
@@ -1348,6 +1350,74 @@ return new ScrollPane(grid);
 
 			return new ScrollPane(grid);
 		
+	}
+	
+	public ScrollPane getEvetsSearchView (int tabIndex){
+		GridPane grid = new GridPane();
+		
+		HashMap<String, Integer> locations= this.controller.getStringToIntLocations();
+
+		int yLevelIndex = 3;
+		int xStartinglevel = 2;
+
+		Label Albumname = new Label("Venue");
+		grid.add(Albumname, xStartinglevel, yLevelIndex);
+		TextField venueField = new TextField();
+		grid.add(venueField, xStartinglevel + 1, yLevelIndex++);
+		
+		Label Linkname = new Label("Name:");
+		grid.add(Linkname, xStartinglevel, yLevelIndex);
+		TextField namefiled = new TextField();
+		grid.add(namefiled, xStartinglevel + 1, yLevelIndex++);
+		
+		Label Eventname = new Label("start time:");
+		grid.add(Eventname, xStartinglevel, yLevelIndex);
+		TextField sfiled = new TextField();
+		grid.add(sfiled, xStartinglevel + 1, yLevelIndex++);
+		
+		Label picSource = new Label("end time");
+		grid.add(picSource, xStartinglevel, yLevelIndex);
+		TextField efiled = new TextField();
+		grid.add(efiled, xStartinglevel + 1, yLevelIndex++);
+		
+		Label VideoMessage = new Label("description");
+		grid.add(VideoMessage, xStartinglevel, yLevelIndex);
+		TextField dfield = new TextField();
+		grid.add(dfield, xStartinglevel + 1, yLevelIndex++);
+		
+		Label creatorIDLabel = new Label("creator ID");
+		grid.add(creatorIDLabel, xStartinglevel, yLevelIndex);
+		TextField creafield = new TextField();
+		grid.add(creafield, xStartinglevel + 1, yLevelIndex++);
+		
+		Label hometownLabel = new Label("location:");
+		grid.add(hometownLabel, xStartinglevel, yLevelIndex);
+		ComboBox hometownBox = new ComboBox(FXCollections.observableArrayList(locations)); 
+		hometownBox.getSelectionModel().selectFirst();
+		grid.add(hometownBox, xStartinglevel+1, yLevelIndex++);
+		
+		
+		Button SearchItemButton = new Button();
+		SearchItemButton.setText("Search Item");
+
+			SearchItemButton.setOnAction(event -> {
+				String venue = venueField.getText();
+				String name = namefiled.getText();
+				String startTimeStr = sfiled.getText();
+				Timestamp startTime=Timestamp.valueOf(startTimeStr);
+				String endTimeStr = efiled.getText();
+				Timestamp endTime=Timestamp.valueOf(endTimeStr);
+				String description = dfield.getText();
+				String creatorIDStr = creafield.getText();
+				int creatorID= Integer.parseInt(creatorIDStr);
+				String locationStr=(String) hometownBox.getValue();
+				Location location = new Location (locations.get(locationStr),locationStr);
+				Event searchEvent= new Event(-1, venue,name,startTime,endTime,description,creatorID,new Privacy("OPEN"),location);
+				
+				this.controller.searchForEvents(searchEvent, tabIndex);
+
+			});
+			return new ScrollPane(grid);
 	}
 
 	public ScrollPane getItemCrollView(FBItem[] items, int tabIndex, boolean canEditItems, boolean mine,boolean isInsert) {
