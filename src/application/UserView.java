@@ -1307,6 +1307,7 @@ return new ScrollPane(grid);
 			Label nothingToShow = new Label("there is nothing to show Here!");
 			grid.add(nothingToShow, HelperFunctions.initXlevel + 1, 1 + HelperFunctions.initYlevel);
 		}
+		System.out.println(tabIndex);
 		for (int objectIndex = 0; objectIndex < items.length; objectIndex++) {
 			FBItem object = items[objectIndex];
 			String className = object.getClass().getSimpleName();
@@ -1321,8 +1322,10 @@ return new ScrollPane(grid);
 			
 			if(tabIndex==3)//???{
 			{
-				Button addFriendButton = new Button("add Friend");
+				Button addFriendButton = new Button("sent friend request");
 				addFriendButton.setOnAction(event->this.controller.addFriend(((User) object).getId(), tabIndex));
+				grid.add(addFriendButton, HelperFunctions.initXlevel + 3, objectIndex + HelperFunctions.initYlevel);
+
 			}
 		}
 		return new ScrollPane(grid);

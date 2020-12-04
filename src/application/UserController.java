@@ -580,7 +580,7 @@ public void addFriend(int id,int tabint) {
 //		User[] users =  this.generateDummyUsers();
 
 		if (items==null) {
-			String message = "Could not find Users";
+			String message = "Could not find items";
 			displayPopUp(message);
 			return;
 		}
