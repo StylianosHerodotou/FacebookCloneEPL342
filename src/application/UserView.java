@@ -1191,6 +1191,7 @@ return new ScrollPane(grid);
 
 			User a = new User(firstName, lastName, email, website, link, birthday, gender, workedForPlaces,
 					educationPlaces, quotes, isVerified, hometown, livesIn, username, "");
+			AuthenticationController.displayPopUp(a.toString());
 			this.controller.searchUsers(a, tabIndex);
 		});
 
@@ -1313,7 +1314,7 @@ return new ScrollPane(grid);
 			
 			
 			
-			if(tabIndex==5)//???{
+			if(tabIndex==3)//???{
 			{
 				Button addFriendButton = new Button("add Friend");
 				addFriendButton.setOnAction(event->this.controller.addFriend(((User) object).getId(), tabIndex));

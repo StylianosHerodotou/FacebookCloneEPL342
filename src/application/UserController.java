@@ -59,8 +59,8 @@ public class UserController {
 		this.view = new UserView(primaryStage);
 		this.model = new UserModel();
 		this.view.setController(this);
-		this.view.generateTabPane();
 		this.model.setController(this);
+		this.view.generateTabPane();
 	}
 	public static  HashMap<String, Integer> getStringToIntLocations() {
 		ResultSet result= UserModel.getLocations();
