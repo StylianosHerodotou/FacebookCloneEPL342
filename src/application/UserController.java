@@ -597,6 +597,23 @@ public void addFriend(int id,int tabint) {
 		Tab tab = this.view.tabPane.getTabs().get(tabIndex);
 		tab.setContent(this.view.FriendNetworkWithBiggerthanXAlbums(tabIndex,x));
 }
+	public void showFriendsView(int tabIndex) {
+		Tab tab = this.view.tabPane.getTabs().get(tabIndex);
+		tab.setContent(this.view.getFriendView(tabIndex));
+}
+	public void showFriendRequestView(int tabIndex) {
+		Tab tab = this.view.tabPane.getTabs().get(tabIndex);
+		tab.setContent(this.view.getFriendRequestView(tabIndex));
+}
+	public void showIgnoredFriendRequestView(int tabIndex) {
+		Tab tab = this.view.tabPane.getTabs().get(tabIndex);
+		try {
+			tab.setContent(this.view.getIgnoredFriendRequestView(tabIndex));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+}
 
 
 	

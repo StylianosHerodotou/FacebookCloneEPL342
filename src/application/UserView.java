@@ -190,6 +190,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 			Button unign = new Button("UnIgnore");
 			unign.setOnAction(event -> {
 				this.controller.unignoreFriend(FriendRequests.get(b).getId(), tabIndex);
+				this.controller.showIgnoredFriendRequestView(tabIndex);
 			});
 			unignb.add(unign);
 
@@ -244,15 +245,18 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 			Button add = new Button("Add");
 			add.setOnAction(event -> {
 				this.controller.addFriend(FriendRequests.get(b).getId(), tabIndex);
+				this.controller.showFriendRequestView(tabIndex);
 			});
 			Button del = new Button("Delete");
 			del.setOnAction(event -> {
 				this.controller.denyFriend(FriendRequests.get(b).getId(), tabIndex);
+				this.controller.showFriendRequestView(tabIndex);
 			});
 			Button ign = new Button("Ignore");
 			ign.setOnAction(event -> {
 				try {
 					this.controller.ignoreFriend(FriendRequests.get(b).getId(), tabIndex);
+					this.controller.showFriendRequestView(tabIndex);
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -308,13 +312,19 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 			return new ScrollPane(grid);
 		}
 		ArrayList<Button> delb = new ArrayList<Button>();
+		ArrayList<Button> seeUser = new ArrayList<Button>();
 		for (int i = 0; i < Friends.size(); i++) {
 			int b = i;
 			Button del = new Button("Delete");
 			del.setOnAction(event -> {
 				this.controller.DeleteFriend(Friends.get(b).getId(), tabIndex);
+				this.controller.showFriendsView(tabIndex);
 			});
 			delb.add(del);
+			Button see = new Button("See Prof");
+			see.setOnAction(event -> {
+				this.controller.showProfile(tabIndex);
+			});
 		}
 		grid.setAlignment(Pos.BASELINE_LEFT);
 		grid.setHgap(18);
