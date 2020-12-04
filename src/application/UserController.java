@@ -722,6 +722,16 @@ public void addFriend(int id,int tabint) {
 			tab.setContent(this.view.getFriendRequestView(tabIndex));
 		}
 
+		public void searchForEvents(Event searchEvent, int tabIndex) {
+			
+			FBItem[] events= this.model.search_events(searchEvent);
+
+			ScrollPane grid =this.view.getItemCrollView(events, tabIndex, false, false, false);
+			Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
+			currentTab.setContent(grid);		
+			
+		}
+
 	
 	
 
