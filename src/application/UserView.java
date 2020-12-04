@@ -312,6 +312,46 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 			grid.add(scenetitle, 0, 0);
 			Label empty = new Label("No Friends ");
 			grid.add(empty, 1, 1);
+			Button Famous=new Button("Famous friends");
+			Famous.setOnAction(event -> {
+				this.controller.showMostFamousFriendsView(tabIndex);
+			});
+			grid.add(Famous, 5, 2);
+			Button Common=new Button("Friends with common friends ");
+			Common.setOnAction(event -> {
+				this.controller.showComonFriendsFriendsView(tabIndex);
+			});
+			grid.add(Common, 5, 3);
+			Button BigX=new Button("Search for friends with bigger than X album");
+			BigX.setOnAction(event -> {
+				this.controller.showSearchBiggerThanXFriends(tabIndex);
+			});
+			grid.add(BigX, 5, 4);
+			Button NetBigX = new Button("Search for network of friends with bigger than X album");
+			NetBigX.setOnAction(event -> {
+				this.controller.showSearchBiggerThanXNetworkFriends(tabIndex);
+			});
+			grid.add(NetBigX, 5, 5);
+			Button SameInter = new Button("Friends with same interests");
+			SameInter.setOnAction(event -> {
+				try {
+					this.controller.showCommonInterestFriendView(tabIndex);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+			grid.add(SameInter, 5, 6);
+			Button notPopularEvents=new Button("Least Popular Events");
+			notPopularEvents.setOnAction(event -> {
+				try {
+					this.controller.showLeastPopularEvent(tabIndex);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+			grid.add(SameInter, 5, 7);
 			return new ScrollPane(grid);
 		}
 		ArrayList<Button> delb = new ArrayList<Button>();
@@ -359,18 +399,22 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 		Famous.setOnAction(event -> {
 			this.controller.showMostFamousFriendsView(tabIndex);
 		});
+		grid.add(Famous, 5, 2);
 		Button Common=new Button("Friends with common friends ");
 		Common.setOnAction(event -> {
 			this.controller.showComonFriendsFriendsView(tabIndex);
 		});
+		grid.add(Common, 5, 3);
 		Button BigX=new Button("Search for friends with bigger than X album");
 		BigX.setOnAction(event -> {
 			this.controller.showSearchBiggerThanXFriends(tabIndex);
 		});
+		grid.add(BigX, 5, 4);
 		Button NetBigX = new Button("Search for network of friends with bigger than X album");
 		NetBigX.setOnAction(event -> {
 			this.controller.showSearchBiggerThanXNetworkFriends(tabIndex);
 		});
+		grid.add(NetBigX, 5, 5);
 		Button SameInter = new Button("Friends with same interests");
 		SameInter.setOnAction(event -> {
 			try {
@@ -380,6 +424,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 				e.printStackTrace();
 			}
 		});
+		grid.add(SameInter, 5, 6);
 		Button notPopularEvents=new Button("Least Popular Events");
 		notPopularEvents.setOnAction(event -> {
 			try {
@@ -389,6 +434,7 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 				e.printStackTrace();
 			}
 		});
+		grid.add(SameInter, 5, 7);
 		return new ScrollPane(grid);
 	}
 
