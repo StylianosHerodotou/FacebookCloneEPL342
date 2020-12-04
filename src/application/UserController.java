@@ -490,34 +490,63 @@ public void addFriend(int id,int tabint) {
 				
 	}
 
-	public void insertItem(ArrayList<Object> newData, String className, FBItem object, int tabIndex) {
-		// TODO Auto-generated method stub
-		
+	public void insertItem(ArrayList<Object> newData, FBItem object, int tabIndex) {
+		String className= object.getClass().getSimpleName();
+		switch(className) {
+		case "Event":
+			Event newEvent= new Event(newData,(Event)object);
+			newEvent.setUser_id(this.user.id);
+			this.model.addEvent(newEvent);
+		break;
+		case "Link":
+			Link newLink= new Link(newData,(Link)object);
+			newLink.setUser_id(this.user.id);
+			this.model.addLink(newLink);
+		break;
+		case "Video":
+			Video newVideo= new Video(newData,(Video)object);
+			newVideo.setUser_id(this.user.id);
+
+			this.model.addVideo(newVideo);
+			break;
+		case "Picture":
+			Picture newPicture= new Picture(newData,(Picture)object);
+			newPicture.setUserId(this.user.id);
+
+			this.model.addPicture(newPicture);
+			break;
+		case "Album":
+			PictureAlbum newAlbum= new PictureAlbum(newData,(PictureAlbum)object);
+			newAlbum.setUser_id(this.user.id);
+			this.model.addAlbum(newAlbum);
+			break;
+		}
+
 	}
 
 	public void showAddImagesView(int tabIndex, boolean b) {
-		Picture newPicture = new Picture();
-		this.showFormView(tabIndex, newPicture,true, true, true);
+		Picture newitem = new Picture();
+		this.showFormView(tabIndex, newitem,true, true, true);
 	}
 
-	public Object showAddUserVideosView(int tabIndex, boolean b) {
-		// TODO Auto-generated method stub
-		return null;
+	public void showAddUserVideosView(int tabIndex, boolean b) {
+		Video newitem = new Video ();
+		this.showFormView(tabIndex, newitem,true, true, true);
 	}
 
-	public Object showAddUserAlbumsView(int tabIndex, boolean b) {
-		// TODO Auto-generated method stub
-		return null;
+	public void showAddUserAlbumsView(int tabIndex, boolean b) {
+		PictureAlbum newitem = new PictureAlbum ();
+		this.showFormView(tabIndex, newitem,true, true, true);
 	}
 
-	public Object showAddUserLinksView(int tabIndex, boolean b) {
-		// TODO Auto-generated method stub
-		return null;
+	public void showAddUserLinksView(int tabIndex, boolean b) {
+		Link newitem = new Link ();
+		this.showFormView(tabIndex, newitem,true, true, true);
 	}
 
-	public Object showAddUserEventsView(int tabIndex, boolean b) {
-		// TODO Auto-generated method stub
-		return null;
+	public void showAddUserEventsView(int tabIndex, boolean b) {
+		Event newitem = new Event ();
+		this.showFormView(tabIndex, newitem,true, true, true);
 	}
 
 

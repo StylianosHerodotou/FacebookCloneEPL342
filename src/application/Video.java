@@ -1,5 +1,6 @@
 package application;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class Video extends FBItem{
@@ -43,6 +44,35 @@ public class Video extends FBItem{
 		this.source=source;
 	}
 
+	public Video() {
+		super("this is a video");
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Video(ArrayList<Object> newData, Video object) {
+		super("this is a video");
+		Field[] all_fields = this.getClass().getDeclaredFields();
+		int newDataIndex=0;
+		for (int field_index = 0; field_index < all_fields.length; field_index++) {
+			try {
+				Field currentField=all_fields[field_index];
+				if(HelperFunctions.is_field_sensitive(currentField.getName())) {
+					currentField.set(this,currentField.get(object));
+				}
+				else
+					currentField.set(this,newData.get(newDataIndex++));
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+	}
+	public int getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
 	public int getId() {
 		return id;
 	}

@@ -62,6 +62,14 @@ public class Picture extends FBItem{
 		}
 	}
 
+	public int getUserId() {
+		return UserId;
+	}
+
+	public void setUserId(int userId) {
+		UserId = userId;
+	}
+
 	public Picture() {
 		super("This is a picture");
 		// TODO Auto-generated constructor stub

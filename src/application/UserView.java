@@ -76,12 +76,12 @@ public class UserView {
 
 		Tab profileTab = new Tab("Profile", this.getMyProfileView(index++));
 		Tab chrisTab = new Tab("My friends", this.ChrisView(index++));
-		Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index++));
+//		Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index++));
 		Tab panikosTab = new Tab("panikos", this.PanikosView(index++));
 
 		tabPane.getTabs().add(profileTab);
 		tabPane.getTabs().add(chrisTab);
-		tabPane.getTabs().add(friendRequesTab);
+//		tabPane.getTabs().add(friendRequesTab);
 		tabPane.getTabs().add(panikosTab);
 
 	}
@@ -430,7 +430,7 @@ public class UserView {
 			if(isInsert==false)
 			this.controller.updateItem(newData, className, object, tabIndex);
 			else
-			this.controller.insertItem(newData,className,object,tabIndex);
+			this.controller.insertItem(newData,object,tabIndex);
 		});
 
 		return new ScrollPane(grid);
@@ -847,13 +847,14 @@ return new ScrollPane(grid);
 		Label hometownLabel = new Label("hometown:");
 		grid.add(hometownLabel, xStartinglevel, yLevelIndex);
 		ComboBox hometownBox = new ComboBox(FXCollections.observableArrayList(locations));
-		hometownBox.getSelectionModel().selectLast();
+//		hometownBox.getSelectionModel().selectLast();
+		hometownBox.getSelectionModel().select("?");
 		grid.add(hometownBox, xStartinglevel + 1, yLevelIndex++);
 
 		Label livesInLabel = new Label("live in :");
 		grid.add(livesInLabel, xStartinglevel, yLevelIndex);
 		ComboBox livesInBox = new ComboBox(FXCollections.observableArrayList(locations));
-		livesInBox.getSelectionModel().selectLast();
+		livesInBox.getSelectionModel().select("?");
 		grid.add(livesInBox, xStartinglevel + 1, yLevelIndex++);
 
 		Label comptel = new Label("Email");
@@ -874,7 +875,7 @@ return new ScrollPane(grid);
 		Label birthdayLabel = new Label("birthday");
 		grid.add(birthdayLabel, xStartinglevel, yLevelIndex);
 		DatePicker datePicker = new DatePicker();
-		datePicker.setValue(LocalDate.now());
+		datePicker.setValue(LocalDate.now()); // na perna null an to date en now
 		grid.add(datePicker, xStartinglevel + 1, yLevelIndex++);
 
 		Label workedAtLabel = new Label("previous employment Places * symbol between employments.");
@@ -947,15 +948,13 @@ return new ScrollPane(grid);
 			Location hometown = new Location(locationHashmap.get(strHometown), strHometown);
 			String strLivesInLocation = (String) livesInBox.getValue();
 			Location livesIn = new Location(locationHashmap.get(strLivesInLocation), strLivesInLocation);
-
+			System.out.print(livesIn.id);
 			// na ta valume tuta?
 			String username = UserNameField.getText();
 
 			User a = new User(firstName, lastName, email, website, link, birthday, gender, workedForPlaces,
 					educationPlaces, quotes, isVerified, hometown, livesIn, username, "");
-
 			this.controller.searchUsers(a, tabIndex);
-
 		});
 
 		grid.add(SearchUserButton, xStartinglevel, ++yLevelIndex);
