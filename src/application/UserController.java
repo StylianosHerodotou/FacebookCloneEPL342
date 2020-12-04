@@ -634,8 +634,15 @@ public void addFriend(int id,int tabint) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+		public void showCommonInterestFriendView(int tabIndex) throws FileNotFoundException {
+			Tab tab = this.view.tabPane.getTabs().get(tabIndex);
+			tab.setContent(this.view.SameInterestsFriendsView(tabIndex));
 }
-
+		public void showLeastPopularEvent(int tabIndex) throws FileNotFoundException {
+			Tab tab = this.view.tabPane.getTabs().get(tabIndex);
+			tab.setContent(this.view.LeastAttendableEvents(tabIndex));
+}
 
 	
 	

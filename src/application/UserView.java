@@ -307,8 +307,11 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 		GridPane grid = new GridPane();
 		ArrayList<User> Friends = this.controller.getFriends(this.controller.getUser().getId());
 		if(Friends == null) {
-			Label empty = new Label("No Friend Requests :");
-			grid.add(empty, 0, 1);
+			Text scenetitle = new Text("Friends");
+			scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+			grid.add(scenetitle, 0, 0);
+			Label empty = new Label("No Friends ");
+			grid.add(empty, 1, 1);
 			return new ScrollPane(grid);
 		}
 		ArrayList<Button> delb = new ArrayList<Button>();
@@ -352,6 +355,40 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 			grid.add(delb.get(i), 3, row);
 			row++;
 		}
+		Button Famous=new Button("Famous friends");
+		Famous.setOnAction(event -> {
+			this.controller.showMostFamousFriendsView(tabIndex);
+		});
+		Button Common=new Button("Friends with common friends ");
+		Common.setOnAction(event -> {
+			this.controller.showComonFriendsFriendsView(tabIndex);
+		});
+		Button BigX=new Button("Search for friends with bigger than X album");
+		BigX.setOnAction(event -> {
+			this.controller.showSearchBiggerThanXFriends(tabIndex);
+		});
+		Button NetBigX = new Button("Search for network of friends with bigger than X album");
+		NetBigX.setOnAction(event -> {
+			this.controller.showSearchBiggerThanXNetworkFriends(tabIndex);
+		});
+		Button SameInter = new Button("Friends with same interests");
+		SameInter.setOnAction(event -> {
+			try {
+				this.controller.showCommonInterestFriendView(tabIndex);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		Button notPopularEvents=new Button("Least Popular Events");
+		notPopularEvents.setOnAction(event -> {
+			try {
+				this.controller.showLeastPopularEvent(tabIndex);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 		return new ScrollPane(grid);
 	}
 
