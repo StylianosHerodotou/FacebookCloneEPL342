@@ -1749,24 +1749,23 @@ public class UserModel {
 		return arr;
 	}
 
-	public FBItem[] search_events(int id, String venue, String name, Date start, Date end, String descr, int creatorid,
-			int locid) {
+	public FBItem[] search_events(int id, String venue, String name, Timestamp start, Timestamp end, String descr, int creatorid,
+			Location locid) {
 
 		ArrayList<Event> events = new ArrayList<Event>();
 		try {
 			ResultSet resultSet = null;
 			CallableStatement cstmt = AuthenticationModel.conn.prepareCall(
-					"{call SEARCH_USERS_TEMP2(?,?,?,?, ?,?,?,?)}", ResultSet.TYPE_SCROLL_INSENSITIVE,
+					"{call handle_events(?,?,?,?, ?,?,?)}", ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
-			cstmt.setInt(columnIndex++, id);
 			cstmt.setString(columnIndex++, venue);
 			cstmt.setString(columnIndex++, name);
-			cstmt.setDate(columnIndex++, start);
-			cstmt.setDate(columnIndex++, end);
+			cstmt.setTimestamp(columnIndex++, start);
+			cstmt.setTimestamp(columnIndex++, end);
 			cstmt.setString(columnIndex++, descr);
 			cstmt.setInt(columnIndex++, creatorid);
-			cstmt.setInt(columnIndex++, locid);
+			cstmt.setInt(columnIndex++, locid.getId());
 
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
@@ -2137,5 +2136,7 @@ public class UserModel {
 			}
 		}
 	}
+	
+	
 
 }
