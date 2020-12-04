@@ -12,8 +12,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-import org.graalvm.compiler.hotspot.aarch64.AArch64HotSpotCRuntimeCallEpilogueOp;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -80,10 +78,12 @@ public class UserView {
 		Tab chrisTab = new Tab("My friends", this.ChrisView(index++));
 Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index++));
 		Tab panikosTab = new Tab("panikos", this.PanikosView(index++));
-		Tab searchItemsTab = new Tab("panikos", this.getSearchForItemsView(index++));
-		Tab searchUsersItemsTab = new Tab("panikos", this.getSearchForItemsView(index++));
-		Tab logAllTab = new Tab("panikos", this.getKLogView(index++));
-		Tab logSingleTab = new Tab("panikos", this.getLogItemView(index++));
+		Tab searchItemsTab = new Tab("search my stuff", this.getSearchForItemsView(index++));
+		Tab searchUsersItemsTab = new Tab("search other peoples stuff", this.getSearchForItemsView(index++));
+		Tab logAllTab = new Tab("log all", this.getKLogView(index++));
+		Tab logSingleTab = new Tab("log single category", this.getLogItemView(index++));
+		Tab searchEventsTab = new Tab("search events", this.getEvetsSearchView(index++));
+
 
 		tabPane.getTabs().add(profileTab);
 		tabPane.getTabs().add(chrisTab);
@@ -93,6 +93,8 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 		tabPane.getTabs().add(searchUsersItemsTab);
 		tabPane.getTabs().add(logAllTab);
 		tabPane.getTabs().add(logSingleTab);
+		tabPane.getTabs().add(searchEventsTab);
+
 
 	}
 
