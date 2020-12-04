@@ -257,10 +257,8 @@ public class UserModel {
 				String name = resultSet.getString("Name");
 				String description = resultSet.getString("Description");
 				String linkname = resultSet.getString("Link");
-				Date End_time = resultSet.getDate("End_time");
-				String desc = resultSet.getString("Description_");
+				int LocId = resultSet.getInt("Taken_LOC_ID");
 				int UserId = resultSet.getInt("UserID");
-				int LocId = resultSet.getInt("LOC_ID");
 				Privacy privacy = new Privacy(resultSet.getString("Privacy_Name"));
 				Location location = new Location(LocId, locations.get(LocId));
 				ArrayList<Picture> pictures = this.getPicturesByAlbum(id);
@@ -483,7 +481,7 @@ public class UserModel {
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
-				return null;
+				return pictures;
 			else {
 				pictures = turnresultSetToPictures(resultSet);
 				System.out.println(pictures);
@@ -506,7 +504,7 @@ public class UserModel {
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
-				return null;
+				return vids;
 			else {
 				vids = turnresultSetToVideos(resultSet);
 				System.out.println(vids);
@@ -529,7 +527,7 @@ public class UserModel {
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
-				return null;
+				return Albums;
 			else {
 				Albums = turnresultSetToPictureAlbums(resultSet);
 				System.out.println(Albums);
@@ -552,7 +550,7 @@ public class UserModel {
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
-				return null;
+				return links;
 			else {
 				links = turnresultSetToLinks(resultSet);
 				System.out.println(links);
@@ -576,7 +574,7 @@ public class UserModel {
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
-				return null;
+				return events;
 			else {
 				events = turnresultSetToEvent(resultSet);
 				System.out.println(events);
@@ -599,7 +597,7 @@ public class UserModel {
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
-				return null;
+				return users;
 			else {
 				users = turnresultSetToUser(resultSet);
 				System.out.println(users);
@@ -623,7 +621,7 @@ public class UserModel {
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
-				return null;
+				return users;
 			else {
 				users = turnresultSetToUser(resultSet);
 				System.out.println(users);
@@ -646,7 +644,7 @@ public class UserModel {
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
-				return null;
+				return users;
 			else {
 				users = turnresultSetToUser(resultSet);
 				System.out.println(users);
@@ -745,7 +743,7 @@ public class UserModel {
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
-				return null;
+				return users;
 			else {
 				users = turnresultSetToUser(resultSet);
 				System.out.println(users);
@@ -768,7 +766,7 @@ public class UserModel {
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
-				return null;
+				return users;
 			else {
 				users = turnresultSetToUser(resultSet);
 				System.out.println(users);
@@ -791,7 +789,7 @@ public class UserModel {
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
-				return null;
+				return users;
 			else {
 				users = turnresultSetToUser(resultSet);
 				System.out.println(users);
@@ -815,7 +813,7 @@ public class UserModel {
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
-				return null;
+				return users;
 			else {
 				users = turnresultSetToUser(resultSet);
 				System.out.println(users);
@@ -837,7 +835,7 @@ public class UserModel {
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
-				return null;
+				return events;
 			else {
 				events = turnresultSetToEvent(resultSet);
 				System.out.println(events);
@@ -861,7 +859,7 @@ public class UserModel {
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
-				return null;
+				return users;
 			else {
 				users = turnresultSetToUser(resultSet);
 				System.out.println(users);
@@ -963,7 +961,7 @@ public class UserModel {
 
 		CallableStatement cstmt = null;
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call insertVideo (?,?,?,?,?,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call insertEvent (?,?,?,?, ?,?,?,?, ?)}");
 
 			int index = 1;
 			cstmt.setString(index++, obj.getVenue());
@@ -974,6 +972,7 @@ public class UserModel {
 			cstmt.setInt(index++, obj.creatorID);
 			cstmt.setInt(index++, obj.location.getId());
 			cstmt.setString(index++, obj.getPrivacy().name);
+			
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
 			cstmt.execute();
@@ -1111,6 +1110,7 @@ public class UserModel {
 	protected boolean addAlbum(PictureAlbum obj) {
 
 		CallableStatement cstmt = null;
+		AuthenticationController.displayPopUp("erkete os dame");
 		try {
 			cstmt = AuthenticationModel.conn.prepareCall("{call insertAlbum (?,?,?,?,?,?,?)}");
 
@@ -1152,7 +1152,7 @@ public class UserModel {
 		String description = obj.description;
 		double length = obj.getLength();
 		String source = obj.getSource();
-		int user_id = obj.getId();
+		int user_id = obj.getUser_id();
 		Privacy privacy = obj.privacy;
 
 		try {
@@ -1195,7 +1195,7 @@ public class UserModel {
 		String link = obj.link;
 		String source = obj.getSource();
 		Privacy privacy = obj.privacy;
-		int user_id = obj.getId();
+		int user_id = obj.getUserId();
 
 		try {
 			cstmt = AuthenticationModel.conn.prepareCall("{call updatePicture(?,?,?,?,?,?,?,?)}");
@@ -1323,8 +1323,8 @@ public class UserModel {
 			cstmt.setDate(columnIndex++, new Date(endTim.getTime()));
 			cstmt.setString(columnIndex++, descri);
 			cstmt.setInt(columnIndex++, user_id);
-			cstmt.setString(columnIndex++, privacy.name);
 			cstmt.setInt(columnIndex++, loca.getId());
+			cstmt.setString(columnIndex++, privacy.name);
 			cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
 			cstmt.execute();
 			System.out.print("okay sinexise\n");
@@ -1411,7 +1411,7 @@ public class UserModel {
 			}
 
 			if (isResultSetEmpty(resultSet))
-				return null;
+				return new User[0];
 			else {
 
 				HashMap<Integer, String> locations = this.controller.getIntToStringLocations();
@@ -1447,11 +1447,11 @@ public class UserModel {
 
 		catch (Exception e) {
 			System.out.println(e);
-			return null;
+			return new User[0];
 		}
 		System.out.println(users);
 		if (users.size() <= 0)
-			return null;
+			return new User[0];
 		User[] arr = new User[users.size()];
 		for (int i = 0; i < arr.length; i++) {
 			arr[i] = (User) users.get(i);
@@ -1704,7 +1704,7 @@ public class UserModel {
 			}
 
 			if (SearchUserModel.isResultSetEmpty(resultSet))
-				return null;
+				return new FBItem[0];
 			else {
 
 				while (resultSet.next()) {

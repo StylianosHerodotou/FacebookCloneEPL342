@@ -337,6 +337,7 @@ public void addFriend(int id,int tabint) {
 	}
 
 	public FBItem[] turnPicturesToFBArray(ArrayList<Picture> objects) {
+		
 		FBItem[] items = new FBItem[objects.size()];
 		for (int index=0; index<objects.size(); index++) {
 			items[index]=objects.get(index);
@@ -407,7 +408,6 @@ public void addFriend(int id,int tabint) {
 		case "Video":
 			Video newVideo= new Video(newData,(Video)object);
 			newVideo.setUser_id(this.user.id);
-
 			this.model.updateVideo(newVideo);
 			break;
 		case "Picture":
@@ -415,7 +415,7 @@ public void addFriend(int id,int tabint) {
 			newPicture.setUserId(this.user.id);
 			this.model.updatePicture(newPicture);
 			break;
-		case "Album":
+		case "PictureAlbum":
 			PictureAlbum newAlbum= new PictureAlbum(newData,(PictureAlbum)object);
 			newAlbum.setUser_id(this.user.id);
 			this.model.updateAlbum(newAlbum);
@@ -539,7 +539,7 @@ public void addFriend(int id,int tabint) {
 			newPicture.setUserId(this.user.id);
 			this.model.addPicture(newPicture);
 			break;
-		case "Album":
+		case "PictureAlbum":
 			PictureAlbum newAlbum= new PictureAlbum(newData,(PictureAlbum)object);
 			newAlbum.setUser_id(this.user.id);
 			this.model.addAlbum(newAlbum);

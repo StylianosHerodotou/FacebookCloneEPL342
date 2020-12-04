@@ -179,7 +179,7 @@ public class AuthenticationModel {
 			String username=resultSet.getString("Username");
 			String password=resultSet.getString("pass");
 			
-			ArrayList<String>  workedFor=this.getWorkOfUser(id);
+			ArrayList<String>  workedFor=this.getWorkOfUser(id); // lathos na men ta fenri oulla
 			
 			ArrayList<String>  educationPlaces=this.getEducationOfUser(id);
 			ArrayList<String>  quotes=this.getQuotesOfUser(id);
@@ -200,7 +200,6 @@ public class AuthenticationModel {
 		ResultSet resultSet=null;
 		try {
 			ps = conn.prepareStatement(SPsql);
-		
 		ps.setEscapeProcessing(true);
 		int index=1;
 		ps.setString(index++, username);

@@ -285,8 +285,13 @@ public class HelperFunctions {
 					else
 						addTextFieldRow("null",retriveFields);
 				break;}
-				else
-					return Timestamp.valueOf(((TextField) retriveFields.get(fieldIndex)).getText());
+				else {
+					String temp=((TextField) retriveFields.get(fieldIndex)).getText();
+					if(temp.length()<8) {
+						return new Timestamp(System.currentTimeMillis());
+					}
+					else return Timestamp.valueOf(temp);
+				}
 			case "boolean":
 				if(field.getName().equals("gender"))
 				{

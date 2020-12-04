@@ -522,8 +522,12 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if(isInsert==false)
+			System.out.print("anything");
+			if(isInsert==false) {
+				
+				AuthenticationController.displayPopUp("erekte os dae prin update item");
 			this.controller.updateItem(newData, object, tabIndex);
+			}
 			else
 			this.controller.insertItem(newData,object,tabIndex);
 		});
@@ -895,6 +899,7 @@ return new ScrollPane(grid);
 		if (canEdit == true) {
 			Button editButton = new Button("Edit");
 			editButton.setOnAction(event -> {
+				AuthenticationController.displayPopUp("erkete osna diksi to show form view");
 				this.controller.showFormView(tabIndex, item,canEdit, mine,isInsert);
 			});
 			grid.add(editButton, HelperFunctions.initXlevel, fields.size() + HelperFunctions.initYlevel++);
