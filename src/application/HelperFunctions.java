@@ -36,7 +36,7 @@ public class HelperFunctions {
 		return is_sensitive;
 	}
 	
-	static void addItemLabel(Field field, Object object, ArrayList<Node> retriveFields, int tabIndex, UserView view) {
+	static void addItemLabel(Field field, Object object, ArrayList<Node> retriveFields, int tabIndex, UserView view,boolean canEdit, boolean mine, boolean isInsert) {
 		String fieldName=field.getName();
 		String fieldType= field.getType().getSimpleName();
 
@@ -60,7 +60,7 @@ public class HelperFunctions {
 						addTextLabelRow("Male", retriveFields);
 				}
 				else if (fieldName.equals("pictures")){
-					addAlbumLabel((ArrayList)fieldValue, retriveFields, tabIndex, view);
+					addAlbumLabel((ArrayList)fieldValue, retriveFields, tabIndex, view,canEdit,mine,isInsert);
 				}
 				else{
 					addTextLabelRow(fieldValue.toString(), retriveFields);
@@ -165,49 +165,49 @@ public class HelperFunctions {
 		}
 		nodes.add(datePicker);
 }
-	protected static Node addPictureLabel( Picture fieldValue, int tabIndex,UserView view) {
+	protected static Node addPictureLabel( Picture fieldValue, int tabIndex,UserView view,boolean canEdit, boolean mine, boolean isInsert) {
 		HBox box=null;
 		if(fieldValue==null) {
 			box = new HBox();
 		}
 		else {
-			box = new HBox(view.getItemView(tabIndex, fieldValue));
+			box = new HBox(view.getItemView(tabIndex, fieldValue,canEdit, mine, isInsert));
 		}
 		return box;
 }
 	
 	
-	protected static Node addPictureField( Picture fieldValue, int tabIndex,UserView view) {
+	protected static Node addPictureField( Picture fieldValue, int tabIndex,UserView view,boolean canEdit,boolean mine, boolean isInsert) {
 		HBox box=null;
 		if(fieldValue==null) {
 			box = new HBox();
 		}
 		else {
-			box = new HBox(view.getFormView(tabIndex, fieldValue));
+			box = new HBox(view.getFormView(tabIndex, fieldValue,canEdit,mine,isInsert));
 		}
 		return box;
 }
-	protected static void addAlbumLabel(ArrayList<Picture> pictures, ArrayList<Node> nodes, int tabIndex,UserView view) {
+	protected static void addAlbumLabel(ArrayList<Picture> pictures, ArrayList<Node> nodes, int tabIndex,UserView view,boolean canEdit, boolean mine, boolean isInsert) {
 		int ylevel=0;
 		int xlevel=2;
 		GridPane grid = new GridPane();	
 		if(pictures!=null) {
 			for (Picture pic : pictures) {
-				grid.add(addPictureLabel(pic,tabIndex,view),xlevel,ylevel++);
+				grid.add(addPictureLabel(pic,tabIndex,view,canEdit,mine,isInsert),xlevel,ylevel++);
 			}
 		}
 
 		nodes.add(grid);
 	}
 	
-	protected static void addAlmbumField(ArrayList<Picture> pictures, ArrayList<Node> nodes, int tabIndex,UserView view) {
+	protected static void addAlmbumField(ArrayList<Picture> pictures, ArrayList<Node> nodes, int tabIndex,UserView view,boolean canEdit,boolean mine, boolean isInsert) {
 			
 			int ylevel=0;
 			int xlevel=2;
 			GridPane grid = new GridPane();	
 			if(pictures!=null) {
 			for (Picture pic : pictures) {
-				grid.add(addPictureField(pic,tabIndex,view),xlevel,ylevel++);
+				grid.add(addPictureField(pic,tabIndex,view,canEdit,mine, isInsert),xlevel,ylevel++);
 			}
 			}
 			nodes.add(grid);
@@ -215,7 +215,7 @@ public class HelperFunctions {
 	
 
 	protected static Object addItemField(Field field, Object object, ArrayList<Node> retriveFields,
-			int fieldIndex,UserView view, boolean forRead, int tabIndex) throws IllegalArgumentException, IllegalAccessException {
+			int fieldIndex,UserView view, boolean forRead, int tabIndex,boolean canEdit, boolean mine, boolean isInsert) throws IllegalArgumentException, IllegalAccessException {
 		String fieldName=field.getName();
 //		String fieldType=(String) allPossibleFields.get(fieldName);
 		String fieldType= field.getType().getSimpleName();
@@ -255,7 +255,7 @@ public class HelperFunctions {
 						addTextFieldRow(comments,retriveFields);
 
 					}else if (fieldName.equals("pictures")){
-						addAlbumLabel((ArrayList<Picture>) field.get(object), retriveFields, tabIndex, view);
+						addAlbumLabel((ArrayList<Picture>) field.get(object), retriveFields, tabIndex, view,canEdit,mine,isInsert);
 					}else {
 						addTextFieldRow(ArrayListToString((ArrayList<Object>) field.get(object)),retriveFields);
 					}
@@ -279,7 +279,11 @@ public class HelperFunctions {
 					return Date.valueOf( ((DatePicker)retriveFields.get(fieldIndex)).getValue());
 			case "Timestamp":
 				if(forRead) {
-				addTextFieldRow(field.get(object).toString(),retriveFields);
+					Object value=field.get(object);
+					if(value!=null)
+						addTextFieldRow(field.get(object).toString(),retriveFields);
+					else
+						addTextFieldRow("null",retriveFields);
 				break;}
 				else
 					return Timestamp.valueOf(((TextField) retriveFields.get(fieldIndex)).getText());
@@ -322,7 +326,11 @@ public class HelperFunctions {
 				}
 			case "Privacy":
 				if(forRead) {
-				addTextFieldRow(((Privacy) field.get(object)).name, retriveFields);
+					if(field.get(object)!=null)
+						addTextFieldRow(((Privacy) field.get(object)).name, retriveFields);
+					else
+						addTextFieldRow("OPEN", retriveFields);
+
 				break;}
 				else
 				return new Privacy(((TextField) retriveFields.get(fieldIndex)).getText());
@@ -347,10 +355,11 @@ public class HelperFunctions {
 		return s;
 	}
 
-	static ArrayList<Object> getDataFromFields(Object object,ArrayList<Field> fields, ArrayList<Node> retriveFields,UserView view, int tabIndex) throws IllegalArgumentException, IllegalAccessException{
+	static ArrayList<Object> getDataFromFields(Object object,ArrayList<Field> fields, ArrayList<Node> retriveFields,
+			UserView view, int tabIndex,boolean canEdit, boolean mine, boolean isInsert) throws IllegalArgumentException, IllegalAccessException{
 		 ArrayList<Object> data= new ArrayList<Object>();
 		 for (int fieldIndex=0; fieldIndex<retriveFields.size(); fieldIndex++) {
-			 data.add(addItemField( fields.get(fieldIndex), object,retriveFields,fieldIndex,view, false,tabIndex));
+			 data.add(addItemField( fields.get(fieldIndex), object,retriveFields,fieldIndex,view, false,tabIndex,canEdit,mine,isInsert));
 		 }
 		 return data;
 

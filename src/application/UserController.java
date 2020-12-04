@@ -323,9 +323,9 @@ public void addFriend(int id,int tabint) {
 		// TODO Auto-generated method stub
 	}
 
-	public void showFormView(int tabIndex, FBItem item, boolean mine) {
+	public void showFormView(int tabIndex, FBItem item,boolean canEdit, boolean mine,boolean isInsert) {
 		Tab currentTab=this.view.tabPane.getTabs().get(tabIndex);
-		currentTab.setContent(this.view.getFormView(tabIndex, item,mine));
+		currentTab.setContent(this.view.getFormView(tabIndex, item,canEdit,mine,isInsert ));
 	}
 
 	public FBItem[] turnPicturesToFBArray(ArrayList<Picture> objects) {
@@ -369,9 +369,9 @@ public void addFriend(int id,int tabint) {
 	}
 
 
-	public void  showItemView(FBItem object, int tabIndex, boolean canEditItems,boolean mine) {
+	public void  showItemView(FBItem object, int tabIndex, boolean canEditItems,boolean mine,boolean isInsert) {
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
-		currentTab.setContent(this.view.getItemView(tabIndex, object,canEditItems,mine));
+		currentTab.setContent(this.view.getItemView(tabIndex, object,canEditItems,mine,isInsert));
 	}
 
 	public void showProfile(int tabIndex) {
@@ -414,7 +414,7 @@ public void addFriend(int id,int tabint) {
 	public void showUserImagesView(int tabIndex,boolean mine) {
 		ArrayList<Picture> pictures= this.model.getUserImages(this.user.getId());
 		FBItem[] pictureItems= turnPicturesToFBArray(pictures);
-		ScrollPane grid = this.view.getItemCrollView(pictureItems,tabIndex,true,mine);
+		ScrollPane grid = this.view.getItemCrollView(pictureItems,tabIndex,true,mine,false);
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
@@ -424,7 +424,7 @@ public void addFriend(int id,int tabint) {
 
 
 		FBItem[] videoItems= turnVideosToFBArray(Videos);
-		ScrollPane grid = this.view.getItemCrollView(videoItems,tabIndex,true,mine);
+		ScrollPane grid = this.view.getItemCrollView(videoItems,tabIndex,true,mine,false);
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
@@ -432,21 +432,21 @@ public void addFriend(int id,int tabint) {
 	public void showUserAlbumsView(int tabIndex,boolean mine) {
 		ArrayList<PictureAlbum> Albums= this.model.getUserAlbums(this.user.getId());
 		FBItem[] albumItems= turnAlbumToFBArray(Albums);
-		ScrollPane grid = this.view.getItemCrollView(albumItems,tabIndex,true,mine);
+		ScrollPane grid = this.view.getItemCrollView(albumItems,tabIndex,true,mine,false);
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);	}
 
 	public void showUserLinksView(int tabIndex,boolean mine) {
 		ArrayList<Link> links= this.model.getUserLinks(this.user.getId());
 		FBItem[] linkItems= turnLinksToFBArray(links);
-		ScrollPane grid = this.view.getItemCrollView(linkItems,tabIndex,true,mine);
+		ScrollPane grid = this.view.getItemCrollView(linkItems,tabIndex,true,mine,false);
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
 	public void showUserEventsView(int tabIndex,boolean mine) {
 		ArrayList<Event> events= this.model.getUserEvents(this.user.getId());
 		FBItem[] eventItems= turnEventsToFBArray(events);
-		ScrollPane grid = this.view.getItemCrollView(eventItems,tabIndex,true,mine);
+		ScrollPane grid = this.view.getItemCrollView(eventItems,tabIndex,true,mine,false);
 		Tab currentTab= this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(grid);
 	}
@@ -477,10 +477,41 @@ public void addFriend(int id,int tabint) {
 			return;
 		}
 		Tab currentTab = this.view.tabPane.getTabs().get(tabIndex);
-		currentTab.setContent(this.view.getItemCrollView(users, tabIndex, false,false));
+		currentTab.setContent(this.view.getItemCrollView(users, tabIndex, false,false,false));
 		
 				
 	}
+
+	public void insertItem(ArrayList<Object> newData, String className, FBItem object, int tabIndex) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void showAddImagesView(int tabIndex, boolean b) {
+		Picture newPicture = new Picture();
+		this.showFormView(tabIndex, newPicture,true, true, true);
+	}
+
+	public Object showAddUserVideosView(int tabIndex, boolean b) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object showAddUserAlbumsView(int tabIndex, boolean b) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object showAddUserLinksView(int tabIndex, boolean b) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object showAddUserEventsView(int tabIndex, boolean b) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	
 	
