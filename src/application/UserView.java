@@ -172,6 +172,11 @@ public class UserView {
 	protected ScrollPane getIgnoredFriendRequestView(int tabIndex) throws FileNotFoundException {
 		GridPane grid = new GridPane();
 		ArrayList<User> FriendRequests = this.controller.getIgnoredFriendRequests(this.controller.getUser().getId());
+		if(FriendRequests == null) {
+			Label empty = new Label("No Friend Requests :");
+			grid.add(empty, 0, 1);
+			return new ScrollPane(grid);
+		}
 		ArrayList<Button> unignb = new ArrayList<Button>();
 		grid.setAlignment(Pos.BASELINE_LEFT);
 		grid.setHgap(18);
@@ -219,6 +224,11 @@ public class UserView {
 	protected ScrollPane getFriendRequestView(int tabIndex) {
 		GridPane grid = new GridPane();
 		ArrayList<User> FriendRequests = this.controller.getFriendRequests(this.controller.getUser().getId());
+		if(FriendRequests == null) {
+			Label empty = new Label("No Friend Requests :");
+			grid.add(empty, 0, 1);
+			return new ScrollPane(grid);
+		}else {
 		ArrayList<Button> addb = new ArrayList<Button>();
 		ArrayList<Button> delb = new ArrayList<Button>();
 		ArrayList<Button> ignb = new ArrayList<Button>();
@@ -282,12 +292,17 @@ public class UserView {
 			row++;
 		}
 		return new ScrollPane(grid);
-
+		}
 	}
 
 	protected ScrollPane getFriendView(int tabIndex) {
 		GridPane grid = new GridPane();
 		ArrayList<User> Friends = this.controller.getFriends(this.controller.getUser().getId());
+		if(Friends == null) {
+			Label empty = new Label("No Friend Requests :");
+			grid.add(empty, 0, 1);
+			return new ScrollPane(grid);
+		}
 		ArrayList<Button> delb = new ArrayList<Button>();
 		for (int i = 0; i < Friends.size(); i++) {
 			int b = i;
@@ -455,6 +470,11 @@ public class UserView {
 		grid.setHgap(30);
 		grid.setVgap(30);
 		ArrayList<User> PopularFriends= this.controller.getMostPopularFriends(this.controller.getUser().getId());
+		if(PopularFriends == null) {
+			Label empty = new Label("No Friend Requests :");
+			grid.add(empty, 0, 1);
+			return new ScrollPane(grid);
+		}
 		Text scenetitle = new Text("Most Popular Friends");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
 		grid.add(scenetitle, 0,0);
@@ -484,6 +504,11 @@ public class UserView {
 			grid.setHgap(30);
 			grid.setVgap(30);
 			ArrayList<User> SameInterestsFriends= this.controller.getSameInterestFriends(this.controller.getUser().getId());
+			if(SameInterestsFriends == null) {
+				Label empty = new Label("No Friend Requests :");
+				grid.add(empty, 0, 1);
+				return new ScrollPane(grid);
+			}
 			Text scenetitle = new Text("Friends with exact same interests ");
 			scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
 			grid.add(scenetitle, 0,0);
@@ -541,6 +566,11 @@ public class UserView {
 			grid.setHgap(30);
 			grid.setVgap(30);
 			ArrayList<Event> Events= this.controller.getLeastAttendableEvents();
+			if(Events == null) {
+				Label empty = new Label("No Friend Requests :");
+				grid.add(empty, 0, 1);
+				return new ScrollPane(grid);
+			}
 			Text scenetitle = new Text("Least Attendable Events");
 			scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
 			grid.add(scenetitle, 0,0);
@@ -574,6 +604,11 @@ public class UserView {
 			grid.setHgap(30);
 			grid.setVgap(30);
 			ArrayList<User> FriendswithSameFriends= this.controller.getFriendswithsamefriends(this.controller.getUser().getId());
+			if(FriendswithSameFriends == null) {
+				Label empty = new Label("No Friend Requests :");
+				grid.add(empty, 0, 1);
+				return new ScrollPane(grid);
+			}
 			Text scenetitle = new Text("Most Popular Friends");
 			scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
 			grid.add(scenetitle, 0,0);

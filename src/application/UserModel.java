@@ -483,9 +483,12 @@ public class UserModel {
 			ps.setInt(1, Userid);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
+			if (isResultSetEmpty(resultSet))
+				return null;
+				else {
 			pictures = turnresultSetToPictures(resultSet);
 			System.out.println(pictures);
-
+				}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -503,9 +506,12 @@ public class UserModel {
 			ps.setInt(1, id);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
+			if (isResultSetEmpty(resultSet))
+				return null;
+				else {
 			vids = turnresultSetToVideos(resultSet);
 			System.out.println(vids);
-
+				}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -523,9 +529,12 @@ public class UserModel {
 			ps.setInt(1, id);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
+			if (isResultSetEmpty(resultSet))
+				return null;
+				else {
 			Albums = turnresultSetToPictureAlbums(resultSet);
 			System.out.println(Albums);
-
+				}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -543,8 +552,12 @@ public class UserModel {
 			ps.setInt(1, id);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
+			if (isResultSetEmpty(resultSet))
+				return null;
+				else {
 			links = turnresultSetToLinks(resultSet);
 			System.out.println(links);
+				}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -563,9 +576,12 @@ public class UserModel {
 			ps.setInt(1, id);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
+			if (isResultSetEmpty(resultSet))
+				return null;
+				else {
 			events = turnresultSetToEvent(resultSet);
 			System.out.println(events);
-
+				}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -583,9 +599,13 @@ public class UserModel {
 			ps.setInt(1, id);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
+			if (isResultSetEmpty(resultSet))
+				return null;
+				else {
 			users = turnresultSetToUser(resultSet);
 			System.out.println(users);
-
+				}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -603,9 +623,12 @@ public class UserModel {
 			ps.setInt(1, id);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
+			if (isResultSetEmpty(resultSet))
+				return null;
+				else {
 			users = turnresultSetToUser(resultSet);
 			System.out.println(users);
-
+				}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -623,9 +646,12 @@ public class UserModel {
 			ps.setInt(1, id);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
+			if (isResultSetEmpty(resultSet))
+				return null;
+				else {
 			users = turnresultSetToUser(resultSet);
 			System.out.println(users);
-
+				}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -719,9 +745,12 @@ public class UserModel {
 			ps.setInt(1, id);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
+			if (isResultSetEmpty(resultSet))
+				return null;
+				else {
 			users = turnresultSetToUser(resultSet);
 			System.out.println(users);
-
+				}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -740,9 +769,12 @@ public class UserModel {
 			ps.setInt(1, id);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
+			if (isResultSetEmpty(resultSet))
+				return null;
+				else {
 			users = turnresultSetToUser(resultSet);
 			System.out.println(users);
-
+				}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -758,9 +790,12 @@ public class UserModel {
 			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
+			if (isResultSetEmpty(resultSet))
+				return null;
+				else {
 			events = turnresultSetToEvent(resultSet);
 			System.out.println(events);
-
+				}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -779,9 +814,12 @@ public class UserModel {
 			ps.setInt(1, id);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
+			if (isResultSetEmpty(resultSet))
+				return null;
+				else {
 			users = turnresultSetToUser(resultSet);
 			System.out.println(users);
-
+				}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
