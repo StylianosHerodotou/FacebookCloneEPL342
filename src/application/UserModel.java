@@ -1489,8 +1489,6 @@ public class UserModel {
 			
 			cstmt.setString(columnIndex++, albStr);
 
-			boolean results = cstmt.execute();
-			int rowsAffected = 0;
 			ArrayList<PictureAlbum> res = turnresultSetToPictureAlbums(resultSet);
 			for (int i = 0; i < res.size(); i++) {
 				items.add(res.get(i));
@@ -1513,8 +1511,7 @@ public class UserModel {
 			
 			cstmt.setString(columnIndex++, picStr);
 
-			boolean results = cstmt.execute();
-			int rowsAffected = 0;
+
 			ArrayList<Picture> res = turnresultSetToPictures(resultSet);
 			for (int i = 0; i < res.size(); i++) {
 				items.add(res.get(i));
@@ -1535,8 +1532,6 @@ public class UserModel {
 			
 			cstmt.setString(columnIndex++, vidStr);
 
-			boolean results = cstmt.execute();
-			int rowsAffected = 0;
 			ArrayList<Video> res = turnresultSetToVideos(resultSet);
 			for (int i = 0; i < res.size(); i++) {
 				items.add(res.get(i));
@@ -1559,9 +1554,6 @@ public class UserModel {
 			int columnIndex = 1;
 			
 			cstmt.setString(columnIndex++, linkStr);
-
-			boolean results = cstmt.execute();
-			int rowsAffected = 0;
 
 				ArrayList<Event> a = turnresultSetToEvent(resultSet);
 				for (int i = 0; i < a.size(); i++) {
@@ -1600,6 +1592,61 @@ public class UserModel {
 		}
 		
 		return (FBItem[]) items.toArray();
+	}
+	public log[] searchUsersLogs(int id,boolean all,boolean alb,boolean pic, boolean vid,boolean link,boolean event) {
+		ArrayList<log> logs = new ArrayList<log>();
+		try {
+			
+			ResultSet resultSet = null;
+			
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall(
+					"{call updates(?,?,?,?, ?,?,?)}", ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+			cstmt.setBoolean(columnIndex++, all);
+			cstmt.setInt(columnIndex++, id);
+			cstmt.setBoolean(columnIndex++, alb);
+			cstmt.setBoolean(columnIndex++, pic);
+			cstmt.setBoolean(columnIndex++, vid);
+			cstmt.setBoolean(columnIndex++, link);
+			cstmt.setBoolean(columnIndex++, event);
+
+	
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
+			
+			if (SearchUserModel.isResultSetEmpty(resultSet))
+				return null;
+			else {
+
+
+				while (resultSet.next()) {
+					
+					int index = 1;
+					logs.add(new log(
+							resultSet.getInt(index++), resultSet.getString(index++), resultSet.getString(index++),
+							resultSet.getString(index++), resultSet.getTimestamp(index++), resultSet.getInt(5)));
+				}
+			}
+		}
+
+		catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
+		System.out.println(logs);
+		return (log[]) logs.toArray();
 	}
 
 	

@@ -10,7 +10,7 @@ import java.util.List;
 public class seeLogsModel {
 
 	
-	public log[] searchUsers(int id,boolean all,boolean alb,boolean pic, boolean vid,boolean link,boolean event) {
+	public log[] searchUsersLogs(int id,boolean all,boolean alb,boolean pic, boolean vid,boolean link,boolean event) {
 //		String protype = "id: -1, taken_loc_id: 0, user_id: 0, privacy: null,firstName: "
 //				+ ", lastName: , email 'ewgfergwegerg ' drop users; : , website: , link: , birthday: null,gender: M"
 //				+ ", workedFor: [], educationPlaces: [], quotes: [], FriendRequests: "
