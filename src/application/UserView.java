@@ -201,14 +201,45 @@ public class UserView {
 			ignb.add(ign);
 
 		}
-		
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		// grid.setPadding(new Insets(00, 00, 00, 00));
+		Text scenetitle = new Text("Friend Requests");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 0,0);
+		Label name = new Label("First Name :");
+		grid.add(name, 0,1 );
+		Label lastname = new Label("Last Name :");
+		grid.add(lastname, 1,1 );
+		Label Email = new Label("Email :");
+		grid.add(Email, 2,1 );
+		Label Delete = new Label("Delete :");
+		grid.add(Delete, 3,1 );
+		Label Ignore = new Label("Ignore :");
+		grid.add(Ignore, 4,1 );
+		Label Add = new Label("Add :");
+		grid.add(Add, 5,1 );
+         int row=2;
+         for(int i=0;i<FriendRequests.size();i++) {
+ 			Text fname = new Text(FriendRequests.get(i).getFirstName());
+ 			Text lname = new Text(FriendRequests.get(i).getLastName());
+ 			Text em = new Text(FriendRequests.get(i).getEmail());
+ 			grid.add(fname, 0, row);
+ 			grid.add(lname, 1, row);
+ 			grid.add(em, 2, row);
+ 			grid.add(delb.get(i), 3, row);
+ 			grid.add(ignb.get(i), 4, row);
+ 			grid.add(addb.get(i), 5, row);
+ 			row++;
+ 		}
 return new ScrollPane(grid);
 
 	}
 	protected ScrollPane getFriendView(int tabIndex ) {
 		GridPane grid = new GridPane();
 		ArrayList<User> Friends= this.controller.getFriends(this.controller.getUser().getId());
-		ObservableList<Button> delb = FXCollections.observableArrayList();
+		ArrayList<Button> delb = new ArrayList<Button>();
 		for(int i=0;i<Friends.size();i++) {
 			int b=i;
 			Button del= new Button("Delete");
@@ -222,33 +253,26 @@ return new ScrollPane(grid);
 		Text scenetitle = new Text("Friends");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
 		grid.add(scenetitle, 0,0);
-		TableColumn<FriendRequest, Integer> idcolumn = new TableColumn<>("ID");
-		idcolumn.setMinWidth(100);
-		idcolumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-		TableColumn<FriendRequest, String> namecolumn = new TableColumn<>("FirstName");
-		namecolumn.setMinWidth(200);
-		namecolumn.setCellValueFactory(new PropertyValueFactory<>("FirstName"));
-		TableColumn<FriendRequest, String> surnamecolumn = new TableColumn<>("LastName");
-		surnamecolumn.setMinWidth(200);
-		surnamecolumn.setCellValueFactory(new PropertyValueFactory<>("LastName"));
-		//TableColumn ID = new TableColumn("ID");
-		TableColumn<Button, Button> DeleteColumn = new TableColumn<>("Delete");
-		DeleteColumn.setMinWidth(200);
-		DeleteColumn.setCellValueFactory(new PropertyValueFactory<Button,Button>("Delete"));
-
-		TableView table = new TableView();
-		TableView table2 = new TableView();
-		table2.setItems(delb);
-		table2.getColumns().addAll(DeleteColumn);
-
-		 table.setItems( Friends);
-table.getColumns().addAll(idcolumn,namecolumn,surnamecolumn,DeleteColumn);
-
-table.setEditable(true);
-grid.add(table, 0, 1);
-grid.add(table, 1, 1);
-return new ScrollPane(grid);
-
+		Label name = new Label("First Name :");
+		grid.add(name, 0,1 );
+		Label lastname = new Label("Last Name :");
+		grid.add(lastname, 1,1 );
+		Label Email = new Label("Email :");
+		grid.add(Email, 2,1 );
+		Label Delete= new Label("Delete :");
+		grid.add(Delete, 3,1 );
+         int row=2;
+		for(int i=0;i<Friends.size();i++) {
+			Text fname = new Text(Friends.get(i).getFirstName());
+			Text lname = new Text(Friends.get(i).getLastName());
+			Text em = new Text(Friends.get(i).getEmail());
+			grid.add(fname, 0, row);
+			grid.add(lname, 1, row);
+			grid.add(em, 2, row);
+			grid.add(delb.get(i), 3, row);
+			row++;
+		}
+		return new ScrollPane(grid);
 	}
 	protected ScrollPane getSearchOccurenceView(int tabIndex ) {
 		GridPane grid = new GridPane();
@@ -353,7 +377,7 @@ return new ScrollPane(grid);
 		grid.setAlignment(Pos.BASELINE_LEFT);
 		grid.setHgap(30);
 		grid.setVgap(30);
-		ObservableList<User> PopularFriends= this.controller.getMostPopularFriends(this.controller.getUser().getId());
+		ArrayList<User> PopularFriends= this.controller.getMostPopularFriends(this.controller.getUser().getId());
 		Text scenetitle = new Text("Most Popular Friends");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
 		grid.add(scenetitle, 0,0);
@@ -409,7 +433,7 @@ return new ScrollPane(grid);
         // how does this work
 return new ScrollPane(grid);
 	}
-	protected GridPane LeastAttendableEvents(
+	protected ScrollPane LeastAttendableEvents(
 			int tabIndex) {
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.BASELINE_LEFT);
@@ -439,9 +463,9 @@ return new ScrollPane(grid);
 		}
 
         // how does this work
-return grid;
+return new ScrollPane(grid);
 	}
-	protected GridPane FriendWithCommonFriends(
+	protected ScrollPane FriendWithCommonFriends(
 			int tabIndex) {
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.BASELINE_LEFT);
@@ -470,12 +494,12 @@ return grid;
 		}
 
         // how does this work
-return grid;
+return new ScrollPane(grid);
 	}
-	protected GridPane getOccurenceResultView(String Name, String slocation, String startDate, String endDate,
+	protected ScrollPane getOccurenceResultView(String Name, String slocation, String startDate, String endDate,
 			int tabIndex) {
 		GridPane grid = new GridPane();
-		ObservableList<Event> Occurence= this.controller.getSpecificOccurences(Name,slocation,startDate,endDate);
+		ArrayList<Event> Occurence= this.controller.getSpecificOccurences(Name,slocation,startDate,endDate);
 		Button[] AddComents = new Button[Occurence.size()];
 		for(int i=0;i<Occurence.size();i++) {
 			int b=i;
@@ -491,7 +515,7 @@ return grid;
 		HashMap<String, Integer> locationHashmap = this.controller.getLocations();
 		String [] locations= AuthenticationController.convert(locationHashmap.keySet());
         // how does this work
-return grid;
+return new ScrollPane(grid);
 	}
 
 	
@@ -595,7 +619,8 @@ return grid;
 			}
 		}
 		return new ScrollPane(grid);
-	}
+	
+		}}
 	
 	private void prepareItemScene(GridPane grid, String className, int tabIndex) {
 		HelperFunctions.initXlevel=2;
