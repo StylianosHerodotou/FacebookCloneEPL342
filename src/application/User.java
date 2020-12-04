@@ -244,7 +244,7 @@ public class User extends FBItem {
 		for (int field_index = 0; field_index < all_fields.length; field_index++) {
 			try {
 				Field currentField=all_fields[field_index];
-				if(UserView.is_field_sensitive(currentField.getName())) {
+				if(HelperFunctions.is_field_sensitive(currentField.getName())) {
 					currentField.set(this,currentField.get(oldUser));
 				}
 				else
