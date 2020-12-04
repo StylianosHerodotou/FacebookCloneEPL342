@@ -234,7 +234,7 @@ public class UserModel {
 		}
 	}
 
-	public ResultSet getLocations() {
+	public static ResultSet getLocations() {
 		String SPsql = "EXEC retrieveLocations "; // for stored proc taking 2 parameters
 		ResultSet resultSet = null;
 		try {
@@ -255,7 +255,7 @@ public class UserModel {
 		try {
 			while (resultSet.next()) {
 				int id = resultSet.getInt("Picture_Album_ID");
-				String name = resultSet.getString("Album_Name");
+				String name = resultSet.getString("Name");
 				String description = resultSet.getString("Description");
 				String linkname = resultSet.getString("Link");
 				Date End_time = resultSet.getDate("End_time");
@@ -319,7 +319,7 @@ public class UserModel {
 				Timestamp et = new Timestamp(End_time.getTime());
 				Privacy privacy = new Privacy(resultSet.getString("Privacy_Name"));
 				Location location = new Location(LocId, locations.get(LocId));
-				Event evnt = new Event(id, ven, name, st, et, desc, CreatId, location, privacy);
+				Event evnt = new Event(id, ven, name, st, et, desc, CreatId,  privacy,location);
 
 				events.add(evnt);
 			}
@@ -445,9 +445,9 @@ public class UserModel {
 		HashMap<Integer, String> locations = this.controller.getIntToStringLocations();
 		try {
 			while (resultSet.next()) {
-				int id = resultSet.getInt("User_ID");
+				int id = resultSet.getInt("UserID");
 				String Username = resultSet.getString("Username");
-				int password = resultSet.getInt("Pass");
+				String password = resultSet.getString("Pass");
 				String First_Name = resultSet.getString("First_Name");
 				String Last_Name = resultSet.getString("Last_Name");
 				String Email = resultSet.getString("Email");
@@ -474,13 +474,13 @@ public class UserModel {
 		return users;
 	}
 
-	public ArrayList<Picture> getUserImages(int id) {
-		String SPsql = "EXEC retrieveUserImages ? "; // for stored proc taking 2 parameters
+	public ArrayList<Picture> getUserImages(int Userid) {
+		String SPsql = "EXEC getPicturesOfUser ? "; // for stored proc taking 2 parameters
 		ResultSet resultSet = null;
 		ArrayList<Picture> pictures = new ArrayList<Picture>();
 		try {
 			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
-			ps.setInt(1, id);
+			ps.setInt(1, Userid);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			pictures = turnresultSetToPictures(resultSet);
@@ -869,8 +869,8 @@ public class UserModel {
 			cstmt.setTimestamp(index++, obj.getStartTime());
 			cstmt.setTimestamp(index++, obj.getEndTime());
 			cstmt.setString(index++, obj.description);
-			cstmt.setInt(index++, obj.user_id);
-			cstmt.setInt(index++, obj.loc.getId());
+			cstmt.setInt(index++, obj.creatorID);
+			cstmt.setInt(index++, obj.location.getId());
 			cstmt.setString(index++, obj.getPrivacy().name);
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
@@ -1215,7 +1215,7 @@ public class UserModel {
 		String descri = obj.description;
 		int user_id = obj.getUser_id();
 		Privacy privacy = obj.privacy;
-		Location loca = obj.loc;
+		Location loca = obj.location;
 
 		try {
 			cstmt = AuthenticationModel.conn.prepareCall("{call updateEvent(?,?,?,?,?,?,?,?,?,?)}");
@@ -1249,6 +1249,117 @@ public class UserModel {
 			}
 		}
 
+	}
+	
+	public static boolean isResultSetEmpty(ResultSet resultSet) throws SQLException {
+		if (!resultSet.isBeforeFirst())
+			return true;
+		else
+			return false;
+	}
+	public User[] searchUsers(User newUser) {
+//		String protype = "id: -1, taken_loc_id: 0, user_id: 0, privacy: null,firstName: "
+//				+ ", lastName: , email 'ewgfergwegerg ' drop users; : , website: , link: , birthday: null,gender: M"
+//				+ ", workedFor: [], educationPlaces: [], quotes: [], FriendRequests: "
+//				+ "null,isVerified: false, hometown: null,livesInLocation: null,username: , password: , \r\n";
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+			List<Object[]> res = new ArrayList<Object[]>();
+			ResultSet resultSet = null;
+			String firstName = newUser.firstName;
+			String lastName = newUser.lastName;
+			String email = newUser.email;
+			String website = newUser.website;
+			String link = newUser.link;
+			Date birthday = newUser.birthday;
+			boolean gender = newUser.gender;
+			String workedFor = AuthenticationModel.translateArrayListToString(newUser.workedFor);
+			String educationPlaces = AuthenticationModel.translateArrayListToString(newUser.educationPlaces);
+			String quotes = AuthenticationModel.translateArrayListToString(newUser.quotes);
+			boolean isVerified = newUser.isVerified;
+			int hometownFK = newUser.hometown.getId();
+			int livesInLocationFK = newUser.livesInLocation.getId();
+			// newer with pass and username
+			String username = newUser.username;
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall(
+					"{call SEARCH_USERS_TEMP2(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?)}", ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+			cstmt.setString(columnIndex++, firstName);
+			cstmt.setString(columnIndex++, lastName);
+			cstmt.setString(columnIndex++, username);
+			cstmt.setString(columnIndex++, email);
+			cstmt.setString(columnIndex++, website);
+			cstmt.setString(columnIndex++, link);
+			cstmt.setDate(columnIndex++, birthday);
+			cstmt.setBoolean(columnIndex++, gender);
+			cstmt.setString(columnIndex++, workedFor);
+			cstmt.setString(columnIndex++, educationPlaces);
+			cstmt.setString(columnIndex++, quotes);
+			cstmt.setBoolean(columnIndex++, isVerified);
+			cstmt.setInt(columnIndex++, hometownFK);
+			cstmt.setInt(columnIndex++, livesInLocationFK);
+
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
+			
+			if (isResultSetEmpty(resultSet))
+				return null;
+			else {
+
+				HashMap<Integer, String> locations = this.controller.getIntToStringLocations();
+
+				while (resultSet.next()) {
+					int id = resultSet.getInt("UserID");
+					firstName = resultSet.getString("First_Name");
+					lastName = resultSet.getString("Last_Name");
+					email = resultSet.getString("Email");
+					website = resultSet.getString("Website");
+					link = resultSet.getString("Link");
+					birthday = resultSet.getDate("Birthday");
+					gender = resultSet.getBoolean("Gender");
+					isVerified = resultSet.getBoolean("Is_verified");
+					hometownFK = resultSet.getInt("Hometown_LOC_ID");
+					Location hometown = new Location(hometownFK, locations.get(hometownFK));
+					livesInLocationFK = resultSet.getInt("Current_LOC_ID");
+					Location livesHereNow = new Location(livesInLocationFK, locations.get(livesInLocationFK));
+					username = resultSet.getString("Username");
+					String password = resultSet.getString("pass");
+
+					ArrayList<String> workedFor2 = this.getWorkOfUser(id);
+
+					ArrayList<String> educationPlaces2 = this.getEducationOfUser(id);
+					ArrayList<String> quotes2 = this.getQuotesOfUser(id);
+					// newer with pass and username
+
+					users.add(new User(id, firstName, lastName, email, website, link, birthday, gender, workedFor2,
+							educationPlaces2, quotes2, isVerified, hometown, livesHereNow, username, password));
+				}
+			}
+		}
+
+		catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
+		return (User[]) users.toArray();
+	}
+
+	public ArrayList<Event> getLeastAttendableEvent() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

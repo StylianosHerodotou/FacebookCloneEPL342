@@ -96,7 +96,7 @@ public class HelperFunctions {
 		grid.add(new Label(fieldName+": "), initXlevel + 1,
 				field_index +initYlevel);// adding 2 because i start from (2,3)
 		grid.add( nodes.get(field_index), initXlevel + 2,
-				field_index +initYlevel);// adding 2 because i start from (2,3)
+				field_index +initYlevel++);// adding 2 because i start from (2,3)
 	}
 
 	protected static void addTextFieldRow( String fieldValue,ArrayList<Node> nodes) {

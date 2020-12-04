@@ -62,8 +62,8 @@ public class UserController {
 		this.view.generateTabPane();
 		this.model.setController(this);
 	}
-	public HashMap<String, Integer> getStringToIntLocations() {
-		ResultSet result= this.model.getLocations();
+	public static  HashMap<String, Integer> getStringToIntLocations() {
+		ResultSet result= UserModel.getLocations();
 		HashMap<String, Integer> locations = new HashMap<String, Integer>();
 		
 		try {
@@ -261,7 +261,7 @@ public void addFriend(int id,int tabint) {
 	}
 
 	public static Picture generateDummyPicture() {
-		return new Picture(0,0,0,"link","source",new Privacy("public"), null);
+		return new Picture(0,0,0,"link","source",new Privacy("public"), null,0);
 	}
 
 	public static PictureAlbum generateDummyPictureAlbum() {
@@ -278,11 +278,11 @@ public void addFriend(int id,int tabint) {
 		return new Link(0,"link name","URL","message","description","caption", 0);
 	}
 	public static Video generateDummyVideo() {
-		return new Video(0,"message","description",40,"source",0,null);
+		return new Video(0,"message","description",40,"source",0,new Privacy("OPEN"), null);
 	}
 	public static Event generateDummyEvent() {
 		return new Event(0,"venue","event",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),
-				"description",0,0,new Privacy("Open"));
+				"description",0,new Privacy("Open"), new Location(0, "larnaka"));
 
 	}
 
@@ -444,6 +444,23 @@ public void addFriend(int id,int tabint) {
 		Tab currentTab = this.view.tabPane.getTabs().get(tabIndex);
 		currentTab.setContent(this.view.getFriendView(tabIndex));
 		
+	}
+	public void showSearchView(int tabIndex) {
+		Tab currentTab = this.view.tabPane.getTabs().get(tabIndex);
+		currentTab.setContent(this.view.getSearchView(tabIndex));
+	}
+	
+	public void searchUsers (User newUser,int tabIndex) {
+		User[] users = this.model.searchUsers(newUser);
+		if (users==null) {
+			String message = "Could not find Users";
+			displayPopUp(message);
+			return;
+		}
+		Tab currentTab = this.view.tabPane.getTabs().get(tabIndex);
+		currentTab.setContent(this.view.getItemCrollView(users, tabIndex, false));
+		
+				
 	}
 	
 

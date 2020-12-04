@@ -67,7 +67,7 @@ public class AuthenticationController {
 		lista.add("dio");
 		Location location = new Location(0,"Archaggelos");
 		
-		return  new User(0,"Stylianos", "Herodotou", "email@ucy.ac.cy","www.ucy.com",
+		return  new User(1,"Stylianos", "Herodotou", "email@ucy.ac.cy","www.ucy.com",
 				"link", Date.valueOf(java.time.LocalDate.now()), false, lista,lista,lista,
 					false,location,location, "sherod01","");
 	}

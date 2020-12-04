@@ -10,9 +10,11 @@ public class Event extends FBItem{
 	protected Timestamp startTime;
 	protected Timestamp endTime;
 	protected String description;
-	protected int user_id ;
+	protected int creatorID ;
 	protected Privacy privacy;
-	protected Location loc;
+	protected Location location;
+	
+	
 	public Privacy getPrivacy() {
 		return privacy;
 	}
@@ -21,13 +23,8 @@ public class Event extends FBItem{
 		this.privacy = privacy;
 	}
 
-	
-
-	
-
-	
 	public Event(int id, String venue, String name, Timestamp startTime, Timestamp endTime, String description,
-			int user_id, Location locs, Privacy privacy) {
+			int user_id, Privacy privacy, Location location) {
 		super("this is an event");
 		this.id = id;
 		this.venue = venue;
@@ -35,19 +32,19 @@ public class Event extends FBItem{
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.description = description;
-		this.user_id = user_id;
-		this.loc = locs;
+		this.creatorID = user_id;
+		this.location=location;
 		this.privacy = privacy;
 	}
 
 
 
 	public int getUser_id() {
-		return user_id;
+		return creatorID;
 	}
   
 	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+		this.creatorID = user_id;
 	}
 
 	

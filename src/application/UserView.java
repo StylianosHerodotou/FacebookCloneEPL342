@@ -78,7 +78,7 @@ public class UserView {
 		int index = 0;
 
 		Tab profileTab = new Tab("Profile", this.getMyProfileView(index++));
-		Tab chrisTab = new Tab("chris", this.ChrisView(index++));
+		Tab chrisTab = new Tab("Myfriends", this.ChrisView(index++));
 		Tab panikosTab = new Tab("panikos", this.PanikosView(index++));
 
 
@@ -160,7 +160,9 @@ public class UserView {
 
 
 
-		HelperFunctions.initYlevel = User.class.getDeclaredFields().length+6;
+		HelperFunctions.initYlevel = HelperFunctions.initYlevel+6;
+		HelperFunctions.initXlevel = HelperFunctions.initYlevel+6;
+
 		grid.add(showPicturesButton, HelperFunctions.initXlevel, HelperFunctions.initYlevel);
 		grid.add(showVideosButton, HelperFunctions.initXlevel+1, HelperFunctions.initYlevel++);
 		grid.add(showAlbumsButton, HelperFunctions.initXlevel,HelperFunctions.initYlevel);
@@ -239,7 +241,7 @@ return new ScrollPane(grid);
 		table2.setItems(delb);
 		table2.getColumns().addAll(DeleteColumn);
 
-		 table.setItems(Friends);
+		 table.setItems( Friends);
 table.getColumns().addAll(idcolumn,namecolumn,surnamecolumn,DeleteColumn);
 
 table.setEditable(true);
@@ -299,10 +301,10 @@ return new ScrollPane(grid);
 	
 	protected ScrollPane getFormView(int tabIndex, FBItem object) {
 		GridPane grid = new GridPane();
-		prepareItemScene(grid, object.getClass().getSimpleName(), tabIndex);
+//		prepareItemScene(grid, object.getClass().getSimpleName(), tabIndex);
 		String className= object.getClass().getSimpleName();
 		if(className.equals("User")) {
-			prepareProfileScene(grid,(User)object );
+			prepareProfileScene(grid,(User)object,tabIndex);
 		}
 		else {
 			prepareItemScene(grid,className,tabIndex);
@@ -490,7 +492,7 @@ return grid;
 
 	
 
-	protected GridPane getItemView(int tabIndex, FBItem item) {
+	protected ScrollPane getItemView(int tabIndex, FBItem item) {
 		GridPane grid = new GridPane();
 		if (item.getClass()!=User.class)
 		prepareItemScene(grid, item.getClass().getSimpleName(), tabIndex);
@@ -512,22 +514,22 @@ return grid;
 					e.printStackTrace();
 				}
 		}
-		HelperFunctions.initXlevel=HelperFunctions.initXlevel+1;
-		HelperFunctions.initYlevel=fields.size() +HelperFunctions.initYlevel;
+//		HelperFunctions.initXlevel=HelperFunctions.initXlevel+1;
+//		HelperFunctions.initYlevel=fields.size() +HelperFunctions.initYlevel;
 		Button editButton = new Button("Edit");
 		editButton.setOnAction(event->{
 			this.controller.showFormView( tabIndex, item);
 		});
-		grid.add(editButton,HelperFunctions.initXlevel+5 , fields.size() +HelperFunctions.initYlevel+1);
-		return grid;
+		grid.add(editButton,HelperFunctions.initXlevel , fields.size() +HelperFunctions.initYlevel++);
+		return new ScrollPane(grid);
 	}
 	
 	
 	protected ScrollPane getItemView(int tabIndex, FBItem item,boolean doPrepareScene) {
-		GridPane grid = this.getItemView(tabIndex, item);
+		GridPane grid = (GridPane) this.getItemView(tabIndex, item).getContent();
 		if(doPrepareScene==true) {
 			if(item.getClass()==User.class) {
-				this.prepareProfileScene(grid, (User)item);
+				this.prepareProfileScene(grid, (User)item,tabIndex);
 			}
 			else
 				this.prepareItemScene(grid, item.getClass().getSimpleName(),tabIndex);
@@ -535,11 +537,48 @@ return grid;
 		return new ScrollPane(grid);
 	}
 	public ScrollPane getItemCrollView(FBItem[] items, int tabIndex, boolean canEditItems) {
+
 		GridPane grid = new GridPane();
+		HelperFunctions.initXlevel=2;
+		HelperFunctions.initYlevel=0;
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		Button logOutButton = new Button("Log Out");
+		logOutButton.setOnAction(event->{
+			this.controller.logOut();
+		});
+		switch(tabIndex) {
+		case 0:
+			Button showProfileButton = new Button("Go Back to profile");
+			showProfileButton.setOnAction(event->{
+				this.controller.showProfile(tabIndex);
+				grid.add(showProfileButton,HelperFunctions.initXlevel+10,HelperFunctions.initYlevel+1);
+			});
+		break;
+		case 1:
+			Button showProfileButton = new Button("Go Back to search");
+			showProfileButton.setOnAction(event->{
+				this.controller.showSearchView(tabIndex);
+				grid.add(showProfileButton,HelperFunctions.initXlevel+10,HelperFunctions.initYlevel+1);
+		break;
+			
+		}
+
+		ScrollPane sp = new ScrollPane(grid);
+		sp.setFitToWidth(true);
+		grid.setHgrow(sp, Priority.ALWAYS);
+		sp.setContent(grid);
+		grid.add(logOutButton, HelperFunctions.initXlevel+10,HelperFunctions.initYlevel);
+
 //		prepareItemScene(grid, items[0].getClass().getSimpleName(), tabIndex);
 		grid.setHgap(8); // horizontal
 		grid.setVgap(10);// vertical
-
+		
+		if(items.length==0) {
+			Label nothingToShow = new Label("there is nothing to show Here!");
+			grid.add(nothingToShow,  HelperFunctions.initXlevel+1, 1 + HelperFunctions.initYlevel);
+		}
 		for (int objectIndex = 0; objectIndex < items.length; objectIndex++) {
 			FBItem object = items[objectIndex];
 			String className=object.getClass().getSimpleName();
@@ -585,7 +624,7 @@ return grid;
 
 	}
 
-	private void prepareProfileScene(GridPane grid, User user) {
+	private void prepareProfileScene(GridPane grid, User user, int tabIndex) {
 		HelperFunctions.initXlevel=2;
 		HelperFunctions.initYlevel=0;
 		grid.setAlignment(Pos.BASELINE_LEFT);
@@ -599,6 +638,166 @@ return grid;
 		logOutButton.setOnAction(event->{
 			this.controller.logOut();
 		});
-		grid.add(logOutButton, 10,0);
+		Button showProfileButton = new Button("Go Back to profile");
+		showProfileButton.setOnAction(event->{
+			this.controller.showProfile(tabIndex);
+		});
+		ScrollPane sp = new ScrollPane(grid);
+		sp.setFitToWidth(true);
+		grid.setHgrow(sp, Priority.ALWAYS);
+		sp.setContent(grid);
+		grid.add(logOutButton, HelperFunctions.initXlevel+10,HelperFunctions.initYlevel);
+		grid.add(showProfileButton,HelperFunctions.initXlevel+10,HelperFunctions.initYlevel+1);
+
 	}
+	
+	protected ScrollPane getSearchView(int tabIndex) {
+			
+			GridPane grid = new GridPane();
+			
+			HashMap<String, Integer> locationHashmap = UserController.getStringToIntLocations();
+			locationHashmap.put("?", -1);
+			String[] locations = AuthenticationController.convert(locationHashmap.keySet());
+			
+			int yLevelIndex = 3;
+			int xStartinglevel = 2;
+
+			Label name = new Label("Name :");
+			grid.add(name, xStartinglevel, yLevelIndex);
+			TextField nameField = new TextField();
+			grid.add(nameField, xStartinglevel + 1, yLevelIndex++);
+
+			Label surname = new Label("Surname :");
+			grid.add(surname, xStartinglevel, yLevelIndex);
+			TextField surnameField = new TextField();
+			grid.add(surnameField, xStartinglevel + 1, yLevelIndex++);
+
+			Label genderLabel = new Label("Gender:");
+			grid.add(genderLabel, xStartinglevel, yLevelIndex);
+			String[] genders = { "Male", "Female" };
+			ComboBox genderBox = new ComboBox(FXCollections.observableArrayList(genders));
+			genderBox.getSelectionModel().selectFirst();
+			grid.add(genderBox, xStartinglevel + 1, yLevelIndex++);
+
+			Label hometownLabel = new Label("hometown:");
+			grid.add(hometownLabel, xStartinglevel, yLevelIndex);
+			ComboBox hometownBox = new ComboBox(FXCollections.observableArrayList(locations));
+			hometownBox.getSelectionModel().selectLast();
+			grid.add(hometownBox, xStartinglevel + 1, yLevelIndex++);
+
+			Label livesInLabel = new Label("live in :");
+			grid.add(livesInLabel, xStartinglevel, yLevelIndex);
+			ComboBox livesInBox = new ComboBox(FXCollections.observableArrayList(locations));
+			livesInBox.getSelectionModel().selectLast();
+			grid.add(livesInBox, xStartinglevel + 1, yLevelIndex++);
+
+			Label comptel = new Label("Email");
+			grid.add(comptel, xStartinglevel, yLevelIndex);
+			TextField emailField = new TextField();
+			grid.add(emailField, xStartinglevel + 1, yLevelIndex++);
+
+			Label comp = new Label("Website");
+			grid.add(comp, xStartinglevel, yLevelIndex);
+			TextField websiteField = new TextField();
+			grid.add(websiteField, xStartinglevel + 1, yLevelIndex++);
+
+			Label linkLabel = new Label("link:");
+			grid.add(linkLabel, xStartinglevel, yLevelIndex);
+			TextField linkField = new TextField();
+			grid.add(linkField, xStartinglevel + 1, yLevelIndex++);
+
+			Label birthdayLabel = new Label("birthday");
+			grid.add(birthdayLabel, xStartinglevel, yLevelIndex);
+			DatePicker datePicker = new DatePicker();
+			datePicker.setValue(LocalDate.now());
+			grid.add(datePicker, xStartinglevel + 1, yLevelIndex++);
+
+			Label workedAtLabel = new Label("previous employment Places * symbol between employments.");
+			grid.add(workedAtLabel, xStartinglevel, yLevelIndex);
+			TextField workedAtField = new TextField();
+			grid.add(workedAtField, xStartinglevel + 1, yLevelIndex++);
+
+			Label educationPlacesLabel = new Label("Education * symbol between employments.");
+			grid.add(educationPlacesLabel, xStartinglevel, yLevelIndex);
+			TextField educationField = new TextField();
+			grid.add(educationField, xStartinglevel + 1, yLevelIndex++);
+
+			Label quotesLabel = new Label("Quotes * symbol between employments.");
+			grid.add(quotesLabel, xStartinglevel, yLevelIndex);
+			TextField quotesField = new TextField();
+			grid.add(quotesField, xStartinglevel + 1, yLevelIndex++);
+
+			
+			Label verifiedLabel = new Label("verified:");
+			grid.add(verifiedLabel, xStartinglevel, yLevelIndex);
+			String[] verified = { "true", "false" };
+			ComboBox verifiedBox = new ComboBox(FXCollections.observableArrayList(verified));
+			verifiedBox.getSelectionModel().selectFirst();
+			grid.add(verifiedBox, xStartinglevel + 1, yLevelIndex++);	
+		
+			Label label1 = new Label("Username:");
+			grid.add(label1, xStartinglevel, yLevelIndex); // i am starting from xStartinglevel,xStartinglevel+1
+			TextField UserNameField = new TextField();
+			grid.add(UserNameField, xStartinglevel + 1, yLevelIndex++);
+
+
+			Button SearchUserButton = new Button();
+			SearchUserButton.setText("Search User");
+			SearchUserButton.setOnAction(event -> {
+				String firstName = nameField.getText();
+				String lastName = surnameField.getText();
+				String email = emailField.getText();
+				String website = websiteField.getText();
+				String link = linkField.getText();
+				Date birthday = null;
+				if (datePicker.getValue().equals(LocalDate.now())) {
+					 birthday = null;
+				} else {
+					 birthday = Date.valueOf(datePicker.getValue());
+
+				}
+				
+				String strGender = (String) genderBox.getValue();
+				boolean gender = false;
+				if (strGender.equals("Male")) {
+					gender = true;
+				}
+				String tempString = workedAtField.getText();
+				if (tempString.equals("")) {
+					ArrayList<String> workedForPlaces = null;
+				}
+				ArrayList<String> workedForPlaces = new ArrayList<String>(Arrays.asList(tempString.split("\\*", 0)));
+				ArrayList<String> educationPlaces = new ArrayList<String>(
+						Arrays.asList(educationField.getText().split("\\*", 0)));
+				ArrayList<String> quotes = new ArrayList<String>(Arrays.asList(quotesField.getText().split("\\*", 0)));
+				;
+				String ver = (String) verifiedBox.getValue();
+				boolean isVerified = false;
+				if (strGender.equals("true")) {
+					isVerified = true;
+				}
+				
+				String strHometown = (String) hometownBox.getValue();
+				Location hometown = new Location(locationHashmap.get(strHometown), strHometown);
+				String strLivesInLocation = (String) livesInBox.getValue();
+				Location livesIn = new Location(locationHashmap.get(strLivesInLocation), strLivesInLocation);
+
+				// na ta valume tuta?
+				String username = UserNameField.getText();
+				
+				User a = new User(firstName, lastName, email, website, link, birthday, gender, workedForPlaces, educationPlaces, quotes, isVerified, hometown, livesIn, username, "");
+				
+			
+			this.controller.searchUsers(a,tabIndex);
+				
+			});
+			
+			grid.add(SearchUserButton, xStartinglevel, ++yLevelIndex);
+			
+			return new ScrollPane( grid);
+			
+			
+
+		}
+
 }
