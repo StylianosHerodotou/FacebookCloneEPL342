@@ -307,24 +307,24 @@ public void addFriend(int id,int tabint) {
 
 
 	public HashMap<String, Integer> getLocations() {
-//		ResultSet result= this.model.getLocations();
-//		HashMap<String, Integer> locations = new HashMap<String, Integer>();
-//
-//		try {
-//			while (result.next()) {
-//				String name = result.getString("Name");
-//				int id = result.getInt("LOC_ID");
-//				locations.put(name, id);
-//			}
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-		
+		ResultSet result= this.model.getLocations();
 		HashMap<String, Integer> locations = new HashMap<String, Integer>();
-		locations.put("larnaka", 0);
-		locations.put("lefkosia", 1);
+
+		try {
+			while (result.next()) {
+				String name = result.getString("Name");
+				int id = result.getInt("LOC_ID");
+				locations.put(name, id);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+//		HashMap<String, Integer> locations = new HashMap<String, Integer>();
+//		locations.put("larnaka", 0);
+//		locations.put("lefkosia", 1);
 
 
 		return locations;
@@ -390,6 +390,10 @@ public void addFriend(int id,int tabint) {
 	public void updateItem(ArrayList<Object> newData, FBItem object, int tabIndex) {
 		String className= object.getClass().getSimpleName();
 		switch(className) {
+		case "User":
+			User updatedUser= new User(newData,(User)object);
+			this.model.updateUser(updatedUser);
+		break;
 		case "Event":
 			Event newEvent= new Event(newData,(Event)object);
 			newEvent.setUser_id(this.user.id);
@@ -418,6 +422,7 @@ public void addFriend(int id,int tabint) {
 			this.model.updateAlbum(newAlbum);
 			break;
 		}
+		this.setUser(this.model.getUser(this.getUser().getId()));
 		this.showProfile(tabIndex);
 	}
 

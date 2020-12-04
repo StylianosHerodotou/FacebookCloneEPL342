@@ -50,7 +50,6 @@ public class UserModel {
 		String password = updatedUser.password;
 
 		try {
-			System.out.print("okay sinexise\n");
 			cstmt = AuthenticationModel.conn.prepareCall("{call updateUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
 			int columnIndex = 1;
 			cstmt.setString(columnIndex++, firstName);
@@ -913,7 +912,7 @@ public class UserModel {
 		User user = null;
 		try {
 			resultSet.next();
-			int id = resultSet.getInt("User_ID");
+			int id = resultSet.getInt("UserID");
 			String Username = resultSet.getString("Username");
 			int password = resultSet.getInt("Pass");
 			String First_Name = resultSet.getString("First_Name");
@@ -941,7 +940,7 @@ public class UserModel {
 		return user;
 	}
 
-	private User getUser(int userId) {
+	User getUser(int userId) {
 		String SPsql = "EXEC getUser ? "; // for stored proc taking 2 parameters
 		ResultSet resultSet = null;
 		User user = null;
