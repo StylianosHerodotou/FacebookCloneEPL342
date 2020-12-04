@@ -1593,14 +1593,14 @@ public class UserModel {
 		
 		return (FBItem[]) items.toArray();
 	}
-	public log[] searchUsersLogs(int id,boolean all,boolean alb,boolean pic, boolean vid,boolean link,boolean event) {
+	public log[] searchUsersLogs(int id,boolean all,boolean alb,boolean pic, boolean vid,boolean link,boolean event,int k) {
 		ArrayList<log> logs = new ArrayList<log>();
 		try {
 			
 			ResultSet resultSet = null;
 			
 			CallableStatement cstmt = AuthenticationModel.conn.prepareCall(
-					"{call updates(?,?,?,?, ?,?,?)}", ResultSet.TYPE_SCROLL_INSENSITIVE,
+					"{call updates(?,?,?,?, ?,?,?,?)}", ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
 			cstmt.setBoolean(columnIndex++, all);
