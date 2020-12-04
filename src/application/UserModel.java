@@ -659,6 +659,30 @@ public class UserModel {
 		}
 		return users;
 	}
+	public int AverageAge() {
+		String SPsql = "EXEC GET_AVERAGE_AGE"; // for stored proc taking 2 parameters
+		ResultSet resultSet ;
+		int avgage=0 ;
+		try {
+			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+			ps.setEscapeProcessing(true);
+			resultSet = ps.executeQuery();
+			while (resultSet.next()) {
+				avgage = resultSet.getInt("AGEE");
+			}
+			if (isResultSetEmpty(resultSet))
+				return avgage;
+			else {
+				
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			e.printStackTrace();
+		}
+		return avgage;
+	}
 
 	public ArrayList<String> getWorkOfUser(int UserID) {
 

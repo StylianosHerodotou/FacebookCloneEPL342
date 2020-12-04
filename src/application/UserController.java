@@ -665,7 +665,10 @@ public void addFriend(int id,int tabint) {
 
 			
 		}
-
+		
+public int getAvgAge(int tabIndex) {
+	return this.model.AverageAge();
+}
 		public void sentFriendRequest(int id, int tabIndex) {
 			if(this.model.sentFriendRequest(this.getUser().getId(),id)) {
 				displayPopUp("Added to friends "+id);

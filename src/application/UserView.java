@@ -410,6 +410,11 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 				}
 			});
 			grid.add(notPopularEvents, 5, 7);
+			Button showAverageAgeOfUsers = new Button("Average age of users");
+			showAverageAgeOfUsers.setOnAction(event -> {
+				AuthenticationController.displayPopUp(""+this.controller.getAvgAge(tabIndex)+"");
+			});
+			grid.add(showAverageAgeOfUsers, 5, 8);
 			return new ScrollPane(grid);
 		}
 		ArrayList<Button> delb = new ArrayList<Button>();
@@ -500,6 +505,11 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 			}
 		});
 		grid.add(notPopularEvents, 5, 7);
+		Button showAverageAgeOfUsers = new Button("Average age of users");
+		showAverageAgeOfUsers.setOnAction(event -> {
+			AuthenticationController.displayPopUp("The average age is :"+this.controller.getAvgAge(tabIndex)+"");
+		});
+		grid.add(showAverageAgeOfUsers, 5, 8);
 		return new ScrollPane(grid);
 	}
 
