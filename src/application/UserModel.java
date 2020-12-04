@@ -1812,5 +1812,34 @@ public class UserModel {
 			}
 		}
 	}
+	protected boolean exportDataToCSV(String tableName, String Path) {
+		//csv must be with header and FIRSTROW = 2, FIELDTERMINATOR =',', ROWTERMINATOR = '\n')'
+		CallableStatement cstmt = null;
+		try {
+			cstmt = AuthenticationModel.conn.prepareCall("{call exportDataToCSV (?,?)}");
+			
+			int index = 1;
+			cstmt.setString(index++, tableName);
+			cstmt.setString(index++, Path);
+			cstmt.execute();
+
+			if (cstmt.getInt(index) == 1) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 }
