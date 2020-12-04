@@ -1301,7 +1301,7 @@ public class UserModel {
 			String username = newUser.username;
 
 			CallableStatement cstmt = AuthenticationModel.conn.prepareCall(
-					"{call SEARCH_USERS_TEMP2(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?)}", ResultSet.TYPE_SCROLL_INSENSITIVE,
+					"{call SEARCH_USERS_TEMP2(?,?,?,?, ?,?,?,?, ?,?,?,?)}", ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
 			cstmt.setString(columnIndex++, firstName);
@@ -1311,11 +1311,9 @@ public class UserModel {
 			cstmt.setString(columnIndex++, website);
 			cstmt.setString(columnIndex++, link);
 			cstmt.setDate(columnIndex++, birthday);
-			cstmt.setBoolean(columnIndex++, gender);
 			cstmt.setString(columnIndex++, workedFor);
 			cstmt.setString(columnIndex++, educationPlaces);
 			cstmt.setString(columnIndex++, quotes);
-			cstmt.setBoolean(columnIndex++, isVerified);
 			cstmt.setInt(columnIndex++, hometownFK);
 			cstmt.setInt(columnIndex++, livesInLocationFK);
 

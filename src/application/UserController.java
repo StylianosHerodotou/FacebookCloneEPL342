@@ -468,8 +468,8 @@ public void addFriend(int id,int tabint) {
 	}
 	
 	public void searchUsers (User newUser,int tabIndex) {
-//		User[] users = this.model.searchUsers(newUser);
-		User[] users =  this.generateDummyUsers();
+		User[] users = this.model.searchUsers(newUser);
+//		User[] users =  this.generateDummyUsers();
 
 		if (users==null) {
 			String message = "Could not find Users";
