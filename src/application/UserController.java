@@ -252,6 +252,14 @@ public void addFriend(int id,int tabint) {
 		ArrayList<User> FriendsWithSameInterests= this.model.FriendsSameInterests(id);
 		return FriendsWithSameInterests;
 	}
+	public ArrayList<User> getFriendsWithAlbumBiggerThanX(int id,int x) {
+		ArrayList<User> FriendsWithBiggerAlbumThanX= this.model.getFriendsWithBiggerAlbumThanX(id,x);
+		return FriendsWithBiggerAlbumThanX;
+	}
+	public ArrayList<User> getNetworkFriendsWithAlbumBiggerThanX(int id,int x) {
+		ArrayList<User> FriendsNetworkWithBiggerAlbumThanX= this.model.getFriendsNetworkWithBiggerAlbumThanX(id, x);
+		return FriendsNetworkWithBiggerAlbumThanX;
+	}
 
 	public ArrayList<Event> getLeastAttendableEvents() {
 		ArrayList<Event> LeastEvents= this.model.getLeastAttendableEvent();

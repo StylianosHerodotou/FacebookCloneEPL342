@@ -758,6 +758,50 @@ public class UserModel {
 		}
 		return users;
 	}
+	public ArrayList<User> getFriendsWithBiggerAlbumThanX(int id,int x) {
+		String SPsql = "EXEC FRIENDS_WITH_BIGGER_ALBUM_THAN_X ? ?"; // for stored proc taking 2 parameters
+		ResultSet resultSet = null;
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+			ps.setInt(1, id);
+			ps.setEscapeProcessing(true);
+			resultSet = ps.executeQuery();
+			if (isResultSetEmpty(resultSet))
+				return null;
+				else {
+			users = turnresultSetToUser(resultSet);
+			System.out.println(users);
+				}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		return users;
+	}
+	public ArrayList<User> getFriendsNetworkWithBiggerAlbumThanX(int id,int x) {
+		String SPsql = "EXEC FRIENDS_NETOWRK_WITH_BIGGER_ALBUM_THAN_X ? ?"; // for stored proc taking 2 parameters
+		ResultSet resultSet = null;
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
+			ps.setInt(1, id);
+			ps.setEscapeProcessing(true);
+			resultSet = ps.executeQuery();
+			if (isResultSetEmpty(resultSet))
+				return null;
+				else {
+			users = turnresultSetToUser(resultSet);
+			System.out.println(users);
+				}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+			e.printStackTrace();
+		}
+		return users;
+	}
 
 //Gets Friends that are most popular
 	public ArrayList<User> getMostPopularFriends(int id) {
@@ -783,7 +827,7 @@ public class UserModel {
 		return users;
 	}
 	public ArrayList<Event> getLeastAttendableEvent() {
-		String SPsql = "EXEC FRIENDS_WITH_SAME_INTERESTS ? "; // for stored proc taking 2 parameters
+		String SPsql = "EXEC SHOW_LEAST_POPULAR_GATHERINGS "; // for stored proc taking 2 parameters
 		ResultSet resultSet = null;
 		ArrayList<Event> events = new ArrayList<Event>();
 		try {
