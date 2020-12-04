@@ -602,6 +602,22 @@ public void addFriend(int id,int tabint) {
 		Tab tab = this.view.tabPane.getTabs().get(tabIndex);
 		tab.setContent(this.view.FriendNetworkWithBiggerthanXAlbums(tabIndex,x));
 }
+	public void showMostFamousFriendsView(int tabIndex) {
+		Tab tab = this.view.tabPane.getTabs().get(tabIndex);
+		tab.setContent(this.view.mostPopularFriendsVuew(tabIndex));
+}
+	public void showComonFriendsFriendsView(int tabIndex) {
+		Tab tab = this.view.tabPane.getTabs().get(tabIndex);
+		tab.setContent(this.view.FriendWithCommonFriends(tabIndex));
+}
+	public void showSearchBiggerThanXFriends(int tabIndex) {
+		Tab tab = this.view.tabPane.getTabs().get(tabIndex);
+		tab.setContent(this.view.SearchForFriendsWithBiggerAlbumthanX(tabIndex));
+	}
+	public void showSearchBiggerThanXNetworkFriends(int tabIndex) {
+		Tab tab = this.view.tabPane.getTabs().get(tabIndex);
+		tab.setContent(this.view.SearchForFriendsNetworkWithBiggerAlbumthanX(tabIndex));
+	}
 	public void showFriendsView(int tabIndex) {
 		Tab tab = this.view.tabPane.getTabs().get(tabIndex);
 		tab.setContent(this.view.getFriendView(tabIndex));
