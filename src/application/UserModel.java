@@ -958,7 +958,7 @@ public class UserModel {
 	}
 
 	protected boolean addEvent(Event obj) {
-		ResultSet resultSet = null;
+
 		CallableStatement cstmt = null;
 		try {
 			cstmt = AuthenticationModel.conn.prepareCall("{call insertVideo (?,?,?,?,?,?)}");
@@ -975,7 +975,7 @@ public class UserModel {
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
 			cstmt.execute();
-			resultSet = cstmt.executeQuery();
+
 
 			if (cstmt.getInt(index) == 1) {
 				return true;
@@ -997,7 +997,7 @@ public class UserModel {
 	}
 
 	protected boolean addVideo(Video obj) {
-		ResultSet resultSet = null;
+
 		CallableStatement cstmt = null;
 		try {
 			cstmt = AuthenticationModel.conn.prepareCall("{call insertVideo (?,?,?,?,?,?,?)}");
@@ -1012,7 +1012,7 @@ public class UserModel {
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
 			cstmt.execute();
-			resultSet = cstmt.executeQuery();
+
 
 			if (cstmt.getInt(index) == 1) {
 				return true;
@@ -1034,7 +1034,7 @@ public class UserModel {
 	}
 
 	protected boolean addPicture(Picture obj) {
-		ResultSet resultSet = null;
+
 		CallableStatement cstmt = null;
 		try {
 			cstmt = AuthenticationModel.conn.prepareCall("{call insertPicture (?,?,?,?,?,?,?)}");
@@ -1049,8 +1049,7 @@ public class UserModel {
 
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
-			cstmt.execute();
-			resultSet = cstmt.executeQuery();
+
 
 			if (cstmt.getInt(index) == 1) {
 				return true;
@@ -1072,7 +1071,6 @@ public class UserModel {
 	}
 
 	protected boolean addLink(Link obj) {
-		ResultSet resultSet = null;
 
 		CallableStatement cstmt = null;
 
@@ -1090,7 +1088,6 @@ public class UserModel {
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
 			cstmt.execute();
-			resultSet = cstmt.executeQuery();
 
 			if (cstmt.getInt(index) == 1) {
 				return true;
@@ -1112,7 +1109,7 @@ public class UserModel {
 	}
 
 	protected boolean addAlbum(PictureAlbum obj) {
-		ResultSet resultSet = null;
+
 		CallableStatement cstmt = null;
 		try {
 			cstmt = AuthenticationModel.conn.prepareCall("{call insertAlbum (?,?,?,?,?,?,?)}");
@@ -1128,7 +1125,7 @@ public class UserModel {
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
 			cstmt.execute();
-			resultSet = cstmt.executeQuery();
+
 
 			if (cstmt.getInt(index) == 1) {
 				return true;
@@ -1452,7 +1449,14 @@ public class UserModel {
 			System.out.println(e);
 			return null;
 		}
-		return (User[]) users.toArray();
+		System.out.println(users);
+		if (users.size()>0) return null;
+		User[] arr = new User[users.size()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = (User) users.get(i);
+		}
+		System.out.println(arr);
+		return arr;
 	}
 
 	public ArrayList<User> getIgnoredUserFriendRequests(int id) {
