@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 import javafx.animation.Animation;
 
 public class UserModel {
@@ -319,7 +318,7 @@ public class UserModel {
 				Timestamp et = new Timestamp(End_time.getTime());
 				Privacy privacy = new Privacy(resultSet.getString("Privacy_Name"));
 				Location location = new Location(LocId, locations.get(LocId));
-				Event evnt = new Event(id, ven, name, st, et, desc, CreatId,  privacy,location);
+				Event evnt = new Event(id, ven, name, st, et, desc, CreatId, privacy, location);
 
 				events.add(evnt);
 			}
@@ -485,10 +484,10 @@ public class UserModel {
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
 				return null;
-				else {
-			pictures = turnresultSetToPictures(resultSet);
-			System.out.println(pictures);
-				}
+			else {
+				pictures = turnresultSetToPictures(resultSet);
+				System.out.println(pictures);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -508,10 +507,10 @@ public class UserModel {
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
 				return null;
-				else {
-			vids = turnresultSetToVideos(resultSet);
-			System.out.println(vids);
-				}
+			else {
+				vids = turnresultSetToVideos(resultSet);
+				System.out.println(vids);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -531,10 +530,10 @@ public class UserModel {
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
 				return null;
-				else {
-			Albums = turnresultSetToPictureAlbums(resultSet);
-			System.out.println(Albums);
-				}
+			else {
+				Albums = turnresultSetToPictureAlbums(resultSet);
+				System.out.println(Albums);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -554,10 +553,10 @@ public class UserModel {
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
 				return null;
-				else {
-			links = turnresultSetToLinks(resultSet);
-			System.out.println(links);
-				}
+			else {
+				links = turnresultSetToLinks(resultSet);
+				System.out.println(links);
+			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -578,10 +577,10 @@ public class UserModel {
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
 				return null;
-				else {
-			events = turnresultSetToEvent(resultSet);
-			System.out.println(events);
-				}
+			else {
+				events = turnresultSetToEvent(resultSet);
+				System.out.println(events);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -601,11 +600,11 @@ public class UserModel {
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
 				return null;
-				else {
-			users = turnresultSetToUser(resultSet);
-			System.out.println(users);
-				}
-			
+			else {
+				users = turnresultSetToUser(resultSet);
+				System.out.println(users);
+			}
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -625,10 +624,10 @@ public class UserModel {
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
 				return null;
-				else {
-			users = turnresultSetToUser(resultSet);
-			System.out.println(users);
-				}
+			else {
+				users = turnresultSetToUser(resultSet);
+				System.out.println(users);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -648,10 +647,10 @@ public class UserModel {
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
 				return null;
-				else {
-			users = turnresultSetToUser(resultSet);
-			System.out.println(users);
-				}
+			else {
+				users = turnresultSetToUser(resultSet);
+				System.out.println(users);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -747,10 +746,10 @@ public class UserModel {
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
 				return null;
-				else {
-			users = turnresultSetToUser(resultSet);
-			System.out.println(users);
-				}
+			else {
+				users = turnresultSetToUser(resultSet);
+				System.out.println(users);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -758,7 +757,8 @@ public class UserModel {
 		}
 		return users;
 	}
-	public ArrayList<User> getFriendsWithBiggerAlbumThanX(int id,int x) {
+
+	public ArrayList<User> getFriendsWithBiggerAlbumThanX(int id, int x) {
 		String SPsql = "EXEC FRIENDS_WITH_BIGGER_ALBUM_THAN_X ? ?"; // for stored proc taking 2 parameters
 		ResultSet resultSet = null;
 		ArrayList<User> users = new ArrayList<User>();
@@ -769,10 +769,10 @@ public class UserModel {
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
 				return null;
-				else {
-			users = turnresultSetToUser(resultSet);
-			System.out.println(users);
-				}
+			else {
+				users = turnresultSetToUser(resultSet);
+				System.out.println(users);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -780,7 +780,8 @@ public class UserModel {
 		}
 		return users;
 	}
-	public ArrayList<User> getFriendsNetworkWithBiggerAlbumThanX(int id,int x) {
+
+	public ArrayList<User> getFriendsNetworkWithBiggerAlbumThanX(int id, int x) {
 		String SPsql = "EXEC FRIENDS_NETOWRK_WITH_BIGGER_ALBUM_THAN_X ? ?"; // for stored proc taking 2 parameters
 		ResultSet resultSet = null;
 		ArrayList<User> users = new ArrayList<User>();
@@ -791,10 +792,10 @@ public class UserModel {
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
 				return null;
-				else {
-			users = turnresultSetToUser(resultSet);
-			System.out.println(users);
-				}
+			else {
+				users = turnresultSetToUser(resultSet);
+				System.out.println(users);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -815,10 +816,10 @@ public class UserModel {
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
 				return null;
-				else {
-			users = turnresultSetToUser(resultSet);
-			System.out.println(users);
-				}
+			else {
+				users = turnresultSetToUser(resultSet);
+				System.out.println(users);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -826,6 +827,7 @@ public class UserModel {
 		}
 		return users;
 	}
+
 	public ArrayList<Event> getLeastAttendableEvent() {
 		String SPsql = "EXEC SHOW_LEAST_POPULAR_GATHERINGS "; // for stored proc taking 2 parameters
 		ResultSet resultSet = null;
@@ -836,10 +838,10 @@ public class UserModel {
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
 				return null;
-				else {
-			events = turnresultSetToEvent(resultSet);
-			System.out.println(events);
-				}
+			else {
+				events = turnresultSetToEvent(resultSet);
+				System.out.println(events);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -860,10 +862,10 @@ public class UserModel {
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
 				return null;
-				else {
-			users = turnresultSetToUser(resultSet);
-			System.out.println(users);
-				}
+			else {
+				users = turnresultSetToUser(resultSet);
+				System.out.println(users);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -958,7 +960,7 @@ public class UserModel {
 	}
 
 	protected boolean addEvent(Event obj) {
-		ResultSet resultSet = null;
+
 		CallableStatement cstmt = null;
 		try {
 			cstmt = AuthenticationModel.conn.prepareCall("{call insertVideo (?,?,?,?,?,?)}");
@@ -975,7 +977,6 @@ public class UserModel {
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
 			cstmt.execute();
-			resultSet = cstmt.executeQuery();
 
 			if (cstmt.getInt(index) == 1) {
 				return true;
@@ -997,7 +998,7 @@ public class UserModel {
 	}
 
 	protected boolean addVideo(Video obj) {
-		ResultSet resultSet = null;
+
 		CallableStatement cstmt = null;
 		try {
 			cstmt = AuthenticationModel.conn.prepareCall("{call insertVideo (?,?,?,?,?,?,?)}");
@@ -1012,7 +1013,6 @@ public class UserModel {
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
 			cstmt.execute();
-			resultSet = cstmt.executeQuery();
 
 			if (cstmt.getInt(index) == 1) {
 				return true;
@@ -1034,7 +1034,7 @@ public class UserModel {
 	}
 
 	protected boolean addPicture(Picture obj) {
-		ResultSet resultSet = null;
+
 		CallableStatement cstmt = null;
 		try {
 			cstmt = AuthenticationModel.conn.prepareCall("{call insertPicture (?,?,?,?,?,?,?)}");
@@ -1049,8 +1049,6 @@ public class UserModel {
 
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
-			cstmt.execute();
-			resultSet = cstmt.executeQuery();
 
 			if (cstmt.getInt(index) == 1) {
 				return true;
@@ -1072,7 +1070,6 @@ public class UserModel {
 	}
 
 	protected boolean addLink(Link obj) {
-		ResultSet resultSet = null;
 
 		CallableStatement cstmt = null;
 
@@ -1090,7 +1087,6 @@ public class UserModel {
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
 			cstmt.execute();
-			resultSet = cstmt.executeQuery();
 
 			if (cstmt.getInt(index) == 1) {
 				return true;
@@ -1112,7 +1108,7 @@ public class UserModel {
 	}
 
 	protected boolean addAlbum(PictureAlbum obj) {
-		ResultSet resultSet = null;
+
 		CallableStatement cstmt = null;
 		try {
 			cstmt = AuthenticationModel.conn.prepareCall("{call insertAlbum (?,?,?,?,?,?,?)}");
@@ -1128,7 +1124,6 @@ public class UserModel {
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
 			cstmt.execute();
-			resultSet = cstmt.executeQuery();
 
 			if (cstmt.getInt(index) == 1) {
 				return true;
@@ -1308,7 +1303,7 @@ public class UserModel {
 	protected boolean updateEvent(Event obj) {
 		CallableStatement cstmt = null;
 		int id = obj.id;
-		String ven =obj.venue;
+		String ven = obj.venue;
 		String name = obj.name;
 		Timestamp startTim = obj.startTime;
 		Timestamp endTim = obj.endTime;
@@ -1350,13 +1345,14 @@ public class UserModel {
 		}
 
 	}
-	
+
 	public static boolean isResultSetEmpty(ResultSet resultSet) throws SQLException {
 		if (!resultSet.isBeforeFirst())
 			return true;
 		else
 			return false;
 	}
+
 	public User[] searchUsers(User newUser) {
 //		String protype = "id: -1, taken_loc_id: 0, user_id: 0, privacy: null,firstName: "
 //				+ ", lastName: , email 'ewgfergwegerg ' drop users; : , website: , link: , birthday: null,gender: M"
@@ -1412,7 +1408,7 @@ public class UserModel {
 				}
 				results = cstmt.getMoreResults();
 			}
-			
+
 			if (isResultSetEmpty(resultSet))
 				return null;
 			else {
@@ -1452,7 +1448,15 @@ public class UserModel {
 			System.out.println(e);
 			return null;
 		}
-		return (User[]) users.toArray();
+		System.out.println(users);
+		if (users.size() <= 0)
+			return null;
+		User[] arr = new User[users.size()];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = (User) users.get(i);
+		}
+		System.out.println(arr);
+		return arr;
 	}
 
 	public ArrayList<User> getIgnoredUserFriendRequests(int id) {
@@ -1474,11 +1478,11 @@ public class UserModel {
 		}
 		return users;
 	}
-	public FBItem[] searchUsers_other( String albStr,  String picStr,
-			String vidStr, String linkStr, String eventStr) {
+
+	public FBItem[] searchUsers_other(String albStr, String picStr, String vidStr, String linkStr, String eventStr) {
 
 		ArrayList<FBItem> items = new ArrayList<FBItem>();
-	
+
 		try {
 
 			ResultSet resultSet = null;
@@ -1486,16 +1490,31 @@ public class UserModel {
 			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_Album_m(?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
-			
+
 			cstmt.setString(columnIndex++, albStr);
 
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
+
 			ArrayList<PictureAlbum> res = turnresultSetToPictureAlbums(resultSet);
+
 			for (int i = 0; i < res.size(); i++) {
 				items.add(res.get(i));
 			}
-			
+
 			cstmt.close();
-			
+
 		}
 
 		catch (Exception e) {
@@ -1508,9 +1527,22 @@ public class UserModel {
 			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_pic_m(?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
-			
+
 			cstmt.setString(columnIndex++, picStr);
 
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
 
 			ArrayList<Picture> res = turnresultSetToPictures(resultSet);
 			for (int i = 0; i < res.size(); i++) {
@@ -1529,8 +1561,22 @@ public class UserModel {
 			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_vid_m(?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
-			
+
 			cstmt.setString(columnIndex++, vidStr);
+
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
 
 			ArrayList<Video> res = turnresultSetToVideos(resultSet);
 			for (int i = 0; i < res.size(); i++) {
@@ -1538,7 +1584,6 @@ public class UserModel {
 			}
 			cstmt.close();
 
-			
 			cstmt.close();
 		}
 
@@ -1552,56 +1597,88 @@ public class UserModel {
 			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_event_m(?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
-			
+
 			cstmt.setString(columnIndex++, linkStr);
 
-				ArrayList<Event> a = turnresultSetToEvent(resultSet);
-				for (int i = 0; i < a.size(); i++) {
-					items.add(a.get(i));
-				}
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
 
-			
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
+
+			ArrayList<Event> a = turnresultSetToEvent(resultSet);
+			for (int i = 0; i < a.size(); i++) {
+				items.add(a.get(i));
+			}
+
 			cstmt.close();
 		}
 
 		catch (Exception e) {
 			System.out.println(e);
-		}try {
+		}
+		try {
 
 			ResultSet resultSet = null;
 
 			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_link_m(?)}",
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
-			
-			cstmt.setString(columnIndex++, linkStr);
 
+			cstmt.setString(columnIndex++, linkStr);
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
+
 			ArrayList<Link> a = turnresultSetToLinks(resultSet);
 			for (int i = 0; i < a.size(); i++) {
 				items.add(a.get(i));
 			}
 
-		
-		cstmt.close();
+			cstmt.close();
 		}
 
 		catch (Exception e) {
 			System.out.println(e);
 		}
-		
-		return (FBItem[]) items.toArray();
+		if (items.size() <= 0)
+			return null;
+		FBItem[] arr = new FBItem[items.size()];
+		for (int i = 0; i < arr.length; i++) {
+
+			arr[i] = items.get(i);
+		}
+		return arr;
+
 	}
-	public log[] searchUsersLogs(int id,boolean all,boolean alb,boolean pic, boolean vid,boolean link,boolean event,int k) {
+
+	public FBItem[] searchUsersLogs(int id, boolean all, boolean alb, boolean pic, boolean vid, boolean link,
+			boolean event, int k) {
 		ArrayList<log> logs = new ArrayList<log>();
 		try {
-			
+
 			ResultSet resultSet = null;
-			
-			CallableStatement cstmt = AuthenticationModel.conn.prepareCall(
-					"{call updates(?,?,?,?, ?,?,?,?)}", ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call updates(?,?,?,?, ?,?,?,?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
 			cstmt.setBoolean(columnIndex++, all);
 			cstmt.setInt(columnIndex++, id);
@@ -1611,7 +1688,70 @@ public class UserModel {
 			cstmt.setBoolean(columnIndex++, link);
 			cstmt.setBoolean(columnIndex++, event);
 
-	
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
+
+			if (SearchUserModel.isResultSetEmpty(resultSet))
+				return null;
+			else {
+
+				while (resultSet.next()) {
+
+					int index = 1;
+					logs.add(new log(resultSet.getInt(index++), resultSet.getString(index++),
+							resultSet.getString(index++), resultSet.getString(index++), resultSet.getTimestamp(index++),
+							resultSet.getInt(5)));
+				}
+			}
+		}
+
+		catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
+		if (logs.size() == 0) {
+			System.out.println("found nothing");
+			return null;
+		}
+		System.out.println(logs);
+		FBItem[] arr = new FBItem[logs.size()];
+		for (int i = 0; i < arr.length; i++) {
+
+			arr[i] = logs.get(i);
+		}
+		return arr;
+	}
+
+	public FBItem[] search_events(int id, String venue, String name, Date start, Date end, String descr, int creatorid,
+			int locid) {
+
+		ArrayList<Event> events = new ArrayList<Event>();
+		try {
+			ResultSet resultSet = null;
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall(
+					"{call SEARCH_USERS_TEMP2(?,?,?,?, ?,?,?,?)}", ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+			cstmt.setInt(columnIndex++, id);
+			cstmt.setString(columnIndex++, venue);
+			cstmt.setString(columnIndex++, name);
+			cstmt.setDate(columnIndex++, start);
+			cstmt.setDate(columnIndex++, end);
+			cstmt.setString(columnIndex++, descr);
+			cstmt.setInt(columnIndex++, creatorid);
+			cstmt.setInt(columnIndex++, locid);
+
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
 
@@ -1626,29 +1766,19 @@ public class UserModel {
 				results = cstmt.getMoreResults();
 			}
 			
-			if (SearchUserModel.isResultSetEmpty(resultSet))
-				return null;
-			else {
+			ArrayList<Event> a = turnresultSetToEvent(resultSet);
 
-
-				while (resultSet.next()) {
-					
-					int index = 1;
-					logs.add(new log(
-							resultSet.getInt(index++), resultSet.getString(index++), resultSet.getString(index++),
-							resultSet.getString(index++), resultSet.getTimestamp(index++), resultSet.getInt(5)));
-				}
-			}
-		}
-
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.out.println(e);
 			return null;
 		}
-		System.out.println(logs);
-		return (log[]) logs.toArray();
-	}
+		System.out.println(events);
+		FBItem[] arr = new FBItem[events.size()];
+		for (int i = 0; i < arr.length; i++) {
 
-	
+			arr[i] = events.get(i);
+		}
+		return arr;
+	}
 
 }

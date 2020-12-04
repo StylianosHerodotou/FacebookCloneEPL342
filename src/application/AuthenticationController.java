@@ -93,11 +93,11 @@ public class AuthenticationController {
 			System.out.println("Exiting Program");
 			primaryStage.close();
 		});
-//		controller.view.startView();
+		controller.view.startView();
 		
-		//TODO Delete this
-		User tempUser=generateDummyUser();
-		UserController.startController(primaryStage, tempUser);
+//		//TODO Delete this
+//		User tempUser=generateDummyUser();
+//		UserController.startController(primaryStage, tempUser);
 	}
 
 //	public void signUp() {
