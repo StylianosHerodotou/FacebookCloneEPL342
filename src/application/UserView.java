@@ -596,7 +596,78 @@ public class UserView {
 		// how does this work
 		return new ScrollPane(grid);
 	}
+		protected ScrollPane FriendNetworkWithBiggerthanXAlbums(
+				int tabIndex,int z ) {
+			GridPane grid = new GridPane();
+			grid.setAlignment(Pos.BASELINE_LEFT);
+			grid.setHgap(30);
+			grid.setVgap(30);
+			ArrayList<User> FriendsNetworkwithAlbumBiggerThanX= this.controller.getNetworkFriendsWithAlbumBiggerThanX(this.controller.getUser().getId(), z);
+			if(FriendsNetworkwithAlbumBiggerThanX == null) {
+				Label empty = new Label("No Friend Requests :");
+				grid.add(empty, 0, 1);
+				return new ScrollPane(grid);
+			}
+			Text scenetitle = new Text("Friends with Album with more than "+z+" photos");
+			scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+			grid.add(scenetitle, 0,0);
+			Label name = new Label("First Name :");
+			grid.add(name, 0,1 );
+			Label lastname = new Label("Last Name :");
+			grid.add(lastname, 1,1 );
+			Label Email = new Label("Email :");
+			grid.add(Email, 2,1 );
 
+	         int row=2;
+			for(int i=0;i<FriendsNetworkwithAlbumBiggerThanX.size();i++) {
+				Text fname = new Text(FriendsNetworkwithAlbumBiggerThanX.get(i).getFirstName());
+				Text lname = new Text(FriendsNetworkwithAlbumBiggerThanX.get(i).getLastName());
+				Text em = new Text(FriendsNetworkwithAlbumBiggerThanX.get(i).getEmail());
+				grid.add(fname, 0, row);
+				grid.add(lname, 1, row);
+				grid.add(em, 2, row);
+				row++;
+			}
+
+        // how does this work
+return new ScrollPane(grid);
+	}
+		protected ScrollPane FriendWithBiggerthanXAlbums(
+				int tabIndex,int z ) {
+			GridPane grid = new GridPane();
+			grid.setAlignment(Pos.BASELINE_LEFT);
+			grid.setHgap(30);
+			grid.setVgap(30);
+			ArrayList<User> FriendswithAlbumBiggerThanX= this.controller.getFriendsWithAlbumBiggerThanX(this.controller.getUser().getId(), z);
+			if(FriendswithAlbumBiggerThanX == null) {
+				Label empty = new Label("No Friend Requests :");
+				grid.add(empty, 0, 1);
+				return new ScrollPane(grid);
+			}
+			Text scenetitle = new Text("Friends with Album with more than "+z+" photos");
+			scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+			grid.add(scenetitle, 0,0);
+			Label name = new Label("First Name :");
+			grid.add(name, 0,1 );
+			Label lastname = new Label("Last Name :");
+			grid.add(lastname, 1,1 );
+			Label Email = new Label("Email :");
+			grid.add(Email, 2,1 );
+
+	         int row=2;
+			for(int i=0;i<FriendswithAlbumBiggerThanX.size();i++) {
+				Text fname = new Text(FriendswithAlbumBiggerThanX.get(i).getFirstName());
+				Text lname = new Text(FriendswithAlbumBiggerThanX.get(i).getLastName());
+				Text em = new Text(FriendswithAlbumBiggerThanX.get(i).getEmail());
+				grid.add(fname, 0, row);
+				grid.add(lname, 1, row);
+				grid.add(em, 2, row);
+				row++;
+			}
+
+        // how does this work
+return new ScrollPane(grid);
+	}
 		protected ScrollPane FriendWithCommonFriends(
 				int tabIndex) {
 			GridPane grid = new GridPane();
