@@ -1749,8 +1749,7 @@ public class UserModel {
 		return arr;
 	}
 
-	public FBItem[] search_events(int id, String venue, String name, Date start, Date end, String descr, int creatorid,
-			int locid) {
+	public FBItem[] search_events(Event event) {
 
 
 		ArrayList<Event> events = new ArrayList<Event>();
@@ -1760,13 +1759,13 @@ public class UserModel {
 					"{call handle_events(?,?,?,?, ?,?,?)}", ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			int columnIndex = 1;
-			cstmt.setString(columnIndex++, venue);
-			cstmt.setString(columnIndex++, name);
-			cstmt.setTimestamp(columnIndex++, start);
-			cstmt.setTimestamp(columnIndex++, end);
-			cstmt.setString(columnIndex++, descr);
-			cstmt.setInt(columnIndex++, creatorid);
-			cstmt.setInt(columnIndex++, locid.getId());
+			cstmt.setString(columnIndex++, event.getVenue());
+			cstmt.setString(columnIndex++, event.getName());
+			cstmt.setTimestamp(columnIndex++, event.getStartTime());
+			cstmt.setTimestamp(columnIndex++, event.getEndTime());
+			cstmt.setString(columnIndex++, event.description);
+			cstmt.setInt(columnIndex++, event.creatorID);
+			cstmt.setInt(columnIndex++, event.getLoc().getId());
 
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
@@ -1782,13 +1781,16 @@ public class UserModel {
 				results = cstmt.getMoreResults();
 			}
 
-			ArrayList<Event> a = turnresultSetToEvent(resultSet);
+			events = turnresultSetToEvent(resultSet);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 		System.out.println(events);
+		if (events.size()==0) {
+			return new FBItem[0];
+		}
 		FBItem[] arr = new FBItem[events.size()];
 		for (int i = 0; i < arr.length; i++) {
 
