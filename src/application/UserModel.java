@@ -1450,7 +1450,7 @@ public class UserModel {
 			return null;
 		}
 		System.out.println(users);
-		if (users.size()>0) return null;
+		if (users.size()<=0) return null;
 		User[] arr = new User[users.size()];
 		for (int i = 0; i < arr.length; i++) {
 			arr[i] = (User) users.get(i);
@@ -1594,8 +1594,15 @@ public class UserModel {
 		catch (Exception e) {
 			System.out.println(e);
 		}
-		
-		return (FBItem[]) items.toArray();
+		if (items.size()<=0)
+			return null;
+		FBItem[] arr = new FBItem[items.size()];
+		for (int i = 0; i < arr.length; i++) {
+			
+			arr[i] = items.get(i);
+		}
+		return arr;
+
 	}
 	public log[] searchUsersLogs(int id,boolean all,boolean alb,boolean pic, boolean vid,boolean link,boolean event,int k) {
 		ArrayList<log> logs = new ArrayList<log>();
@@ -1649,6 +1656,7 @@ public class UserModel {
 			System.out.println(e);
 			return null;
 		}
+		
 		System.out.println(logs);
 		return (log[]) logs.toArray();
 	}
