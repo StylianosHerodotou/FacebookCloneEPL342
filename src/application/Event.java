@@ -1,6 +1,8 @@
 package application;
+import java.lang.reflect.Field;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import javafx.scene.control.Button;
 public class Event extends FBItem{
@@ -36,6 +38,31 @@ public class Event extends FBItem{
 		this.location=location;
 		this.privacy = privacy;
 	}
+
+public Event() {
+	super("this is an event");
+
+	}
+
+public Event(ArrayList<Object> newData, Event object) {
+	super("this is an event");
+
+	Field[] all_fields = this.getClass().getDeclaredFields();
+	int newDataIndex=0;
+	for (int field_index = 0; field_index < all_fields.length; field_index++) {
+		try {
+			Field currentField=all_fields[field_index];
+			if(HelperFunctions.is_field_sensitive(currentField.getName())) {
+				currentField.set(this,currentField.get(object));
+			}
+			else
+				currentField.set(this,newData.get(newDataIndex++));
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+}
 
 public Location getLoc() {
 	return this.location;

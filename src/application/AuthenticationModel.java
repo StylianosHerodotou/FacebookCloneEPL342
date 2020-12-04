@@ -230,7 +230,6 @@ public class AuthenticationModel {
 	public boolean registerUser(User newUser) {
 		CallableStatement cstmt=null;
 		try {
-			 int id=101;//TODO DELETE THIS molis sasti to autoincrement.
 			 String firstName= newUser.firstName;
 			 String lastName=newUser.lastName;
 			 String email=newUser.email;
@@ -249,7 +248,7 @@ public class AuthenticationModel {
 			 String password=newUser.password;
 			
 			
-				cstmt = conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? ,?)}");
+				cstmt = conn.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? )}");
 				int columnIndex=1;		
 				cstmt.setString(columnIndex++, firstName);
 				cstmt.setString(columnIndex++, lastName);
@@ -266,7 +265,6 @@ public class AuthenticationModel {
 				cstmt.setBoolean(columnIndex++, isVerified);
 				cstmt.setInt(columnIndex++, hometownFK);
 				cstmt.setInt(columnIndex++, livesInLocationFK);
-				cstmt.setInt(columnIndex++, id);
 
 				
 				cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);

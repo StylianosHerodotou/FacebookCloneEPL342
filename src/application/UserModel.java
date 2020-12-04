@@ -940,7 +940,7 @@ public class UserModel {
 			}
 
 		} catch (SQLException e) {
-			System.out.print(e);
+			e.printStackTrace();
 			return false;
 		} finally {
 			try {
@@ -977,7 +977,7 @@ public class UserModel {
 			}
 
 		} catch (SQLException e) {
-			System.out.print(e);
+			e.printStackTrace();
 			return false;
 		} finally {
 			try {
@@ -1015,7 +1015,7 @@ public class UserModel {
 			}
 
 		} catch (SQLException e) {
-			System.out.print(e);
+			e.printStackTrace();
 			return false;
 		} finally {
 			try {
@@ -1055,7 +1055,7 @@ public class UserModel {
 			}
 
 		} catch (SQLException e) {
-			System.out.print(e);
+			e.printStackTrace();
 			return false;
 		} finally {
 			try {
@@ -1093,7 +1093,7 @@ public class UserModel {
 			}
 
 		} catch (SQLException e) {
-			System.out.print(e);
+			e.printStackTrace();
 			return false;
 		} finally {
 			try {

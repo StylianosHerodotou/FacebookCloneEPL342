@@ -134,12 +134,10 @@ public class AuthenticationController {
 				locations.put(id, name);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return locations;
-		// TODO Auto-generated method stub
 	}
 
 	public static String[] convert(Set<String> setOfString) {
