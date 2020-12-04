@@ -1841,5 +1841,198 @@ public class UserModel {
 			}
 		}
 	}
+	public FBItem[] searchOwn(int id,String albStr, String picStr, String vidStr, String linkStr, String eventStr) {
+
+		ArrayList<FBItem> items = new ArrayList<FBItem>();
+
+		try {
+
+			ResultSet resultSet = null;
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_Album_c(?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+			cstmt.setInt(columnIndex++, id);
+			cstmt.setString(columnIndex++, albStr);
+			
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
+
+			ArrayList<PictureAlbum> res = turnresultSetToPictureAlbums(resultSet);
+
+			for (int i = 0; i < res.size(); i++) {
+				items.add(res.get(i));
+			}
+
+			cstmt.close();
+
+		}
+
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		try {
+
+			ResultSet resultSet = null;
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_pic_c(?,?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+			cstmt.setInt(columnIndex++, id);
+			cstmt.setString(columnIndex++, picStr);
+
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
+
+			ArrayList<Picture> res = turnresultSetToPictures(resultSet);
+			for (int i = 0; i < res.size(); i++) {
+				items.add(res.get(i));
+			}
+			cstmt.close();
+		}
+
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		try {
+
+			ResultSet resultSet = null;
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_vid_c(?,?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+			cstmt.setInt(columnIndex++, id);
+			cstmt.setString(columnIndex++, vidStr);
+
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
+
+			ArrayList<Video> res = turnresultSetToVideos(resultSet);
+			for (int i = 0; i < res.size(); i++) {
+				items.add(res.get(i));
+			}
+			cstmt.close();
+
+			cstmt.close();
+		}
+
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		try {
+
+			ResultSet resultSet = null;
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_event_c(?,?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+			cstmt.setInt(columnIndex++, id);
+			cstmt.setString(columnIndex++, linkStr);
+
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
+
+			ArrayList<Event> a = turnresultSetToEvent(resultSet);
+			for (int i = 0; i < a.size(); i++) {
+				items.add(a.get(i));
+			}
+
+			cstmt.close();
+		}
+
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		try {
+
+			ResultSet resultSet = null;
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_link_c(?,?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+			cstmt.setInt(columnIndex++, id);
+			cstmt.setString(columnIndex++, linkStr);
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+			// Protects against lack of SET NOCOUNT in stored prodedure
+			while (results || rowsAffected != -1) {
+				if (results) {
+					resultSet = cstmt.getResultSet();
+					break;
+				} else {
+					rowsAffected = cstmt.getUpdateCount();
+				}
+				results = cstmt.getMoreResults();
+			}
+
+			ArrayList<Link> a = turnresultSetToLinks(resultSet);
+			for (int i = 0; i < a.size(); i++) {
+				items.add(a.get(i));
+			}
+
+			cstmt.close();
+		}
+
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		if (items.size() <= 0)
+			return null;
+		FBItem[] arr = new FBItem[items.size()];
+		for (int i = 0; i < arr.length; i++) {
+
+			arr[i] = items.get(i);
+		}
+		return arr;
+
+	}
+	
+	
+	
 
 }
