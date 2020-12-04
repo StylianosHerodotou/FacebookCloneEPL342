@@ -132,9 +132,9 @@ public class UserView {
 		showLinksButton.setOnAction(event -> this.controller.showUserLinksView(tabIndex, true));
 		Button showEventsButton = new Button("show Events");
 		showEventsButton.setOnAction(event -> this.controller.showUserEventsView(tabIndex, true));
-		
-		
-		
+
+
+
 		Button addPicturesButton = new Button("add pictures");
 		addPicturesButton.setOnAction(event -> this.controller.showAddImagesView(tabIndex, true));
 		Button addVideosButton = new Button("add videos");
@@ -475,6 +475,33 @@ public class UserView {
 		}
 		return new ScrollPane(grid);
 	}
+		protected ScrollPane SameInterestsFriendsView(
+				int tabIndex) {
+			GridPane grid = new GridPane();
+			grid.setAlignment(Pos.BASELINE_LEFT);
+			grid.setHgap(30);
+			grid.setVgap(30);
+			ArrayList<User> SameInterestsFriends= this.controller.getSameInterestFriends(this.controller.getUser().getId());
+			Text scenetitle = new Text("Friends with exact same interests ");
+			scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+			grid.add(scenetitle, 0,0);
+			Label name = new Label("First Name :");
+			grid.add(name, 0,1 );
+			Label lastname = new Label("Last Name :");
+			grid.add(lastname, 1,1 );
+			Label Email = new Label("Email :");
+			grid.add(Email, 2,1 );
+
+	         int row=2;
+			for(int i=0;i<SameInterestsFriends.size();i++) {
+				Text fname = new Text(SameInterestsFriends.get(i).getFirstName());
+				Text lname = new Text(SameInterestsFriends.get(i).getLastName());
+				Text em = new Text(SameInterestsFriends.get(i).getEmail());
+				grid.add(fname, 0, row);
+				grid.add(lname, 1, row);
+				grid.add(em, 2, row);
+				row++;
+			}
 
 	protected ScrollPane SameInterestsFriendsView(int tabIndex) {
 		GridPane grid = new GridPane();
@@ -503,150 +530,71 @@ public class UserView {
 			grid.add(em, 2, row);
 			row++;
 		}
+		protected ScrollPane LeastAttendableEvents(
+				int tabIndex) {
+			GridPane grid = new GridPane();
+			grid.setAlignment(Pos.BASELINE_LEFT);
+			grid.setHgap(30);
+			grid.setVgap(30);
+			ArrayList<Event> Events= this.controller.getLeastAttendableEvents();
+			Text scenetitle = new Text("Least Attendable Events");
+			scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+			grid.add(scenetitle, 0,0);
+			Label name = new Label("Name :");
+			grid.add(name, 0,1 );
+			Label location = new Label("Location");
+			grid.add(location, 1,1 );
+			Label venue = new Label("Venue");
+			grid.add(location, 2,1 );
+
+
+	         int row=2;
+			for(int i=0;i<Events.size();i++) {
+				Text nameText = new Text(Events.get(i).getName());
+				Text locationText = new Text(Events.get(i).getLoc().getName());
+				Text venueText = new Text(Events.get(i).getVenue());
+				grid.add(nameText, 0, row);
+				grid.add(locationText, 1, row);
+				grid.add(venueText, 2, row);
+				row++;
+			}
 
 		// how does this work
 		return new ScrollPane(grid);
 	}
 
-//	protected ScrollPane LeastAttendableEvents(int tabIndex) {
-//		GridPane grid = new GridPane();
-//		grid.setAlignment(Pos.BASELINE_LEFT);
-//		grid.setHgap(30);
-//		grid.setVgap(30);
-//		ArrayList<Event> Events = this.controller.getLeastAttendableEvents();
-//		Text scenetitle = new Text("Least Attendable Events");
-//		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
-//		grid.add(scenetitle, 0, 0);
-//		Label name = new Label("Name :");
-//		grid.add(name, 0, 1);
-//		Label location = new Label("Location");
-//		grid.add(location, 1, 1);
-//		Label venue = new Label("Venue");
-//		grid.add(location, 2, 1);
-//
-//		int row = 2;
-//		for (int i = 0; i < Events.size(); i++) {
-//			Text nameText = new Text(Events.get(i).getName());
-//			Text locationText = new Text(Events.get(i).getLoc().getName());
-//			Text venueText = new Text(Events.get(i).getVenue());
-//			grid.add(nameText, 0, row);
-//			grid.add(locationText, 1, row);
-//			grid.add(venueText, 2, row);
-//			row++;
-//		}
-//
-//		// how does this work
-//		return new ScrollPane(grid);
-//	}
+		protected ScrollPane FriendWithCommonFriends(
+				int tabIndex) {
+			GridPane grid = new GridPane();
+			grid.setAlignment(Pos.BASELINE_LEFT);
+			grid.setHgap(30);
+			grid.setVgap(30);
+			ArrayList<User> FriendswithSameFriends= this.controller.getFriendswithsamefriends(this.controller.getUser().getId());
+			Text scenetitle = new Text("Most Popular Friends");
+			scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+			grid.add(scenetitle, 0,0);
+			Label name = new Label("First Name :");
+			grid.add(name, 0,1 );
+			Label lastname = new Label("Last Name :");
+			grid.add(lastname, 1,1 );
+			Label Email = new Label("Email :");
+			grid.add(Email, 2,1 );
 
-	protected ScrollPane LeastAttendableEvents(int tabIndex) {
-		GridPane grid = new GridPane();
-		grid.setAlignment(Pos.BASELINE_LEFT);
-		grid.setHgap(30);
-		grid.setVgap(30);
-		ArrayList<Event> Events= this.controller.getLeastAttendableEvents();
-		Text scenetitle = new Text("Least Attendable Events");
-		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
-		grid.add(scenetitle, 0,0);
-		Label name = new Label("Name :");
-		grid.add(name, 0,1 );
-		Label location = new Label("Location");
-		grid.add(location, 1,1 );
-		Label venue = new Label("Venue");
-		grid.add(location, 2,1 );
+	         int row=2;
+			for(int i=0;i<FriendswithSameFriends.size();i++) {
+				Text fname = new Text(FriendswithSameFriends.get(i).getFirstName());
+				Text lname = new Text(FriendswithSameFriends.get(i).getLastName());
+				Text em = new Text(FriendswithSameFriends.get(i).getEmail());
+				grid.add(fname, 0, row);
+				grid.add(lname, 1, row);
+				grid.add(em, 2, row);
+				row++;
+			}
 
-
-         int row=2;
-		for(int i=0;i<Events.size();i++) {
-			Text nameText = new Text(Events.get(i).getName());
-			Text locationText = new Text(Events.get(i).getLoc().getName());
-			Text venueText = new Text(Events.get(i).getVenue());
-			grid.add(nameText, 0, row);
-			grid.add(locationText, 1, row);
-			grid.add(venueText, 2, row);
-			row++;
-		}
-		return new ScrollPane(grid);
+        // how does this work
+return new ScrollPane(grid);
 	}
 
-//	protected GridPane FriendWithCommonFriends(int tabIndex) {
-//		GridPane grid = new GridPane();
-//		grid.setAlignment(Pos.BASELINE_LEFT);
-//		grid.setHgap(30);
-//		grid.setVgap(30);
-//		ArrayList<User> FriendswithSameFriends = this.controller
-//				.getFriendswithsamefriends(this.controller.getUser().getId());
-//		Text scenetitle = new Text("Most Popular Friends");
-//		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
-//		grid.add(scenetitle, 0, 0);
-//		Label name = new Label("First Name :");
-//		grid.add(name, 0, 1);
-//		Label lastname = new Label("Last Name :");
-//		grid.add(lastname, 1, 1);
-//		Label Email = new Label("Email :");
-//		grid.add(Email, 2, 1);
-//
-//		int row = 2;
-//		for (int i = 0; i < FriendswithSameFriends.size(); i++) {
-//			Text fname = new Text(FriendswithSameFriends.get(i).getFirstName());
-//			Text lname = new Text(FriendswithSameFriends.get(i).getLastName());
-//			Text em = new Text(FriendswithSameFriends.get(i).getEmail());
-//			grid.add(fname, 0, row);
-//			grid.add(lname, 1, row);
-//			grid.add(em, 2, row);
-//			row++;
-//		}
-//
-//		// how does this work
-//		return new ScrollPane(grid);
-//	}
-
-	protected ScrollPane FriendWithCommonFriends(
-			int tabIndex) {
-		GridPane grid = new GridPane();
-		grid.setAlignment(Pos.BASELINE_LEFT);
-		grid.setHgap(30);
-		grid.setVgap(30);
-		ArrayList<User> FriendswithSameFriends= this.controller.getFriendswithsamefriends(this.controller.getUser().getId());
-		Text scenetitle = new Text("Most Popular Friends");
-		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
-		grid.add(scenetitle, 0,0);
-		Label name = new Label("First Name :");
-		grid.add(name, 0,1 );
-		Label lastname = new Label("Last Name :");
-		grid.add(lastname, 1,1 );
-		Label Email = new Label("Email :");
-		grid.add(Email, 2,1 );
-
-         int row=2;
-		for(int i=0;i<FriendswithSameFriends.size();i++) {
-			Text fname = new Text(FriendswithSameFriends.get(i).getFirstName());
-			Text lname = new Text(FriendswithSameFriends.get(i).getLastName());
-			Text em = new Text(FriendswithSameFriends.get(i).getEmail());
-			grid.add(fname, 0, row);
-			grid.add(lname, 1, row);
-			grid.add(em, 2, row);
-			row++;
-		}
-		return new ScrollPane(grid);
-	}
-
-//	protected GridPane getOccurenceResultView(String Name, String slocation, String startDate, String endDate,
-//			int tabIndex) {
-//		GridPane grid = new GridPane();
-//		ObservableList<Event> Occurence = this.controller.getSpecificOccurences(Name, slocation, startDate, endDate);
-//		Button[] AddComents = new Button[Occurence.size()];
-//		for (int i = 0; i < Occurence.size(); i++) {
-//			int b = i;
-//			AddComents[i].setText("Add comment");
-//			AddComents[i].setOnAction(event -> {
-//				this.controller.goToEvent(Occurence.get(b), tabIndex);
-//			});
-//		}
-//
-//		// how does this work
-//		return new ScrollPane(grid);
-//	}
 
 	protected ScrollPane getOccurenceResultView(String Name, String slocation, String startDate, String endDate,
 			int tabIndex) {
