@@ -132,19 +132,29 @@ public class UserController {
 		}
 	}
 public void ignoreFriend(int id, int tabint) throws FileNotFoundException {
-	if(this.model.removeFromFriendRequest(this.getUser().getId(),id)) {
-		displayPopUp("Removed from the friend request List "+id);
+	if(this.model.banFromFriendRequest(this.getUser().getId(),id)) {
+		displayPopUp("Banned from the friend request List "+id);
 	}else {
-	displayPopUp("Failed to remove from list "+id);
+	displayPopUp("Failed to ban from list "+id);
 	}
 	Tab tab= this.view.tabPane.getTabs().get(tabint);
 	tab.setContent(this.view.getFriendRequestView(tabint));
 }
+public void unignoreFriend(int id, int tabIndex) {
+	if(this.model.unbanFromFriendRequest(this.getUser().getId(),id)) {
+		displayPopUp("Removed from Ignored friend request List "+id);
+	}else {
+	displayPopUp("Failed to Remove from ignored friend  list "+id);
+	}
+	Tab tab= this.view.tabPane.getTabs().get(tabIndex);
+	tab.setContent(this.view.getFriendRequestView(tabIndex));
+	
+}
 	public void denyFriend(int id, int tabint) {
-		if(this.model.banFromFriendRequest(this.getUser().getId(),id)) {
-			displayPopUp("Banned from the friend request List "+id);
+		if(this.model.removeFromFriendRequest(this.getUser().getId(),id)) {
+			displayPopUp("Remove from the friend request List "+id);
 		}else {
-		displayPopUp("Failed to ban from list "+id);
+		displayPopUp("Failed to remove ban from list "+id);
 		}
 		Tab tab= this.view.tabPane.getTabs().get(tabint);
 		tab.setContent(this.view.getFriendRequestView(tabint));
@@ -207,6 +217,10 @@ public void addFriend(int id,int tabint) {
 	}
 	public ArrayList<User> getFriendRequests(int id)  {
 		ArrayList<User> UsersThatSendFriendRequest= this.model.getUserFriendRequests(id);
+		return UsersThatSendFriendRequest;
+	}
+	public ArrayList<User> getIgnoredFriendRequests(int id)  {
+		ArrayList<User> UsersThatSendFriendRequest= this.model.getIgnoredUserFriendRequests(id);
 		return UsersThatSendFriendRequest;
 	}
 	public ArrayList<User> getFriends(int id)  {
@@ -467,6 +481,8 @@ public void addFriend(int id,int tabint) {
 		
 				
 	}
+
+	
 	
 
 

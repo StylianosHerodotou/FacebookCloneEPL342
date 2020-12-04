@@ -85,7 +85,7 @@ public class UserView {
 
 
 	}
-	
+
 	protected ScrollPane ChrisView(int tabIndex) {
 		GridPane grid = new GridPane();
 		Button goButton = new Button("Start Chris");
@@ -93,7 +93,7 @@ public class UserView {
 		grid.add(goButton, 0, 0);
 		return new ScrollPane(grid);
 	}
-	
+
 	protected ScrollPane PanikosView(int tabIndex) {
 		GridPane grid = new GridPane();
 		Button goButton = new Button("Start Panikos");
@@ -153,86 +153,155 @@ public class UserView {
 		return scene;
 
 	}
-	
+
 	// FRIEND REQUEST VIEW
-		protected ScrollPane getFriendRequestView(int tabIndex ) {
-			GridPane grid = new GridPane();
-			ArrayList<User> FriendRequests = this.controller.getFriendRequests(this.controller.getUser().getId());
-			ArrayList<Button> addb = new ArrayList<Button>();
-			ArrayList<Button> delb = new ArrayList<Button>();
-			ArrayList<Button> ignb = new ArrayList<Button>();
-			grid.setAlignment(Pos.BASELINE_LEFT);
-			grid.setHgap(18);
-			grid.setVgap(18);
-			for(int i=0;i<FriendRequests.size();i++) {
-				int b=i;
-				Button add= new Button("Add");
-				add.setOnAction(event ->{this.controller.addFriend(FriendRequests.get(b).getId(), tabIndex);});
-				Button del= new Button("Delete");
-				del.setOnAction(event ->{this.controller.denyFriend(FriendRequests.get(b).getId(), tabIndex);});
-				Button ign= new Button("Ignore");
-				ign.setOnAction(event ->{try {
-					this.controller.ignoreFriend(FriendRequests.get(b).getId(), tabIndex);
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}});
-				addb.add(add);
-				delb.add(del);
-				ignb.add(ign);
-
-			}
-			
-	return new ScrollPane(grid);
+	protected ScrollPane getIgnoredFriendRequestView(int tabIndex ) throws FileNotFoundException {
+		GridPane grid = new GridPane();
+		ArrayList<User> FriendRequests = this.controller.getIgnoredFriendRequests(this.controller.getUser().getId());
+		ArrayList<Button> unignb = new ArrayList<Button>();
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		for(int i=0;i<FriendRequests.size();i++) {
+			int b=i;
+			Button unign= new Button("UnIgnore");
+			unign.setOnAction(event ->{this.controller.unignoreFriend(FriendRequests.get(b).getId(), tabIndex);});
+			unignb.add(unign);
 
 		}
-		protected ScrollPane getFriendView(int tabIndex ) {
-			GridPane grid = new GridPane();
-			ArrayList<User> Friends= this.controller.getFriends(this.controller.getUser().getId());
-			ObservableList<Button> delb = FXCollections.observableArrayList();
-			for(int i=0;i<Friends.size();i++) {
-				int b=i;
-				Button del= new Button("Delete");
-				del.setOnAction(event ->{this.controller.DeleteFriend(Friends.get(b).getId(), tabIndex);});
-				delb.add(del);
-			}
-			grid.setAlignment(Pos.BASELINE_LEFT);
-			grid.setHgap(18);
-			grid.setVgap(18);
-			// grid.setPadding(new Insets(00, 00, 00, 00));
-			Text scenetitle = new Text("Friends");
-			scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
-			grid.add(scenetitle, 0,0);
-			TableColumn<FriendRequest, Integer> idcolumn = new TableColumn<>("ID");
-			idcolumn.setMinWidth(100);
-			idcolumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-			TableColumn<FriendRequest, String> namecolumn = new TableColumn<>("FirstName");
-			namecolumn.setMinWidth(200);
-			namecolumn.setCellValueFactory(new PropertyValueFactory<>("FirstName"));
-			TableColumn<FriendRequest, String> surnamecolumn = new TableColumn<>("LastName");
-			surnamecolumn.setMinWidth(200);
-			surnamecolumn.setCellValueFactory(new PropertyValueFactory<>("LastName"));
-			//TableColumn ID = new TableColumn("ID");
-			TableColumn<Button, Button> DeleteColumn = new TableColumn<>("Delete");
-			DeleteColumn.setMinWidth(200);
-			DeleteColumn.setCellValueFactory(new PropertyValueFactory<Button,Button>("Delete"));
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		// grid.setPadding(new Insets(00, 00, 00, 00));
+		Text scenetitle = new Text("Friend Requests");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 0,0);
+		Label name = new Label("First Name :");
+		grid.add(name, 0,1 );
+		Label lastname = new Label("Last Name :");
+		grid.add(lastname, 1,1 );
+		Label Email = new Label("Email :");
+		grid.add(Email, 2,1 );
+		Label Uningnore = new Label("Uningnore :");
+		grid.add(Uningnore, 3,1 );
 
-			TableView table = new TableView();
-			TableView table2 = new TableView();
-			table2.setItems(delb);
-			table2.getColumns().addAll(DeleteColumn);
+         int row=2;
+         for(int i=0;i<FriendRequests.size();i++) {
+ 			Text fname = new Text(FriendRequests.get(i).getFirstName());
+ 			Text lname = new Text(FriendRequests.get(i).getLastName());
+ 			Text em = new Text(FriendRequests.get(i).getEmail());
+ 			grid.add(fname, 0, row);
+ 			grid.add(lname, 1, row);
+ 			grid.add(em, 2, row);
+ 			grid.add(unignb.get(i), 3, row);
+ 			row++;
+ 		}
+return new ScrollPane(grid);
 
-			 table.setItems( Friends);
-	table.getColumns().addAll(idcolumn,namecolumn,surnamecolumn,DeleteColumn);
-
-	table.setEditable(true);
-	grid.add(table, 0, 1);
-	grid.add(table, 1, 1);
-	return new ScrollPane(grid);
+	}
+	protected ScrollPane getFriendRequestView(int tabIndex ) {
+		GridPane grid = new GridPane();
+		ArrayList<User> FriendRequests = this.controller.getFriendRequests(this.controller.getUser().getId());
+		ArrayList<Button> addb = new ArrayList<Button>();
+		ArrayList<Button> delb = new ArrayList<Button>();
+		ArrayList<Button> ignb = new ArrayList<Button>();
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		for(int i=0;i<FriendRequests.size();i++) {
+			int b=i;
+			Button add= new Button("Add");
+			add.setOnAction(event ->{this.controller.addFriend(FriendRequests.get(b).getId(), tabIndex);});
+			Button del= new Button("Delete");
+			del.setOnAction(event ->{this.controller.denyFriend(FriendRequests.get(b).getId(), tabIndex);});
+			Button ign= new Button("Ignore");
+			ign.setOnAction(event ->{try {
+				this.controller.ignoreFriend(FriendRequests.get(b).getId(), tabIndex);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}});
+			addb.add(add);
+			delb.add(del);
+			ignb.add(ign);
 
 		}
-		protected ScrollPane getSearchOccurenceView(int tabIndex ) {
-			GridPane grid = new GridPane();
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		// grid.setPadding(new Insets(00, 00, 00, 00));
+		Text scenetitle = new Text("Friend Requests");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 0,0);
+		Label name = new Label("First Name :");
+		grid.add(name, 0,1 );
+		Label lastname = new Label("Last Name :");
+		grid.add(lastname, 1,1 );
+		Label Email = new Label("Email :");
+		grid.add(Email, 2,1 );
+		Label Delete = new Label("Delete :");
+		grid.add(Delete, 3,1 );
+		Label Ignore = new Label("Ignore :");
+		grid.add(Ignore, 4,1 );
+		Label Add = new Label("Add :");
+		grid.add(Add, 5,1 );
+         int row=2;
+         for(int i=0;i<FriendRequests.size();i++) {
+ 			Text fname = new Text(FriendRequests.get(i).getFirstName());
+ 			Text lname = new Text(FriendRequests.get(i).getLastName());
+ 			Text em = new Text(FriendRequests.get(i).getEmail());
+ 			grid.add(fname, 0, row);
+ 			grid.add(lname, 1, row);
+ 			grid.add(em, 2, row);
+ 			grid.add(delb.get(i), 3, row);
+ 			grid.add(ignb.get(i), 4, row);
+ 			grid.add(addb.get(i), 5, row);
+ 			row++;
+ 		}
+return new ScrollPane(grid);
+
+	}
+
+	protected ScrollPane getFriendView(int tabIndex ) {
+		GridPane grid = new GridPane();
+		ArrayList<User> Friends= this.controller.getFriends(this.controller.getUser().getId());
+		ArrayList<Button> delb = new ArrayList<Button>();
+		for(int i=0;i<Friends.size();i++) {
+			int b=i;
+			Button del= new Button("Delete");
+			del.setOnAction(event ->{this.controller.DeleteFriend(Friends.get(b).getId(), tabIndex);});
+			delb.add(del);
+		}
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		// grid.setPadding(new Insets(00, 00, 00, 00));
+		Text scenetitle = new Text("Friends");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 0,0);
+		Label name = new Label("First Name :");
+		grid.add(name, 0,1 );
+		Label lastname = new Label("Last Name :");
+		grid.add(lastname, 1,1 );
+		Label Email = new Label("Email :");
+		grid.add(Email, 2,1 );
+		Label Delete= new Label("Delete :");
+		grid.add(Delete, 3,1 );
+         int row=2;
+		for(int i=0;i<Friends.size();i++) {
+			Text fname = new Text(Friends.get(i).getFirstName());
+			Text lname = new Text(Friends.get(i).getLastName());
+			Text em = new Text(Friends.get(i).getEmail());
+			grid.add(fname, 0, row);
+			grid.add(lname, 1, row);
+			grid.add(em, 2, row);
+			grid.add(delb.get(i), 3, row);
+			row++;
+		}
+		return new ScrollPane(grid);
+	}
+	protected ScrollPane getSearchOccurenceView(int tabIndex ) {
+		GridPane grid = new GridPane();
 
 			grid.setAlignment(Pos.BASELINE_LEFT);
 			grid.setHgap(18);
@@ -279,7 +348,7 @@ public class UserView {
 
 		}
 
-		
+
 		protected ScrollPane getFormView(int tabIndex, FBItem object,boolean mine) {
 			GridPane grid = new GridPane();
 			String className= object.getClass().getSimpleName();
@@ -355,8 +424,32 @@ public class UserView {
 				row++;
 			}
 
-	        // how does this work
-	return new ScrollPane(grid);
+	protected ScrollPane mostPopularFriendsVuew(
+			int tabIndex) {
+		GridPane grid = new GridPane();
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(30);
+		grid.setVgap(30);
+		ArrayList<User> PopularFriends= this.controller.getMostPopularFriends(this.controller.getUser().getId());
+		Text scenetitle = new Text("Most Popular Friends");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 0,0);
+		Label name = new Label("First Name :");
+		grid.add(name, 0,1 );
+		Label lastname = new Label("Last Name :");
+		grid.add(lastname, 1,1 );
+		Label Email = new Label("Email :");
+		grid.add(Email, 2,1 );
+
+         int row=2;
+		for(int i=0;i<PopularFriends.size();i++) {
+			Text fname = new Text(PopularFriends.get(i).getFirstName());
+			Text lname = new Text(PopularFriends.get(i).getLastName());
+			Text em = new Text(PopularFriends.get(i).getEmail());
+			grid.add(fname, 0, row);
+			grid.add(lname, 1, row);
+			grid.add(em, 2, row);
+			row++;
 		}
 		protected ScrollPane SameInterestsFriendsView(
 				int tabIndex) {
@@ -418,8 +511,36 @@ public class UserView {
 				row++;
 			}
 
-	        // how does this work
-	return grid;
+        // how does this work
+return new ScrollPane(grid);
+	}
+	protected ScrollPane LeastAttendableEvents(
+			int tabIndex) {
+		GridPane grid = new GridPane();
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(30);
+		grid.setVgap(30);
+		ArrayList<Event> Events= this.controller.getLeastAttendableEvents();
+		Text scenetitle = new Text("Least Attendable Events");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 0,0);
+		Label name = new Label("Name :");
+		grid.add(name, 0,1 );
+		Label location = new Label("Location");
+		grid.add(location, 1,1 );
+		Label venue = new Label("Venue");
+		grid.add(location, 2,1 );
+
+
+         int row=2;
+		for(int i=0;i<Events.size();i++) {
+			Text nameText = new Text(Events.get(i).getName());
+			Text locationText = new Text(Events.get(i).getLoc().getName());
+			Text venueText = new Text(Events.get(i).getVenue());
+			grid.add(nameText, 0, row);
+			grid.add(locationText, 1, row);
+			grid.add(venueText, 2, row);
+			row++;
 		}
 		protected GridPane FriendWithCommonFriends(
 				int tabIndex) {
@@ -449,8 +570,35 @@ public class UserView {
 				row++;
 			}
 
-	        // how does this work
-	return grid;
+        // how does this work
+return new ScrollPane(grid);
+	}
+	protected ScrollPane FriendWithCommonFriends(
+			int tabIndex) {
+		GridPane grid = new GridPane();
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(30);
+		grid.setVgap(30);
+		ArrayList<User> FriendswithSameFriends= this.controller.getFriendswithsamefriends(this.controller.getUser().getId());
+		Text scenetitle = new Text("Most Popular Friends");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 0,0);
+		Label name = new Label("First Name :");
+		grid.add(name, 0,1 );
+		Label lastname = new Label("Last Name :");
+		grid.add(lastname, 1,1 );
+		Label Email = new Label("Email :");
+		grid.add(Email, 2,1 );
+
+         int row=2;
+		for(int i=0;i<FriendswithSameFriends.size();i++) {
+			Text fname = new Text(FriendswithSameFriends.get(i).getFirstName());
+			Text lname = new Text(FriendswithSameFriends.get(i).getLastName());
+			Text em = new Text(FriendswithSameFriends.get(i).getEmail());
+			grid.add(fname, 0, row);
+			grid.add(lname, 1, row);
+			grid.add(em, 2, row);
+			row++;
 		}
 		protected GridPane getOccurenceResultView(String Name, String slocation, String startDate, String endDate,
 				int tabIndex) {
@@ -465,16 +613,30 @@ public class UserView {
 					});
 			}
 
-			grid.setAlignment(Pos.BASELINE_LEFT);
-			grid.setHgap(30);
-			grid.setVgap(30);
-			HashMap<String, Integer> locationHashmap = this.controller.getLocations();
-			String [] locations= AuthenticationController.convert(locationHashmap.keySet());
-	        // how does this work
-	return grid;
+        // how does this work
+return new ScrollPane(grid);
+	}
+	protected ScrollPane getOccurenceResultView(String Name, String slocation, String startDate, String endDate,
+			int tabIndex) {
+		GridPane grid = new GridPane();
+		ArrayList<Event> Occurence= this.controller.getSpecificOccurences(Name,slocation,startDate,endDate);
+		Button[] AddComents = new Button[Occurence.size()];
+		for(int i=0;i<Occurence.size();i++) {
+			int b=i;
+			AddComents[i].setText("Add comment");
+			AddComents[i].setOnAction(event -> {
+				this.controller.goToEvent(Occurence.get(b), tabIndex);
+				});
 		}
 
-		
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(30);
+		grid.setVgap(30);
+		HashMap<String, Integer> locationHashmap = this.controller.getLocations();
+		String [] locations= AuthenticationController.convert(locationHashmap.keySet());
+        // how does this work
+return new ScrollPane(grid);
+	}
 
 		protected ScrollPane getItemViewMinor(int tabIndex, FBItem item, boolean canEdit,boolean mine) {
 			GridPane grid = new GridPane();
@@ -513,8 +675,8 @@ public class UserView {
 			}
 			return new ScrollPane(grid);
 		}
-		
-		
+
+
 		protected ScrollPane getItemView(int tabIndex, FBItem item,boolean canEdit,boolean mine) {
 			GridPane grid = (GridPane) this.getItemViewMinor(tabIndex, item,canEdit,mine).getContent();
 //			if(doPrepareScene==true) {
@@ -526,7 +688,7 @@ public class UserView {
 //			}
 			return new ScrollPane(grid);
 		}
-		
+
 		private void prepareScene(GridPane grid,int tabIndex) {
 			HelperFunctions.initXlevel=2;
 			HelperFunctions.initYlevel=0;
@@ -565,7 +727,7 @@ public class UserView {
 
 			grid.add(scenetitle, 1, 1, 10, 1);
 		}
-		
+
 		private void prepareForeignItemScene(GridPane grid, FBItem item, int tabIndex) {
 			prepareScene(grid,tabIndex);
 			Text scenetitle = null;
@@ -574,24 +736,78 @@ public class UserView {
 			}else {
 				scenetitle = new Text("foreign "+ item.getClass().getSimpleName());
 			}
-			scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
-			Button showSearchButton = new Button("Go Back to search");
-			showSearchButton.setOnAction(event->{
-				this.controller.showSearchView(tabIndex);
-			});
-			grid.add(showSearchButton,HelperFunctions.initXlevel+10,HelperFunctions.initYlevel+1);
+		}
+		return new ScrollPane(grid);
+
+		}}
+
+	private void prepareItemScene(GridPane grid, String className, int tabIndex) {
+		HelperFunctions.initXlevel=2;
+		HelperFunctions.initYlevel=0;
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		// grid.setPadding(new Insets(00, 00, 00, 00));
+		Text scenetitle = null;
+		User myUser=this.controller.getUser();
+		scenetitle = new Text(myUser.getUsername()+ "'s "+className);
+
+		scenetitle = new Text(className);
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 1, 1, 10, 1);
+		Button logOutButton = new Button("Log Out");
+		logOutButton.setOnAction(event->{
+			this.controller.logOut();
+		});
+		Button showProfileButton = new Button("Go Back to profile");
+		showProfileButton.setOnAction(event->{
+			this.controller.showProfile(tabIndex);
+		});
+		ScrollPane sp = new ScrollPane(grid);
+		sp.setFitToWidth(true);
+		grid.setHgrow(sp, Priority.ALWAYS);
+		sp.setContent(grid);
+		grid.add(logOutButton, HelperFunctions.initXlevel+10,HelperFunctions.initYlevel);
+		grid.add(showProfileButton,HelperFunctions.initXlevel+10,HelperFunctions.initYlevel+1);
+
+	}
+
+	private void prepareProfileScene(GridPane grid, User user, int tabIndex) {
+		HelperFunctions.initXlevel=2;
+		HelperFunctions.initYlevel=0;
+		grid.setAlignment(Pos.BASELINE_LEFT);
+		grid.setHgap(18);
+		grid.setVgap(18);
+		// grid.setPadding(new Insets(00, 00, 00, 00));
+		Text scenetitle = new Text(user.getUsername()+ "'s Profile");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
+		grid.add(scenetitle, 1, 1, 10, 1);
+		Button logOutButton = new Button("Log Out");
+		logOutButton.setOnAction(event->{
+			this.controller.logOut();
+		});
+		Button showProfileButton = new Button("Go Back to profile");
+		showProfileButton.setOnAction(event->{
+			this.controller.showProfile(tabIndex);
+		});
+		ScrollPane sp = new ScrollPane(grid);
+		sp.setFitToWidth(true);
+		grid.setHgrow(sp, Priority.ALWAYS);
+		sp.setContent(grid);
+		grid.add(logOutButton, HelperFunctions.initXlevel+10,HelperFunctions.initYlevel);
+		grid.add(showProfileButton,HelperFunctions.initXlevel+10,HelperFunctions.initYlevel+1);
 
 			grid.add(scenetitle, 1, 1, 10, 1);
 		}
 
 		protected ScrollPane getSearchView(int tabIndex) {
-				
+
 				GridPane grid = new GridPane();
-				
+
 				HashMap<String, Integer> locationHashmap = UserController.getStringToIntLocations();
 				locationHashmap.put("?", -1);
 				String[] locations = AuthenticationController.convert(locationHashmap.keySet());
-				
+
 				int yLevelIndex = 3;
 				int xStartinglevel = 2;
 
@@ -660,14 +876,14 @@ public class UserView {
 				TextField quotesField = new TextField();
 				grid.add(quotesField, xStartinglevel + 1, yLevelIndex++);
 
-				
+
 //				Label verifiedLabel = new Label("verified:");
 //				grid.add(verifiedLabel, xStartinglevel, yLevelIndex);
 //				String[] verified = { "true", "false" };
 //				ComboBox verifiedBox = new ComboBox(FXCollections.observableArrayList(verified));
 //				verifiedBox.getSelectionModel().selectFirst();
-//				grid.add(verifiedBox, xStartinglevel + 1, yLevelIndex++);	
-			
+//				grid.add(verifiedBox, xStartinglevel + 1, yLevelIndex++);
+
 				Label label1 = new Label("Username:");
 				grid.add(label1, xStartinglevel, yLevelIndex); // i am starting from xStartinglevel,xStartinglevel+1
 				TextField UserNameField = new TextField();
@@ -690,7 +906,7 @@ public class UserView {
 						 birthday = Date.valueOf(datePicker.getValue());
 
 					}
-					
+
 //					String strGender = (String) genderBox.getValue();
 //					boolean gender = false;
 //					if (strGender.equals("Male")) {
@@ -713,7 +929,7 @@ public class UserView {
 //					}
 					boolean isVerified = false;
 
-					
+
 					String strHometown = (String) hometownBox.getValue();
 					Location hometown = new Location(locationHashmap.get(strHometown), strHometown);
 					String strLivesInLocation = (String) livesInBox.getValue();
@@ -721,22 +937,22 @@ public class UserView {
 
 					// na ta valume tuta?
 					String username = UserNameField.getText();
-					
+
 					User a = new User(firstName, lastName, email, website, link, birthday, gender, workedForPlaces, educationPlaces, quotes, isVerified, hometown, livesIn, username, "");
-					
-				
+
+
 				this.controller.searchUsers(a,tabIndex);
-					
+
 				});
-				
+
 				grid.add(SearchUserButton, xStartinglevel, ++yLevelIndex);
-				
+
 				return new ScrollPane( grid);
-				
-				
+
+
 
 			}
-		
+
 		public ScrollPane getItemCrollView(FBItem[] items, int tabIndex, boolean canEditItems,boolean mine) {
 
 			GridPane grid = new GridPane();
@@ -766,15 +982,15 @@ public class UserView {
 					this.controller.showSearchView(tabIndex);
 					grid.add(showSearchButton,HelperFunctions.initXlevel+10,HelperFunctions.initYlevel+1);
 				});
-				
+
 			}else {
-				
+
 			}
-				
+
 //			prepareItemScene(grid, items[0].getClass().getSimpleName(), tabIndex);
 			grid.setHgap(8); // horizontal
 			grid.setVgap(10);// vertical
-			
+
 			if(items.length==0) {
 				Label nothingToShow = new Label("there is nothing to show Here!");
 				grid.add(nothingToShow,  HelperFunctions.initXlevel+1, 1 + HelperFunctions.initYlevel);
