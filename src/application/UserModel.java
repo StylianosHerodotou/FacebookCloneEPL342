@@ -1430,7 +1430,133 @@ public class UserModel {
 		}
 		return users;
 	}
+	public FBItem[] searchUsers_other( String albStr,  String picStr,
+			String vidStr, String linkStr, String eventStr) {
 
+		ArrayList<FBItem> items = new ArrayList<FBItem>();
+	
+		try {
+
+			ResultSet resultSet = null;
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_Album_m(?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+			
+			cstmt.setString(columnIndex++, albStr);
+
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+			ArrayList<PictureAlbum> res = turnresultSetToPictureAlbums(resultSet);
+			for (int i = 0; i < res.size(); i++) {
+				items.add(res.get(i));
+			}
+			
+			cstmt.close();
+			
+		}
+
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		try {
+
+			ResultSet resultSet = null;
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_pic_m(?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+			
+			cstmt.setString(columnIndex++, picStr);
+
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+			ArrayList<Picture> res = turnresultSetToPictures(resultSet);
+			for (int i = 0; i < res.size(); i++) {
+				items.add(res.get(i));
+			}
+			cstmt.close();
+		}
+
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		try {
+
+			ResultSet resultSet = null;
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_vid_m(?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+			
+			cstmt.setString(columnIndex++, vidStr);
+
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+			ArrayList<Video> res = turnresultSetToVideos(resultSet);
+			for (int i = 0; i < res.size(); i++) {
+				items.add(res.get(i));
+			}
+			cstmt.close();
+
+			
+			cstmt.close();
+		}
+
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		try {
+
+			ResultSet resultSet = null;
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_event_m(?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+			
+			cstmt.setString(columnIndex++, linkStr);
+
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+
+				ArrayList<Event> a = turnresultSetToEvent(resultSet);
+				for (int i = 0; i < a.size(); i++) {
+					items.add(a.get(i));
+				}
+
+			
+			cstmt.close();
+		}
+
+		catch (Exception e) {
+			System.out.println(e);
+		}try {
+
+			ResultSet resultSet = null;
+
+			CallableStatement cstmt = AuthenticationModel.conn.prepareCall("{call search_others_link_m(?)}",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			int columnIndex = 1;
+			
+			cstmt.setString(columnIndex++, linkStr);
+
+			boolean results = cstmt.execute();
+			int rowsAffected = 0;
+			ArrayList<Link> a = turnresultSetToLinks(resultSet);
+			for (int i = 0; i < a.size(); i++) {
+				items.add(a.get(i));
+			}
+
+		
+		cstmt.close();
+		}
+
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		return (FBItem[]) items.toArray();
+	}
 
 	
 
