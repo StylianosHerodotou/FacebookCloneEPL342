@@ -589,6 +589,15 @@ public void addFriend(int id,int tabint) {
 		
 	}
 
+	public void showFriendsWithAlbumBiggerThanXView(int tabIndex, int x) {
+			Tab tab = this.view.tabPane.getTabs().get(tabIndex);
+			tab.setContent(this.view.FriendWithBiggerthanXAlbums(tabIndex,x));
+	}
+	public void showFriendsWithNetworkAlbumBiggerThanXView(int tabIndex, int x) {
+		Tab tab = this.view.tabPane.getTabs().get(tabIndex);
+		tab.setContent(this.view.FriendNetworkWithBiggerthanXAlbums(tabIndex,x));
+}
+
 
 	
 	
