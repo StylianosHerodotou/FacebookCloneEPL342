@@ -1,5 +1,7 @@
 package application;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.Socket;
 import java.sql.CallableStatement;
 import java.sql.Date;
@@ -11,6 +13,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 import javafx.animation.Animation;
 
@@ -461,7 +464,7 @@ public class UserModel {
 				ArrayList<String> educationPlaces = this.getEducationOfUser(id);
 				ArrayList<String> quotes = this.getQuotesOfUser(id);
 				User use = new User(id, First_Name, Last_Name, Email, Website, Link, Birthday, gender, workedFor,
-						educationPlaces, quotes, is_verified, home, current,Username,password);
+						educationPlaces, quotes, is_verified, home, current, Username, password);
 				users.add(use);
 			}
 		} catch (SQLException e) {
@@ -762,8 +765,8 @@ public class UserModel {
 		ArrayList<User> users = new ArrayList<User>();
 		try {
 			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
-			ps.setInt(1,id);
-			ps.setInt(2,x);
+			ps.setInt(1, id);
+			ps.setInt(2, x);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
@@ -786,8 +789,8 @@ public class UserModel {
 		ArrayList<User> users = new ArrayList<User>();
 		try {
 			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
-			ps.setInt(1,id);
-			ps.setInt(2,x);
+			ps.setInt(1, id);
+			ps.setInt(2, x);
 			ps.setEscapeProcessing(true);
 			resultSet = ps.executeQuery();
 			if (isResultSetEmpty(resultSet))
@@ -932,7 +935,7 @@ public class UserModel {
 			ArrayList<String> educationPlaces = this.getEducationOfUser(id);
 			ArrayList<String> quotes = this.getQuotesOfUser(id);
 			user = new User(id, First_Name, Last_Name, Email, Website, Link, Birthday, gender, workedFor,
-					educationPlaces, quotes, is_verified, home, current,Username,password);
+					educationPlaces, quotes, is_verified, home, current, Username, password);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -974,7 +977,7 @@ public class UserModel {
 			cstmt.setInt(index++, obj.creatorID);
 			cstmt.setInt(index++, obj.location.getId());
 			cstmt.setString(index++, obj.getPrivacy().name);
-			
+
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
 			cstmt.execute();
@@ -1482,7 +1485,7 @@ public class UserModel {
 		return users;
 	}
 
-	public FBItem[] searchUsers_other(String albStr, String picStr, String vidStr, String linkStr, String eventStr) {
+	public FBItem[] searchUsers_other(String albStr, String picStr, String vidStr, String linkStr, String eventStr,int id) {
 
 		ArrayList<FBItem> items = new ArrayList<FBItem>();
 		int userID=this.controller.getUser().getId();
@@ -1778,7 +1781,7 @@ public class UserModel {
 				}
 				results = cstmt.getMoreResults();
 			}
-			
+
 			ArrayList<Event> a = turnresultSetToEvent(resultSet);
 
 		} catch (Exception e) {
@@ -1793,41 +1796,69 @@ public class UserModel {
 		}
 		return arr;
 	}
-	protected boolean importData(String tableName, String Path) {
-		//csv must be with header and FIRSTROW = 2, FIELDTERMINATOR =',', ROWTERMINATOR = '\n')'
+
+	protected boolean importData(String tableName, String path , Object obj) {
+
 		CallableStatement cstmt = null;
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call importDataFromCSV (?,?)}");
-			
-			int index = 1;
-			cstmt.setString(index++, tableName);
-			cstmt.setString(index++, Path);
-			cstmt.execute();
+		Scanner sc = new Scanner(new File(path));
+		sc.useDelimiter(","); // sets the delimiter pattern
 
-			if (cstmt.getInt(index) == 1) {
-				return true;
-			} else {
-				return false;
-			}
+		switch (tableName) {
+		case "User": {
+			while (sc.hasNext()) // returns a boolean value
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		} finally {
-			try {
-				cstmt.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				cstmt  = AuthenticationModel.conn.prepareCall("{call inser (?,?,?,?, ?,?,?,?, ?)}");
+				obj = (User)obj;
+				int index = 1;
+//		cstmt.setString(index++, obj.getVenue());
+//		cstmt.setString(index++, obj.getName());
+//		cstmt.setTimestamp(index++, obj.getStartTime());
+//		cstmt.setTimestamp(index++, obj.getEndTime());
+//		cstmt.setString(index++, obj.description);
+//		cstmt.setInt(index++, obj.creatorID);
+//		cstmt.setInt(index++, obj.location.getId());
+//		cstmt.setString(index++, obj.getPrivacy().name);
+
+//				cstmt.setEscapeProcessing(true);
+//				cstmt.registerOutParameter(index, java.sql.Types.BIT);
+//				cstmt.execute();
+//
+//				if (cstmt.getInt(index) == 1) {
+//					return true;
+//				} else {
+//					return false;
+//				}
+
 		}
+
+		}
+
+
+				sc.close(); // closes the scanner
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			} finally {
+				try {
+					cstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		return true;
+
+
 	}
+
 	protected boolean exportDataToCSV(String tableName, String Path) {
-		//csv must be with header and FIRSTROW = 2, FIELDTERMINATOR =',', ROWTERMINATOR = '\n')'
+		// csv must be with header and FIRSTROW = 2, FIELDTERMINATOR =',', ROWTERMINATOR
+		// = '\n')'
 		CallableStatement cstmt = null;
 		try {
 			cstmt = AuthenticationModel.conn.prepareCall("{call exportDataToCSV (?,?)}");
-			
+
 			int index = 1;
 			cstmt.setString(index++, tableName);
 			cstmt.setString(index++, Path);
@@ -1855,7 +1886,7 @@ public class UserModel {
 	public FBItem[] searchThisUsers_other(String albumName, String pictureSource, String videoMessage, String linkName,
 			String eventName, int usersID) {
 		ArrayList<FBItem> items = new ArrayList<FBItem>();
-		
+
 
 		try {
 
@@ -1941,7 +1972,7 @@ public class UserModel {
 
 			cstmt.setString(columnIndex++, videoMessage);
 			cstmt.setInt(columnIndex, usersID);
-			
+
 			boolean results = cstmt.execute();
 			int rowsAffected = 0;
 
