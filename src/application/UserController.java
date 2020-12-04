@@ -641,6 +641,10 @@ public void addFriend(int id,int tabint) {
 			Tab tab = this.view.tabPane.getTabs().get(tabIndex);
 			tab.setContent(this.view.LeastAttendableEvents(tabIndex));
 }
+		public void showIgnoredRequestsView(int tabIndex) throws FileNotFoundException {
+			Tab tab = this.view.tabPane.getTabs().get(tabIndex);
+			tab.setContent(this.view.getIgnoredFriendRequestView(tabIndex));
+}
 
 	
 	

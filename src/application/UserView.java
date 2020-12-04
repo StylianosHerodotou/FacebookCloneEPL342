@@ -235,6 +235,15 @@ Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index+
 		ArrayList<Button> addb = new ArrayList<Button>();
 		ArrayList<Button> delb = new ArrayList<Button>();
 		ArrayList<Button> ignb = new ArrayList<Button>();
+	    Button seeIgnored = new Button("See Ignored");
+        seeIgnored.setOnAction(event -> {
+		try {
+			this.controller.showIgnoredRequestsView(tabIndex);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	});
 		grid.setAlignment(Pos.BASELINE_LEFT);
 		grid.setHgap(18);
 		grid.setVgap(18);
