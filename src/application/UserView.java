@@ -46,6 +46,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class UserView {
@@ -76,26 +77,55 @@ public class UserView {
 
 		Tab profileTab = new Tab("Profile", this.getMyProfileView(index++));
 		Tab chrisTab = new Tab("My friends", this.ChrisView(index++));
-Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index++));
-		Tab panikosTab = new Tab("panikos", this.PanikosView(index++));
+		Tab friendRequesTab= new Tab("Friend Requests", this.getFriendRequestView(index++));
+		Tab searchUsersTab = new Tab("search users", this.getSearchUsersView(index++));
 		Tab searchItemsTab = new Tab("search my stuff", this.getSearchForItemsView(index++));
 		Tab searchUsersItemsTab = new Tab("search other peoples stuff", this.getSearchForItemsView(index++));
 		Tab logAllTab = new Tab("log all", this.getKLogView(index++));
 		Tab logSingleTab = new Tab("log single category", this.getLogItemView(index++));
 		Tab searchEventsTab = new Tab("search events", this.getEvetsSearchView(index++));
+		Tab finishDatabase = new Tab("finish", this.finishView(index++));
 
 
 		tabPane.getTabs().add(profileTab);
 		tabPane.getTabs().add(chrisTab);
 		tabPane.getTabs().add(friendRequesTab);
-		tabPane.getTabs().add(panikosTab);
+		tabPane.getTabs().add(searchUsersTab);
 		tabPane.getTabs().add(searchItemsTab);
 		tabPane.getTabs().add(searchUsersItemsTab);
 		tabPane.getTabs().add(logAllTab);
 		tabPane.getTabs().add(logSingleTab);
 		tabPane.getTabs().add(searchEventsTab);
+		tabPane.getTabs().add(finishDatabase);
 
 
+	}
+
+	private ScrollPane finishView(int i) {
+		GridPane grid = new GridPane();
+		Button exportButton =new Button("export");
+		Button insertButton =new Button("export");
+		Button deleteButton =new Button("Delete");
+		deleteButton.setOnAction(event->{
+			Stage popupwindow = new Stage();
+			popupwindow.initModality(Modality.APPLICATION_MODAL);
+			popupwindow.setTitle("are you sure?");
+			Label label1 = new Label("Are you sure you want to delete database?");
+			Button button1 = new Button("Yes");
+			button1.setOnAction(e -> popupwindow.close());
+			Button button2 = new Button("No");
+			button2.setOnAction(e -> popupwindow.close());
+			VBox layout = new VBox(10);
+			layout.getChildren().addAll(label1, button1,button2);
+			layout.setAlignment(Pos.CENTER);
+			Scene scene1 = new Scene(layout, 300, 250);
+			popupwindow.setScene(scene1);
+			popupwindow.showAndWait();
+		});
+		grid.add(exportButton, 0, 0);
+		grid.add(insertButton, 1, 0);
+		grid.add(deleteButton, 2, 0);
+		return new ScrollPane(grid);
 	}
 
 	private ScrollPane getKLogView(int tabIndex) {
@@ -1392,8 +1422,9 @@ return new ScrollPane(grid);
 		
 		Label hometownLabel = new Label("location:");
 		grid.add(hometownLabel, xStartinglevel, yLevelIndex);
-		ComboBox hometownBox = new ComboBox(FXCollections.observableArrayList(locations)); 
-		hometownBox.getSelectionModel().selectFirst();
+		locations.put("?", -1);
+		ComboBox hometownBox = new ComboBox(FXCollections.observableArrayList(locations.keySet())); 
+		hometownBox.getSelectionModel().select("?");
 		grid.add(hometownBox, xStartinglevel+1, yLevelIndex++);
 		
 		
@@ -1404,19 +1435,28 @@ return new ScrollPane(grid);
 				String venue = venueField.getText();
 				String name = namefiled.getText();
 				String startTimeStr = sfiled.getText();
-				Timestamp startTime=Timestamp.valueOf(startTimeStr);
 				String endTimeStr = efiled.getText();
-				Timestamp endTime=Timestamp.valueOf(endTimeStr);
+				Timestamp startTime=null;
+				Timestamp endTime=null;
+				if(startTimeStr.length()>6) {
+					startTime=Timestamp.valueOf(startTimeStr);
+				}
+				if(endTimeStr.length()>6) {
+					endTime=Timestamp.valueOf(endTimeStr);
+				}
 				String description = dfield.getText();
 				String creatorIDStr = creafield.getText();
-				int creatorID= Integer.parseInt(creatorIDStr);
+				int creatorID=-1;
+				if(creatorIDStr.length()!=0){
+					 Integer.parseInt(creatorIDStr);
+				}
 				String locationStr=(String) hometownBox.getValue();
 				Location location = new Location (locations.get(locationStr),locationStr);
 				Event searchEvent= new Event(-1, venue,name,startTime,endTime,description,creatorID,new Privacy("OPEN"),location);
-				
 				this.controller.searchForEvents(searchEvent, tabIndex);
 
 			});
+			grid.add(SearchItemButton,  xStartinglevel+1, yLevelIndex++);
 			return new ScrollPane(grid);
 	}
 

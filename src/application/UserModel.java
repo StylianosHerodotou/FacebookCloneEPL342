@@ -2137,7 +2137,6 @@ public class UserModel {
 				return false;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return false;
 		} finally {
 			try {
