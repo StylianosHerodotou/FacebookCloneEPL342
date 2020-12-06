@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.net.Socket;
 import java.sql.CallableStatement;
 import java.sql.Date;
@@ -1888,7 +1889,7 @@ public class UserModel {
 				cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
 				cstmt.execute();
 				cstmt.close();
-				UserController.displayPopUp("DONE!!");
+				UserController.displayPopUp("DONEE");
 				break;
 
 			}
@@ -1909,7 +1910,8 @@ public class UserModel {
 	}
 
 	protected boolean exportDataToCSV(String tableName, String Path) {
-		
+		try {
+		FileWriter myWriter = new FileWriter("users.csv");
 		String query = "SELECT *\r\n" + "FROM USERS";
 		PreparedStatement stmt;
 		ResultSet results = null;
@@ -1924,9 +1926,13 @@ public class UserModel {
 		
 		ArrayList<application.User> users = turnresultSetToUser(results);
 		for (int i = 0; i < users.size(); i++) {
-			System.out.println(users.get(i));
+		      myWriter.write((users.get(i).toCSV()+'\n'));
 
 		}
+		}catch (Exception e) {
+			return false;
+		}
+		UserController.displayPopUp("DONE EXPORT");
 		return true;
 	}
 

@@ -244,6 +244,12 @@ public class User extends FBItem {
 				+ educationPlaces + ", quotes=" + quotes + ", isVerified=" + isVerified + ", hometown=" + hometown
 				+ ", livesInLocation=" + livesInLocation + ", username=" + username + ", password=" + password + "]";
 	}
+	public String toCSV() {
+		return "'"+id +"','" + firstName + "','" + lastName +"','" + email +"','" + website +"','" + link
+				+"','" + birthday +"','" + gender +"','" + workedFor +"','" +
+				educationPlaces +"','" + quotes +"','" + isVerified +"','" + hometown
+				+"','" + livesInLocation +"','" + username +"','" + password+"'" ;
+	}
 	
 	
 
