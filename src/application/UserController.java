@@ -741,6 +741,20 @@ public int getAvgAge(int tabIndex) {
 			
 		}
 
+		public void deleteDatabase() {
+			AuthenticationController.displayPopUp("Database is deleted");
+			this.view.primaryStage.close();
+		}
+
+		public void importDatabase() {
+			this.model.importData();
+			
+		}
+
+		public void exportDatabase() {
+			this.model.exportDataToCSV("" , "");
+		}
+
 	
 	
 

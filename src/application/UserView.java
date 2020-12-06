@@ -104,7 +104,13 @@ public class UserView {
 	private ScrollPane finishView(int i) {
 		GridPane grid = new GridPane();
 		Button exportButton =new Button("export");
-		Button insertButton =new Button("export");
+		exportButton.setOnAction(event->{
+			this.controller.exportDatabase();
+		});
+		Button insertButton =new Button("import");
+		insertButton.setOnAction(event->{
+			this.controller.importDatabase();
+		});
 		Button deleteButton =new Button("Delete");
 		deleteButton.setOnAction(event->{
 			Stage popupwindow = new Stage();
@@ -112,7 +118,10 @@ public class UserView {
 			popupwindow.setTitle("are you sure?");
 			Label label1 = new Label("Are you sure you want to delete database?");
 			Button button1 = new Button("Yes");
-			button1.setOnAction(e -> popupwindow.close());
+			button1.setOnAction(e -> {
+				this.controller.deleteDatabase();
+				popupwindow.close();
+			});
 			Button button2 = new Button("No");
 			button2.setOnAction(e -> popupwindow.close());
 			VBox layout = new VBox(10);
@@ -1277,7 +1286,6 @@ return new ScrollPane(grid);
 				birthday = null;
 			} else {
 				birthday = Date.valueOf(datePicker.getValue());
-
 			}
 
 //					String strGender = (String) genderBox.getValue();
@@ -1313,6 +1321,8 @@ return new ScrollPane(grid);
 			User a = new User(firstName, lastName, email, website, link, birthday, gender, workedForPlaces,
 					educationPlaces, quotes, isVerified, hometown, livesIn, username, "");
 			AuthenticationController.displayPopUp(a.toString());
+			AuthenticationController.displayPopUp(a.livesInLocation.id +" "+ a.hometown.id);
+
 			this.controller.searchUsers(a, tabIndex);
 		});
 
@@ -1361,10 +1371,10 @@ return new ScrollPane(grid);
 				String albumName = AlbumField.getText();
 				String linkName = LinknameField.getText();
 				String eventName = EventnameField.getText();
-				String pictureSource = picSource.getText();
+				String pictureSource = PictureSourceField.getText();
 				String videoMessage = VideoField.getText();
-				
-				this.controller.searchForItems(tabIndex,albumName,linkName,eventName,pictureSource,videoMessage);
+				this.controller.searchForUsersItem(tabIndex,albumName,linkName,eventName,pictureSource,videoMessage);
+
 
 			});
 		}
@@ -1375,8 +1385,8 @@ return new ScrollPane(grid);
 				String eventName = EventnameField.getText();
 				String pictureSource = picSource.getText();
 				String videoMessage = VideoField.getText();
-				
-				this.controller.searchForUsersItem(tabIndex,albumName,linkName,eventName,pictureSource,videoMessage);
+				this.controller.searchForItems(tabIndex,albumName,linkName,eventName,pictureSource,videoMessage);
+
 
 			});
 		}

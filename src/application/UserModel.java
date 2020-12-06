@@ -1542,7 +1542,10 @@ public class UserModel {
 
 	public FBItem[] searchUsers_other(String albStr, String picStr, String vidStr, String linkStr, String eventStr,
 			int id) {
-
+		String s=albStr+" "+ picStr+" "+ vidStr +" "+linkStr + " "+ eventStr+ " "+ id;
+		
+		
+		System.out.println(s+" length "+s.length());
 		ArrayList<FBItem> items = new ArrayList<FBItem>();
 		int userID = this.controller.getUser().getId();
 
@@ -1857,7 +1860,7 @@ public class UserModel {
 		CallableStatement cstmt = null;
 		try {
 			// parsing a CSV file into BufferedReader class constructor
-			BufferedReader br = new BufferedReader(new FileReader("D:\\User\\Desktop\\a.csv"));
+			BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\35796\\Desktop\\university\\Iliko mathimaton\\3 Etos\\Ximerino Eksamino\\EPL342\\Group_Project\\toBeImported.csv"));
 			while ((line = br.readLine()) != null) // returns a Boolean value
 			{
 				String[] arr = line.split(splitBy); // use comma as separator
@@ -1872,7 +1875,7 @@ public class UserModel {
 				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
 				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
 				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
-				cstmt.setDate(columnIndex, (Date) new SimpleDateFormat("dd/MM/yyyy").parse(arr[columnIndex++ - 1]));
+				cstmt.setDate(columnIndex,Date.valueOf(arr[columnIndex++-1]));
 				cstmt.setBoolean(columnIndex, Boolean.parseBoolean(arr[columnIndex++ - 1]));
 				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
 				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
