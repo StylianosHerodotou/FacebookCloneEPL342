@@ -16,8 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-import applicationVersionTwo.AuthenticationModel;
-import applicationVersionTwo.User;
 import javafx.animation.Animation;
 
 public class UserModel {
