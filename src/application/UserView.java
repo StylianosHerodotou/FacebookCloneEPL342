@@ -632,7 +632,6 @@ public class UserView {
 			System.out.print("anything");
 			if(isInsert==false) {
 				
-				AuthenticationController.displayPopUp("erekte os dae prin update item");
 			this.controller.updateItem(newData, object, tabIndex);
 			}
 			else

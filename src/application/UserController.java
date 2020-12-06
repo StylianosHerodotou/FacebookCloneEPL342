@@ -541,6 +541,7 @@ public void addFriend(int id,int tabint) {
 			}
 			Picture newPicture= new Picture(newData,(Picture)object);
 			newPicture.setUserId(this.user.id);
+			System.out.println("user id"+this.user.getId()+" album id"+ albumID);
 			this.model.addPicture(newPicture,albumID);
 			break;
 		case "PictureAlbum":
@@ -553,9 +554,9 @@ public void addFriend(int id,int tabint) {
 
 	}
 
-	public void showAddImagesView(int tabIndex, int id) {
+	public void showAddImagesView(int tabIndex, int albumId) {
 		Picture newitem = new Picture();
-		newitem.setId(id);
+		newitem.setId(albumId);
 		this.showFormView(tabIndex, newitem,true, true, true);
 	}
 

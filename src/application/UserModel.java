@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+
 import javafx.animation.Animation;
 
 public class UserModel {
@@ -290,6 +292,7 @@ public class UserModel {
 		ResultSet resultSet = null;
 		ArrayList<Picture> pictures = new ArrayList<Picture>();
 		try {
+			
 			PreparedStatement ps = AuthenticationModel.conn.prepareStatement(SPsql);
 			ps.setInt(1, id);
 			ps.setEscapeProcessing(true);
@@ -1070,8 +1073,7 @@ public class UserModel {
 		try {
 			
 
-			
-			cstmt = AuthenticationModel.conn.prepareCall("{call insertPicture (?,?,?,?,?,?,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call insertPicture (?,?,?,? ,?,?,?,?)}");
 
 			int index = 1;
 			cstmt.setFloat(index++, (float) obj.width);
@@ -1082,20 +1084,31 @@ public class UserModel {
 			cstmt.setInt(index++, obj.UserId);
 
 			cstmt.setEscapeProcessing(true);
-			cstmt.registerOutParameter(index, java.sql.Types.BIT);
+			cstmt.registerOutParameter(index++, java.sql.Types.BIT);
+			cstmt.registerOutParameter(index, java.sql.Types.INTEGER);
 			cstmt.execute();
-			int answer=cstmt.getInt(index);
+			int answer=cstmt.getInt(index-1);
+			int pictureID=cstmt.getInt(index);
 		
 			if(albumID!=-1) {
 				CallableStatement cstmt2 = null;
 				cstmt2 = AuthenticationModel.conn.prepareCall("{call addPictureInAlbum (?,?)}");
 
 				int index2 = 1;
-				cstmt2.setInt(index2++, obj.id);
+				cstmt2.setInt(index2++, pictureID);
 				cstmt2.setInt(index2++, albumID);
 
 				cstmt2.setEscapeProcessing(true);
 				cstmt2.execute();
+				cstmt2.close();
+//				try {
+//				cstmt2 = AuthenticationModel.conn.prepareCall("{call testFun}");
+//				cstmt2.execute();
+//				} catch(SQLServerException e) {
+//					return true;
+//				}
+				
+				
 			}
 
 			if (answer == 1) {

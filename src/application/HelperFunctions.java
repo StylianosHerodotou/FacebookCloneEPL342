@@ -332,19 +332,36 @@ public class HelperFunctions {
 				}
 			case "Privacy":
 				if(forRead) {
-					if(field.get(object)!=null)
+					if(field.get(object)!=null) {
 						addTextFieldRow(((Privacy) field.get(object)).name, retriveFields);
-					else
+					}else
 						addTextFieldRow("OPEN", retriveFields);
-
 				break;}
-				else
+				else {
+					if(!isRightPrivacy(((TextField) retriveFields.get(fieldIndex)).getText())) {
+						AuthenticationController.displayPopUp("The policy you gave is not correct.");
+						return new Privacy("OPEN");
+
+					}
 				return new Privacy(((TextField) retriveFields.get(fieldIndex)).getText());
-			default:
+				}
+				default:
 				System.out.print("there was a new field "+fieldName + "field type "+fieldType );
 			break;
 		}
 		return null;
+	}
+	private static boolean isRightPrivacy(String privacy) {
+		String[] privacies= {"OPEN","NETWORK","FRIEND","CLOSED"};
+		boolean ans=false;
+		for(String tempPrivacy:privacies) {
+			if(tempPrivacy.equals(privacy)) {
+				ans=true;
+				break;
+			}
+			
+		}
+		return ans;
 	}
 
 
