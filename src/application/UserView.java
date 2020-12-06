@@ -219,15 +219,15 @@ public class UserView {
 
 
 		Button addPicturesButton = new Button("add pictures");
-		addPicturesButton.setOnAction(event -> this.controller.showAddImagesView(tabIndex, true));
+		addPicturesButton.setOnAction(event -> this.controller.showAddImagesView(tabIndex,-1));
 		Button addVideosButton = new Button("add videos");
-		addVideosButton.setOnAction(event -> this.controller.showAddUserVideosView(tabIndex, true));
+		addVideosButton.setOnAction(event -> this.controller.showAddUserVideosView(tabIndex));
 		Button addAlbumsButton = new Button("add Albums");
-		addAlbumsButton.setOnAction(event -> this.controller.showAddUserAlbumsView(tabIndex, true));
+		addAlbumsButton.setOnAction(event -> this.controller.showAddUserAlbumsView(tabIndex));
 		Button addLinksButton = new Button("add Links");
-		addLinksButton.setOnAction(event -> this.controller.showAddUserLinksView(tabIndex, true));
+		addLinksButton.setOnAction(event -> this.controller.showAddUserLinksView(tabIndex));
 		Button addEventsButton = new Button("add Events");
-		addEventsButton.setOnAction(event -> this.controller.showAddUserEventsView(tabIndex, true));
+		addEventsButton.setOnAction(event -> this.controller.showAddUserEventsView(tabIndex));
 
 		HelperFunctions.initYlevel = HelperFunctions.initYlevel - 16;
 		HelperFunctions.initXlevel = 12;
@@ -1006,7 +1006,6 @@ return new ScrollPane(grid);
 		if (canEdit == true) {
 			Button editButton = new Button("Edit");
 			editButton.setOnAction(event -> {
-				AuthenticationController.displayPopUp("erkete osna diksi to show form view");
 				this.controller.showFormView(tabIndex, item,canEdit, mine,isInsert);
 			});
 			grid.add(editButton, HelperFunctions.initXlevel, fields.size() + HelperFunctions.initYlevel++);
@@ -1054,6 +1053,14 @@ return new ScrollPane(grid);
 		if (item.getClass().equals(User.class)) {
 			scenetitle = new Text(myUser.getUsername() + "'s profile");
 		} else {
+			if (item.getClass().equals(PictureAlbum.class)) {
+				Button addPictureButton = new Button("add a picture");
+				addPictureButton.setOnAction(event->{
+					
+					this.controller.showAddImagesView(tabIndex, ((PictureAlbum) item).id );
+				});
+				grid.add( addPictureButton,HelperFunctions.initXlevel + 10, HelperFunctions.initYlevel + 4);
+			}
 			scenetitle = new Text(myUser.getUsername() + "'s" + item.getClass().getSimpleName());
 		}
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));

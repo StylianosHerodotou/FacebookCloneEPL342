@@ -16,8 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-import applicationVersionTwo.AuthenticationModel;
-import applicationVersionTwo.User;
 import javafx.animation.Animation;
 
 public class UserModel {
@@ -1064,10 +1062,13 @@ public class UserModel {
 		}
 	}
 
-	protected boolean addPicture(Picture obj) {
+	protected boolean addPicture(Picture obj, int albumID) {
 
 		CallableStatement cstmt = null;
 		try {
+			
+
+			
 			cstmt = AuthenticationModel.conn.prepareCall("{call insertPicture (?,?,?,?,?,?,?)}");
 
 			int index = 1;
@@ -1081,8 +1082,21 @@ public class UserModel {
 			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
 			cstmt.execute();
+			int answer=cstmt.getInt(index);
+		
+			if(albumID!=-1) {
+				CallableStatement cstmt2 = null;
+				cstmt2 = AuthenticationModel.conn.prepareCall("{call addPictureInAlbum (?,?)}");
 
-			if (cstmt.getInt(index) == 1) {
+				int index2 = 1;
+				cstmt2.setInt(index2++, obj.id);
+				cstmt2.setInt(index2++, albumID);
+
+				cstmt2.setEscapeProcessing(true);
+				cstmt2.execute();
+			}
+
+			if (answer == 1) {
 				return true;
 			} else {
 				return false;
@@ -1142,9 +1156,8 @@ public class UserModel {
 	protected boolean addAlbum(PictureAlbum obj) {
 
 		CallableStatement cstmt = null;
-		AuthenticationController.displayPopUp("erkete os dame");
 		try {
-			cstmt = AuthenticationModel.conn.prepareCall("{call insertAlbum (?,?,?,?,?,?,?)}");
+			cstmt = AuthenticationModel.conn.prepareCall("{call insertAlbum (?,?,?,?, ?,?,?)}");
 
 			int index = 1;
 			cstmt.setString(index++, obj.getName());
@@ -1154,7 +1167,7 @@ public class UserModel {
 			cstmt.setInt(index++, obj.user_id);
 			cstmt.setString(index++, obj.privacy.name);
 
-			cstmt.setEscapeProcessing(true);
+//			cstmt.setEscapeProcessing(true);
 			cstmt.registerOutParameter(index, java.sql.Types.BIT);
 			cstmt.execute();
 

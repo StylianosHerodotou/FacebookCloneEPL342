@@ -535,9 +535,13 @@ public void addFriend(int id,int tabint) {
 			this.model.addVideo(newVideo);
 			break;
 		case "Picture":
+			int albumID=-1;
+			if(((Picture)object).getId()!=-1) {
+				albumID=((Picture)object).getId();
+			}
 			Picture newPicture= new Picture(newData,(Picture)object);
 			newPicture.setUserId(this.user.id);
-			this.model.addPicture(newPicture);
+			this.model.addPicture(newPicture,albumID);
 			break;
 		case "PictureAlbum":
 			PictureAlbum newAlbum= new PictureAlbum(newData,(PictureAlbum)object);
@@ -549,27 +553,28 @@ public void addFriend(int id,int tabint) {
 
 	}
 
-	public void showAddImagesView(int tabIndex, boolean b) {
+	public void showAddImagesView(int tabIndex, int id) {
 		Picture newitem = new Picture();
+		newitem.setId(id);
 		this.showFormView(tabIndex, newitem,true, true, true);
 	}
 
-	public void showAddUserVideosView(int tabIndex, boolean b) {
+	public void showAddUserVideosView(int tabIndex) {
 		Video newitem = new Video ();
 		this.showFormView(tabIndex, newitem,true, true, true);
 	}
 
-	public void showAddUserAlbumsView(int tabIndex, boolean b) {
+	public void showAddUserAlbumsView(int tabIndex) {
 		PictureAlbum newitem = new PictureAlbum ();
 		this.showFormView(tabIndex, newitem,true, true, true);
 	}
 
-	public void showAddUserLinksView(int tabIndex, boolean b) {
+	public void showAddUserLinksView(int tabIndex) {
 		Link newitem = new Link ();
 		this.showFormView(tabIndex, newitem,true, true, true);
 	}
 
-	public void showAddUserEventsView(int tabIndex, boolean b) {
+	public void showAddUserEventsView(int tabIndex) {
 		Event newitem = new Event ();
 		this.showFormView(tabIndex, newitem,true, true, true);
 	}
