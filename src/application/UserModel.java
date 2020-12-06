@@ -1,7 +1,9 @@
 package application;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.net.Socket;
 import java.sql.CallableStatement;
 import java.sql.Date;
@@ -1826,11 +1828,12 @@ public class UserModel {
 		String splitBy = ",";
 		CallableStatement cstmt = null;
 		try {
-			Scanner sc = new Scanner(new File("D:\\User\\Desktop\\IMP\\a.csv"));
-			sc.useDelimiter(","); // sets the delimiter pattern
-
-			while (sc.hasNext()) { // returns a boolean value
-				String[] arr = line.split(splitBy);
+			// parsing a CSV file into BufferedReader class constructor
+			BufferedReader br = new BufferedReader(new FileReader("D:\\User\\Desktop\\a.csv"));
+			while ((line = br.readLine()) != null) // returns a Boolean value
+			{
+				String[] arr = line.split(splitBy); // use comma as separator
+			
 				cstmt = AuthenticationModel.conn
 						.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? )}");
 				int columnIndex = 1;
@@ -1856,7 +1859,6 @@ public class UserModel {
 
 			}
 
-			sc.close(); // closes the scanner
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
