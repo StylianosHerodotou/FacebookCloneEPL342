@@ -25,7 +25,7 @@ public class DbFunctions {
 //				
 //		
 //	}
-	static HashMap<String, Integer> locationHashmap = SearchUserController.getLocations();
+//	static HashMap<String, Integer> locationHashmap = SearchUserController.getLocations();
 	public static List<Object[]> resultSetToList(ResultSet rs){
 		List<Object[]> results = new ArrayList<Object[]>();
 		try {
