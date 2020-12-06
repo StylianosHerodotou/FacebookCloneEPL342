@@ -1860,11 +1860,11 @@ public class UserModel {
 		CallableStatement cstmt = null;
 		try {
 			// parsing a CSV file into BufferedReader class constructor
-			BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\35796\\Desktop\\university\\Iliko mathimaton\\3 Etos\\Ximerino Eksamino\\EPL342\\Group_Project\\toBeImported.csv"));
+			BufferedReader br = new BufferedReader(new FileReader("D:\\User\\Desktop\\a.csv"));
 			while ((line = br.readLine()) != null) // returns a Boolean value
 			{
 				String[] arr = line.split(splitBy); // use comma as separator
-			
+				System.out.println(arr);
 				cstmt = AuthenticationModel.conn
 						.prepareCall("{call registerUser(?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,? )}");
 				int columnIndex = 1;
@@ -1875,6 +1875,7 @@ public class UserModel {
 				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
 				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
 				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
+				System.out.println(arr[columnIndex-1]);
 				cstmt.setDate(columnIndex,Date.valueOf(arr[columnIndex++-1]));
 				cstmt.setBoolean(columnIndex, Boolean.parseBoolean(arr[columnIndex++ - 1]));
 				cstmt.setString(columnIndex, arr[columnIndex++ - 1]);
@@ -1886,7 +1887,9 @@ public class UserModel {
 				cstmt.setEscapeProcessing(true);
 				cstmt.registerOutParameter(columnIndex, java.sql.Types.BIT);
 				cstmt.execute();
-				
+				cstmt.close();
+				UserController.displayPopUp("DONE!!");
+				break;
 
 			}
 
