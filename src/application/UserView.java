@@ -1359,7 +1359,7 @@ return new ScrollPane(grid);
 		TextField PictureSourceField = new TextField();
 		grid.add(PictureSourceField, xStartinglevel + 1, yLevelIndex++);
 		
-		Label VideoMessage = new Label("Video message :");
+		Label VideoMessage = new Label("Video Source :");
 		grid.add(VideoMessage, xStartinglevel, yLevelIndex);
 		TextField VideoField = new TextField();
 		grid.add(VideoField, xStartinglevel + 1, yLevelIndex++);
